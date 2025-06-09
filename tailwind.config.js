@@ -13,7 +13,11 @@ module.exports = {
     },
     extend: {
       colors: {
-        // اگر رنگ سفارشی داری اینجا اضافه کن
+        primary:"#EE10B0",
+        secoundry:"#0E9EEF",
+        bgbody:"#181818",
+        bgcard:"#1F1F1F",
+        bgrow:"#1E1E1E",
       },
     },
   },
