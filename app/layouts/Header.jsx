@@ -1,7 +1,7 @@
 
 function Header() {
   return (
-     <div className="text-primary">Header</div>
+     <div className="font-iranSansLight">سلام خوبی</div>
   )
 }
 

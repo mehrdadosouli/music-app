@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'morabba-light';
+  src: url('/styles/fonts/Morabba-Light.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'morabba-medium';
+  src: url('/styles/fonts/Morabba-Medium.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'morabba-bold';
+  src: url('/styles/fonts/Morabba-Bold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'iransans-light';
+  src: url('/styles/fonts/IRANSans_Light.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'iransans-medium';
+  src: url('/styles/fonts/IRANSans_Medium.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'iransans-bold';
+  src: url('/styles/fonts/IRANSans_Bold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
