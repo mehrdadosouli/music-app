@@ -6,7 +6,7 @@ import "aos/dist/aos.css";  //انیمیشن اسکرول
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import {store} from "./redux/store";
 import { Provider } from "react-redux";
-import MainLayout from "./layouts/MainLayout.jsx";
+import MainLayout from "./layouts/MainLayout";
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -28,7 +28,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     });
   },[])
   return (
-    <html lang="fa" className="light">
+    <html lang="fa" className="dark">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

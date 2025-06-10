@@ -4,12 +4,15 @@ import { Outlet } from "react-router";
 
 export default function MainLayout() {
   return (
-    <>
-      <Header />
-      <main className="container mx-auto p-4">
-        <Outlet />
-      </main>
-      <Footer />
-    </>
+    <div className="container flex pt-10">
+      <div className="w-5/6">
+        <Header />
+        <main className="">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+      <aside className="w-1/6">eeeeeeeeeeeeee</aside>
+    </div>
   );
 }

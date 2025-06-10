@@ -11,3 +11,12 @@ body {
     color-scheme: dark;
   }
 }
+body{
+  font-family: "iransans-bold";
+  direction: rtl;
+}
+@layer components  {
+  .dark {
+    background-color: #181818;
+  }
+}
