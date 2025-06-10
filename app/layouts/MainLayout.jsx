@@ -1,6 +1,13 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
+import HomeIcon from "~/components/icons/HomeIcon";
+import LibraryIcon from "~/components/icons/LibraryIcon";
+import LogOutIcon from "~/components/icons/LogOutIcon";
+import AddPlaylistIcon from "~/components/icons/AddPlaylistIcon";
+import HeartIcon from "~/components/icons/HeartIcon";
+import SignIcon from "~/components/icons/SignIcon";
+import ListIcon from "~/components/icons/ListIcon";
 
 export default function MainLayout() {
   return (
@@ -12,7 +19,40 @@ export default function MainLayout() {
         </main>
         <Footer />
       </div>
-      <aside className="w-1/6">eeeeeeeeeeeeee</aside>
+      <aside className="w-1/6 flex flex-col items-end gap-5">
+        <h1 className="textstroke">OSOULI</h1>
+        <span className="text-primary text-sm">منو</span>
+        <Link to="/" className="flex flex-row-reverse items-center gap-2 dark:text-white text-black hover:bg-gray-700">
+          <HomeIcon />
+          خانه
+        </Link>
+        <Link to="/" className="flex flex-row-reverse items-center gap-2 dark:text-white text-black hover:bg-gray-700">
+          <ListIcon />
+          آلبوم ها
+        </Link>
+        <Link to="/" className="flex flex-row-reverse items-center gap-2 dark:text-white text-black hover:bg-gray-700">
+          <SignIcon />
+          خواننده ها
+        </Link>
+        <span className="text-primary text-sm">پلی لیست و مورد علاقه ها</span>
+        <Link to="/" className="flex flex-row-reverse items-center gap-2 dark:text-white text-black hover:bg-gray-700">
+          <HeartIcon />
+          مورد علاقه های من
+        </Link>
+        <Link to="/" className="flex flex-row-reverse items-center gap-2 dark:text-white text-black hover:bg-gray-700">
+          <LibraryIcon />
+          پلی لیست من
+        </Link>
+        <Link to="/" className="flex flex-row-reverse items-center gap-2 dark:text-white text-black hover:bg-gray-700">
+          <AddPlaylistIcon />
+          اظافه کردن پلی لیست
+        </Link>
+        <span className="text-primary text-sm">عمومی</span>
+        <Link to="/" className="flex flex-row-reverse items-center gap-2 dark:text-white text-black hover:bg-gray-700">
+          <LogOutIcon />
+          خروج از حساب کاربری
+        </Link>
+      </aside>
     </div>
   );
 }

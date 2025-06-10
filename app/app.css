@@ -5,18 +5,21 @@
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white dark:bg-bgcard;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
 }
-body{
+body {
   font-family: "iransans-bold";
   direction: rtl;
 }
-@layer components  {
-  .dark {
-    background-color: #181818;
+@layer components {
+  .textstroke {
+    font-size: 3rem;
+    background: -webkit-linear-gradient( #ee10b0, #0e9eef);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
