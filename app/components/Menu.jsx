@@ -7,7 +7,7 @@ function Menu() {
     return (
         <div className="flex gap-20 mx-10">
             {items.map(menu => <ul className="flex items-center" key={menu.id}>
-                <li><Link className="text-white" to={menu.link}>{menu.name}</Link></li>
+                <li><Link className="text-white hover:text-secondary" to={menu.link}>{menu.name}</Link></li>
             </ul>)}
         </div>
     )

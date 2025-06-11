@@ -5,18 +5,30 @@ import SearchHeader from "~/components/SearchHeader"
 
 function Header() {
   const [theme, setTheme] = useState("");
-
+  const [scrollY, setScrollY] = useState(false)
   useEffect(() => {
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';    
+    const handleScroll = () => {
+      if(window.scrollY > 50) {
+        setScrollY(true);
+      } else {
+        setScrollY(false);
+      }
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  useEffect(() => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
     setTheme(currentTheme);
   }, []);
   const clickHandler = () => {
-    const newTheme=theme === 'light' ? 'dark' : 'light' ;
-    document.documentElement.setAttribute('data-theme',newTheme)
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', newTheme)
     setTheme(newTheme)
   }
   return (
-    <div className="flex justify-between items-center fixed top-10">
+    <div className={`flex justify-between items-center fixed top-10 ${scrollY && 'backdrop-blur-xl'}`}>
       <div className="flex gap-5">
         <Link className="w-40 h-8 rounded-sm flex justify-center items-center text-white bg-primary hover:text-primary hover:bg-white border border-primary transition-all" to="/signup">Sign Up</Link>
         <Link className="w-40 h-8 rounded-sm flex justify-center items-center text-primary border border-primary hover:text-white hover:bg-primary transition-all" to="/login">Login</Link>

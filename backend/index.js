@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
 const PORT = 4000;
+const cors = require('cors');
+app.use('/static', express.static('public'));
 
-// داده‌های واقعی‌تر خواننده‌ها و ترک‌ها
-
+app.use(cors());
 const artists = [
   {
     id: '1',
@@ -25,9 +26,9 @@ const artists = [
   },
   {
     id: '4',
-    name: 'ابی',
-    bio: 'ابی یکی از مشهورترین خوانندگان موسیقی پاپ ایران است.',
-    photo: 'https://upload.wikimedia.org/wikipedia/commons/4/40/Ebi_2019.jpg',
+    name: 'محمدرضا شجریان',
+    bio: 'محمدرضا شجریان یکی از مشهورترین خوانندگان موسیقی پاپ ایران است.',
+    photo: 'http://localhost:4000/static/photos/محمدرضا شجریان.jpg',
   },
   {
     id: '5',
@@ -40,11 +41,11 @@ const artists = [
 // آلبوم‌ها
 
 const albums = [
-  { id: '100', title: 'آلبوم شیدایی', artistId: '1', release_date: '2000-01-01', cover_url: 'https://upload.wikimedia.org/wikipedia/en/5/52/Shajarian_Sheidaei.jpg' },
-  { id: '101', title: 'آلبوم نسیم وصل', artistId: '2', release_date: '2015-06-12', cover_url: 'https://upload.wikimedia.org/wikipedia/en/f/f5/Nasim-e_Vasl.jpg' },
-  { id: '102', title: 'آلبوم رگ خواب', artistId: '3', release_date: '2017-09-20', cover_url: 'https://upload.wikimedia.org/wikipedia/en/6/69/Rag_Khab_album.jpg' },
-  { id: '103', title: 'آلبوم کنار پرچین‌ها', artistId: '4', release_date: '1992-11-11', cover_url: 'https://upload.wikimedia.org/wikipedia/en/3/38/Kenar_Parchinha.jpg' },
-  { id: '104', title: 'آلبوم تیک تاک', artistId: '5', release_date: '2013-04-15', cover_url: 'https://upload.wikimedia.org/wikipedia/en/0/0c/Tick_Tock_Album.jpg' },
+  { id: '100', title: 'آلبوم شیدایی', artistId: '1', release_date: '2000-01-01', cover_url: 'http://localhost:4000/static/photos/محمدرضا شجریان.jpg',description:"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود" },
+  { id: '101', title: 'آلبوم نسیم بیداری', artistId: '2', release_date: '2015-06-12', cover_url: 'http://localhost:4000/static/photos/محسن یگانه.jpg',description:"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود" },
+  { id: '102', title: 'آلبوم رگ خواب', artistId: '3', release_date: '2017-09-20', cover_url: 'http://localhost:4000/static/photos/محسن یگانه.jpg',description:"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود" },
+  { id: '103', title: 'آلبوم کنار پرچین‌ها', artistId: '4', release_date: '1992-11-11', cover_url: 'https://upload.wikimedia.org/wikipedia/en/3/38/Kenar_Parchinha.jpg' ,description:"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود"},
+  { id: '104', title: 'آلبوم تیک تاک', artistId: '5', release_date: '2013-04-15', cover_url: 'http://localhost:4000/static/photos/سیروان خسروی.jpg',description:"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود" },
 ];
 
 // ترک‌ها
@@ -58,7 +59,7 @@ const tracks = [
     albumId: '100',
     duration: 300,
     genre: 'Classical Persian',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/en/5/52/Shajarian_Sheidaei.jpg',
+    cover_url: 'http://localhost:4000/static/photos/محمدرضا شجریان.jpg',
     stream_url: 'https://example.com/stream/1000',
     download_url: 'https://example.com/download/1000',
     lyrics: 'بیداد از آلبوم شیدایی از محمدرضا شجریان',
@@ -70,7 +71,7 @@ const tracks = [
     albumId: '100',
     duration: 320,
     genre: 'Classical Persian',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/en/5/52/Shajarian_Sheidaei.jpg',
+    cover_url: 'http://localhost:4000/static/photos/محمدرضا شجریان.jpg',
     stream_url: 'https://example.com/stream/1001',
     download_url: 'https://example.com/download/1001',
     lyrics: 'مرغ سحر از آلبوم شیدایی از محمدرضا شجریان',
@@ -82,7 +83,7 @@ const tracks = [
     albumId: '100',
     duration: 280,
     genre: 'Classical Persian',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/en/5/52/Shajarian_Sheidaei.jpg',
+    cover_url: 'http://localhost:4000/static/photos/محمدرضا شجریان.jpg',
     stream_url: 'https://example.com/stream/1002',
     download_url: 'https://example.com/download/1002',
     lyrics: 'چرا رفتی از آلبوم شیدایی از محمدرضا شجریان',
@@ -96,7 +97,7 @@ const tracks = [
     albumId: '101',
     duration: 250,
     genre: 'Persian Traditional',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/en/f/f5/Nasim-e_Vasl.jpg',
+    cover_url: 'http://localhost:4000/static/photos/محسن یگانه.jpg',
     stream_url: 'https://example.com/stream/2000',
     download_url: 'https://example.com/download/2000',
     lyrics: 'دل شیدا از آلبوم نسیم وصل از همایون شجریان',
@@ -108,7 +109,7 @@ const tracks = [
     albumId: '101',
     duration: 270,
     genre: 'Persian Traditional',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/en/f/f5/Nasim-e_Vasl.jpg',
+    cover_url: 'http://localhost:4000/static/photos/محسن یگانه.jpg',
     stream_url: 'https://example.com/stream/2001',
     download_url: 'https://example.com/download/2001',
     lyrics: 'شب دهم از آلبوم نسیم وصل از همایون شجریان',
@@ -120,7 +121,7 @@ const tracks = [
     albumId: '101',
     duration: 260,
     genre: 'Persian Traditional',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/en/f/f5/Nasim-e_Vasl.jpg',
+    cover_url: 'http://localhost:4000/static/photos/محسن یگانه.jpg',
     stream_url: 'https://example.com/stream/2002',
     download_url: 'https://example.com/download/2002',
     lyrics: 'گل نازم از آلبوم نسیم وصل از همایون شجریان',
@@ -134,7 +135,7 @@ const tracks = [
     albumId: '102',
     duration: 240,
     genre: 'Pop',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/en/6/69/Rag_Khab_album.jpg',
+    cover_url: 'http://localhost:4000/static/photos/محسن یگانه.jpg',
     stream_url: 'https://example.com/stream/3000',
     download_url: 'https://example.com/download/3000',
     lyrics: 'عاشق که می‌شوی از آلبوم رگ خواب از محسن یگانه',
@@ -146,7 +147,7 @@ const tracks = [
     albumId: '102',
     duration: 220,
     genre: 'Pop',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/en/6/69/Rag_Khab_album.jpg',
+    cover_url: 'http://localhost:4000/static/photos/محسن یگانه.jpg',
     stream_url: 'https://example.com/stream/3001',
     download_url: 'https://example.com/download/3001',
     lyrics: 'رگ خواب از آلبوم رگ خواب از محسن یگانه',
@@ -158,13 +159,13 @@ const tracks = [
     albumId: '102',
     duration: 230,
     genre: 'Pop',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/en/6/69/Rag_Khab_album.jpg',
+    cover_url: 'http://localhost:4000/static/photos/محسن یگانه.jpg',
     stream_url: 'https://example.com/stream/3002',
     download_url: 'https://example.com/download/3002',
     lyrics: 'برگرد از آلبوم رگ خواب از محسن یگانه',
   },
 
-  // ابی
+  // محمدرضا شجریان
   {
     id: '4000',
     title: 'کلبه',
@@ -172,10 +173,10 @@ const tracks = [
     albumId: '103',
     duration: 260,
     genre: 'Pop',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/commons/4/40/Ebi_2019.jpg',
+    cover_url: 'http://localhost:4000/static/photos/محمدرضا شجریان.jpg',
     stream_url: 'https://example.com/stream/4000',
     download_url: 'https://example.com/download/4000',
-    lyrics: 'کلبه از آلبوم کنار پرچین‌ها از ابی',
+    lyrics: 'کلبه از آلبوم کنار پرچین‌ها از محمدرضا شجریان',
   },
   {
     id: '4001',
@@ -184,10 +185,10 @@ const tracks = [
     albumId: '103',
     duration: 250,
     genre: 'Pop',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/commons/4/40/Ebi_2019.jpg',
+    cover_url: 'http://localhost:4000/static/photos/محمدرضا شجریان.jpg',
     stream_url: 'https://example.com/stream/4001',
     download_url: 'https://example.com/download/4001',
-    lyrics: 'شاید از آلبوم کنار پرچین‌ها از ابی',
+    lyrics: 'شاید از آلبوم کنار پرچین‌ها از محمدرضا شجریان',
   },
   {
     id: '4002',
@@ -196,10 +197,10 @@ const tracks = [
     albumId: '103',
     duration: 270,
     genre: 'Pop',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/commons/4/40/Ebi_2019.jpg',
+    cover_url: 'http://localhost:4000/static/photos/محمدرضا شجریان.jpg',
     stream_url: 'https://example.com/stream/4002',
     download_url: 'https://example.com/download/4002',
-    lyrics: 'خاطره از آلبوم کنار پرچین‌ها از ابی',
+    lyrics: 'خاطره از آلبوم کنار پرچین‌ها از محمدرضا شجریان',
   },
 
   // سیروان خسروی
@@ -210,7 +211,7 @@ const tracks = [
     albumId: '104',
     duration: 210,
     genre: 'Pop',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/en/0/0c/Tick_Tock_Album.jpg',
+    cover_url: 'http://localhost:4000/static/photos/سیروان خسروی.jpg',
     stream_url: 'https://example.com/stream/5000',
     download_url: 'https://example.com/download/5000',
     lyrics: 'تیک تاک از آلبوم تیک تاک از سیروان خسروی',
@@ -222,7 +223,7 @@ const tracks = [
     albumId: '104',
     duration: 220,
     genre: 'Pop',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/en/0/0c/Tick_Tock_Album.jpg',
+    cover_url: 'http://localhost:4000/static/photos/سیروان خسروی.jpg',
     stream_url: 'https://example.com/stream/5001',
     download_url: 'https://example.com/download/5001',
     lyrics: 'برف از آلبوم تیک تاک از سیروان خسروی',
@@ -234,7 +235,7 @@ const tracks = [
     albumId: '104',
     duration: 230,
     genre: 'Pop',
-    cover_url: 'https://upload.wikimedia.org/wikipedia/en/0/0c/Tick_Tock_Album.jpg',
+    cover_url: 'http://localhost:4000/static/photos/سیروان خسروی.jpg',
     stream_url: 'https://example.com/stream/5002',
     download_url: 'https://example.com/download/5002',
     lyrics: 'رویا از آلبوم تیک تاک از سیروان خسروی',
