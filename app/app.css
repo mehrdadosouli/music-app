@@ -3,6 +3,24 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary: #EE10B0;
+  --secondary: #0E9EEF;
+  --bgbody: white;
+  --bgcard: #1F1F1F;
+  --bgrow: #1E1E1E;
+  --primarytxt:black;
+}
+html[data-theme="dark"]{
+  --primary: #EE10B0;
+  --secondary: #0E9EEF;
+  --bgbody: #181818;
+  --bgcard: #1F1F1F;
+  --bgrow: #1E1E1E;
+  --primarytxt:white
+}
+
+
 html,
 body {
   @apply bg-white dark:bg-bgcard;
@@ -14,6 +32,7 @@ body {
 body {
   font-family: "iransans-bold";
   direction: rtl;
+  background-color: var(--bgbody);
 }
 @layer components {
   .textstroke {
@@ -21,5 +40,13 @@ body {
     background: -webkit-linear-gradient( #ee10b0, #0e9eef);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+  .banner{
+    background-image: url("../public/styles/headerimage.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 38rem;
   }
 }

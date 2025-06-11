@@ -1,5 +1,5 @@
 module.exports = {
-  darkMode: "class",
+  // darkMode: "class",
   content: [
     "./index.html",
     "./app/**/*.{js,jsx,ts,tsx}", // فولدر app به جای src
@@ -11,11 +11,12 @@ module.exports = {
         padding: '3.43rem',
       },
       colors: {
-        primary: "#EE10B0",
-        secondary: "#0E9EEF",
-        bgbody: "#181818",
-        bgcard: "#1F1F1F",
-        bgrow: "#1E1E1E",
+        primary: 'var(--primary)', 
+        secondary: 'var(--secondary)',
+        bgbody: 'var(--bgbody)',
+        bgcard: 'var(--bgcard)',
+        bgrow: 'var(--bgrow)',
+        primarytxt:'var(--primarytxt)'
       },
       fontFamily: {
         morabbaLight: ["morabba-light", "sans-serif"],
