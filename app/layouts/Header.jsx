@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router"
 import Menu from "~/components/Menu"
 import SearchHeader from "~/components/SearchHeader"
+import { setTheme, toggleTheme } from "~/redux/features/music/musicSlice";
 
 function Header() {
-  const [theme, setTheme] = useState("");
+  const theme = useSelector(state => state.songs.theme);
+  const dispatch = useDispatch();
   const [scrollY, setScrollY] = useState(false)
   useEffect(() => {
     const handleScroll = () => {
@@ -17,16 +20,20 @@ function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
+
   useEffect(() => {
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-    setTheme(currentTheme);
-  }, []);
+    dispatch(setTheme(currentTheme));
+  }, [dispatch]);
+
+  // به محض تغییر تم، صدا زدن این useEffect برای هماهنگی DOM
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
   const clickHandler = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', newTheme)
-    setTheme(newTheme)
-  }
+    dispatch(toggleTheme());
+  };
   return (
     <div className={`flex justify-between items-center fixed top-10 ${scrollY && 'backdrop-blur-xl'}`}>
       <div className="flex gap-5">

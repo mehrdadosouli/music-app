@@ -6,9 +6,8 @@ export default function TrackItem({track}) {
     
   return (
     <div className="flex bg-bgcard rounded-md px-2 shadow-sm">
-        <img src="" alt="" />
         <ButtonMusic bg={true} track={track.id} />
-        <div className="w-full [&>*]:text-red-300 flex justify-between items-center">
+        <div className="w-full [&>*]:text-primarytxt flex justify-between items-center">
             <img src={`/backend/public/photos/${track.artistName}.jpg`} className="size-12" alt="" />
             <div className="flex flex-col gap-2">
                 <h5>{track.title}</h5>

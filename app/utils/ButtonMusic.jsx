@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import PlayIconmusic from "~/components/icons/PlayIconmusic";
+import usePauseAllAudio from "~/components/useStopAllAdudio";
 
 export default function ButtonMusic({ track, bg = false }) {
 
@@ -16,19 +17,7 @@ export default function ButtonMusic({ track, bg = false }) {
             setIsPlaying(true)
         }
     };
-    useEffect(() => {
-        const handleStop = () => {
-            if (audioRef.current) {
-                audioRef.current.pause();
-                audioRef.current.currentTime = 0;
-                setIsPlaying(false);
-            }
-        };
-        window.addEventListener("pauseAllAudio", handleStop);
-        return () => {
-            window.removeEventListener("pauseAllAudio", handleStop)
-        }
-    }, [])
+    usePauseAllAudio(audioRef, setIsPlaying);
     return (
         <>
             <button onClick={handlePlay} className={`${bg ? "size-14 bg-bgcard" : "size-14 bg-primarytxt"}  flex gap-2 justify-center items-center rounded-full`}>
