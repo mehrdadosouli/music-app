@@ -10,6 +10,7 @@
   --bgcard: #e7e7e7;
   --bgrow: #1e1e1e;
   --primarytxt: black;
+  /* --bgbody: linear-gradient(to right, #0E9EEF, #053754) !important;  */
 }
 html[data-theme="dark"] {
   --primary: #ee10b0;
@@ -31,7 +32,7 @@ body {
 body {
   font-family: "iransans-bold";
   direction: rtl;
-  background-color: var(--bgbody);
+  background: var(--bgbody);
 }
 @layer components {
   .textstroke {
@@ -53,8 +54,5 @@ body {
     background-position: center;
     width: 100%;
     height: 38rem;
-  }
-  .bg-track{
-    background: linear-gradient(to right,#0E9EEF,#053754) !important;
   }
 }

@@ -1,5 +1,5 @@
 import type { Route } from "./+types/home";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router";
 import DetailTrack from "~/components/DetailTrack";
@@ -16,17 +16,22 @@ export function meta({}: Route.MetaArgs) {
 export default function Track() {
   const {trackError,trackLoading,track}= useSelector(state => state.songs)
   const { trackId } = useParams();
-
   const dispatch=useDispatch()
+
   useEffect(()=>{
     if (trackId) dispatch(fetchTrackById(trackId));
   },[dispatch,trackId])
+
+  ///////// music play handler
+  // const playMusicHandler=useCallback(()=>{
+
+  // },[])
   
   if (trackLoading) { return (<h1>IsLoading.....</h1>) }
   if (trackError) return <p>خطا: {trackError}</p>;
   return (<>
     <div className="flex flex-col">
-        <DetailTrack track={track} />
+        {track ? <DetailTrack track={track} /> : <p>داده موجود نیست</p>}
         <div></div>
     </div>  
   </>);

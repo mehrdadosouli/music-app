@@ -7,7 +7,6 @@ function SearchHeader() {
     const clickHandler = useCallback((e) => {
         e.preventDefault();
         if (search.trim()) {
-            console.log("Searching for:", search);
             // اینجا می‌توانید جستجو رو انجام بدید (مثل درخواست API)
         }
     }, [search])
