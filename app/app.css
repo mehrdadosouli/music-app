@@ -46,7 +46,6 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-
   .banner {
     background-image: url("../public/styles/headerimage.png");
     background-repeat: no-repeat;
@@ -54,5 +53,9 @@ body {
     background-position: center;
     width: 100%;
     height: 38rem;
+  }
+  .listtrack {
+    background: linear-gradient(to right, #0B77B3, #053754);
+    background: -webkit-linear-gradient( to right, #0B77B3, #053754);
   }
 }

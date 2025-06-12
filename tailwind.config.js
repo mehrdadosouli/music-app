@@ -26,6 +26,9 @@ module.exports = {
         iranSansMedium: ["iransans-medium", "sans-serif"],
         iranSansBold: ["iransans-bold", "sans-serif"],
       },
+      boxShadow: {
+        'bottom': '5px 9px 9px 2px rgba(0,0,0,0.75)', 
+      },
     },
   },
   plugins: [],
