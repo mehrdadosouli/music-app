@@ -10,6 +10,8 @@
   --bgcard: #e7e7e7;
   --bgrow: #1e1e1e;
   --primarytxt: black;
+  --bgplayercontroll:#373542;
+  --bgplayercontrollcard:#4e4d52;
   /* --bgbody: linear-gradient(to right, #0E9EEF, #053754) !important;  */
 }
 html[data-theme="dark"] {
@@ -19,6 +21,8 @@ html[data-theme="dark"] {
   --bgcard: #1f1f1f;
   --bgrow: #1e1e1e;
   --primarytxt: white;
+  --bgplayercontroll:#373542;
+  --bgplayercontrollcard:#4e4d52;
 }
 
 html,

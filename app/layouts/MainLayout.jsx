@@ -11,7 +11,7 @@ import ListIcon from "~/components/icons/ListIcon";
 
 export default function MainLayout() {
   return (
-    <div className="container flex pt-10">
+    <div className="container relative flex pt-10">
       <div className="w-5/6">
         <Header />
         <main className="">
