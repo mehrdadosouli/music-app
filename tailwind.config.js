@@ -16,7 +16,9 @@ module.exports = {
         bgbody: 'var(--bgbody)',
         bgcard: 'var(--bgcard)',
         bgrow: 'var(--bgrow)',
-        primarytxt:'var(--primarytxt)'
+        primarytxt:'var(--primarytxt)',
+        bgplayercontroll:'var(--bgplayercontroll)',
+        bgplayercontrollCard:'var(--bgplayercontrollCard)',
       },
       fontFamily: {
         morabbaLight: ["morabba-light", "sans-serif"],
