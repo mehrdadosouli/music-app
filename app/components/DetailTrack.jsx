@@ -1,5 +1,4 @@
-import { memo, useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router";
+import { memo } from "react";
 import { formatDuration } from "~/utils/formatDuration";
 import ListMusicOfAlbum from "./ListMusicOfAlbum";
 import ButtonMusic from "~/utils/ButtonMusic";

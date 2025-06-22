@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  isPlaying:false,
+  currentAudio:null,
   value: 0,
   topSongs: [],
   allSong: [],
@@ -37,10 +39,17 @@ export const fetchTrackById = createAsyncThunk(
     }
   }
 );
-const counterSlice = createSlice({
-  name: "counter",
+const musicSlice = createSlice({
+  name: "music",
   initialState,
   reducers: {
+    playAudio:(state,action)=>{
+      state.currentAudio=action.payload;
+      state.isPlaying=true;
+    },
+    pauseAudio:(state)=>{
+      state.isPlaying=false
+    },
     setTheme(state, action) {
       state.theme = action.payload;
     },
@@ -71,5 +80,5 @@ const counterSlice = createSlice({
   },
 });
 
-export const { toggleTheme ,setTheme } = counterSlice.actions;
-export default counterSlice.reducer;
+export const { toggleTheme ,setTheme,playAudio,pauseAudio } = musicSlice.actions;
+export default musicSlice.reducer;

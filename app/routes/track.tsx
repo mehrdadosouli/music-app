@@ -32,7 +32,7 @@ export default function Track() {
   if (trackError) return <p>خطا: {trackError}</p>;
   return (<>
     <div className="flex flex-col">
-      <PlayerControll track={track} />
+      {/* <PlayerControll track={track} /> */}
         {track ? <DetailTrack track={track} /> : <p>داده موجود نیست</p>}
         <div></div>
     </div>  
