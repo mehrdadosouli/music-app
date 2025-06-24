@@ -3,7 +3,6 @@ import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router";
 import DetailTrack from "~/components/DetailTrack";
-import PlayerControll from "~/components/PlayerControll/PlayerControll";
 import { fetchTrackById } from "~/redux/features/music/musicSlice";
 
 
@@ -15,7 +14,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Track() {
-  const {trackError,trackLoading,track}= useSelector(state => state.songs)
+  const {trackError,trackLoading,track,isPlaying}= useSelector(state => state.songs)
   const { trackId } = useParams();
   const dispatch=useDispatch()
 
@@ -32,7 +31,6 @@ export default function Track() {
   if (trackError) return <p>خطا: {trackError}</p>;
   return (<>
     <div className="flex flex-col">
-      {/* <PlayerControll track={track} /> */}
         {track ? <DetailTrack track={track} /> : <p>داده موجود نیست</p>}
         <div></div>
     </div>  

@@ -1,33 +1,33 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { formatDuration } from "~/utils/formatDuration";
 import ListMusicOfAlbum from "./ListMusicOfAlbum";
 import ButtonMusic from "~/utils/ButtonMusic";
+import { useSelector } from "react-redux";
+import PlayerControll from "./PlayerControll/PlayerControll";
 
 function DetailTrack({ track }) {
-
+    const { isPlaying } = useSelector((state) => state.songs);
+    const [isPlayerMounted, setIsPlayerMounted] = useState(false)
+    const [isPlayerVisible, setIsPlayeVisible] = useState(false)
     const words = track?.title?.split(" ") || [];
     const lastIndex = words.length > 0 ? words[words.length - 1] : "";
     const firstIndex = words.slice(0, words.length - 1).join(" ");
-    // const location=useLocation()
-    // const [state,setState]=useState(document.documentElement.getAttribute("data-theme"))
     const durations = track?.tracks?.map(item => item.duration) || [];
     const sumDurationMusics = durations.reduce((a, b) => a + b, 0);
-    // useEffect(() => {
-    //     const themeAttr = document.documentElement.getAttribute("data-theme");
-    //     setState(themeAttr);  // به روز رسانی state بر اساس تم
 
-    //     // اگر در مسیر آلبوم و تم لایت هستیم، پس‌زمینه گرادیانت اعمال می‌شود
-    //     if (location.pathname.includes("album") && themeAttr === "light") {
-    //         document.documentElement.style.setProperty(
-    //             '--bgbody', 
-    //             'linear-gradient(to right, #0E9EEF, #053754)'
-    //         );
-    //     } else {
-    //         document.documentElement.style.setProperty('--bgbody', 'white');
-    //     }
-    // }, [location.pathname, state]);
-    
-
+    useEffect(() => {
+        if (isPlaying) {
+            setIsPlayerMounted(true)
+            setTimeout(() => {
+                setIsPlayeVisible(true)
+            }, 10);
+        } else {
+            setIsPlayeVisible(false)
+            setTimeout(() => {
+                setIsPlayerMounted(false)
+            }, 500);
+        }
+    }, [isPlaying])
     return (
         <div className="flex flex-col">
             <div className="flex gap-10 mt-36 ">
@@ -48,7 +48,8 @@ function DetailTrack({ track }) {
                     </div>
                 </div>
             </div>
-            <ListMusicOfAlbum tracks={track?.tracks} />
+            {isPlayerMounted && <PlayerControll track={track} open={isPlayerVisible} />}
+            {!isPlayerMounted && <ListMusicOfAlbum tracks={track?.tracks} />}
         </div>
     );
 }

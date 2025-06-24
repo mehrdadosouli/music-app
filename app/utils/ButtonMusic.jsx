@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PlayIconmusic from "~/components/icons/PlayIconmusic";
-import usePauseAllAudio from "~/components/useStopAllAdudio";
 import { pauseAudio, playAudio } from "~/redux/features/music/musicSlice";
 
 export default function ButtonMusic({ track, bg = false }) {
@@ -12,7 +11,6 @@ export default function ButtonMusic({ track, bg = false }) {
     const handlePlay = () => {
         if (!audioRef.current) return
         if (isPlaying && isCurrent) {
-            
             audioRef.current.pause()
             dispatch(pauseAudio())
         } else {
@@ -21,7 +19,7 @@ export default function ButtonMusic({ track, bg = false }) {
         }
     };
     useEffect(()=>{
-        if(audioRef.current){
+        if(audioRef.current){            
             if(isPlaying && isCurrent){
                 audioRef.current.play()
             }else{
