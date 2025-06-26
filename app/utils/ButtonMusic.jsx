@@ -8,15 +8,25 @@ export default function ButtonMusic({ track, bg = false }) {
     const {isPlaying,currentAudio}=useSelector((state)=>state.songs); 
     const isCurrent=currentAudio === track;
     const audioRef = useRef(null);
+    // const handlePlay = () => {
+    //     if (!audioRef.current) return
+    //     if (isPlaying && isCurrent) {
+    //         audioRef.current.pause()
+    //         dispatch(pauseAudio())
+    //     } else {
+    //         audioRef.current.play()
+    //         dispatch(playAudio(track))
+    //     }
+    // };
     const handlePlay = () => {
-        if (!audioRef.current) return
-        if (isPlaying && isCurrent) {
-            audioRef.current.pause()
-            dispatch(pauseAudio())
-        } else {
-            audioRef.current.play()
-            dispatch(playAudio(track))
-        }
+    //     if (!audioRef.current) return
+    //     if (isPlaying && isCurrent) {
+    //         audioRef.current.pause()
+    //         dispatch(pauseAudio())
+    //     } else {
+    //         audioRef.current.play()
+    //         dispatch(playAudio(track))
+    //     }
     };
     useEffect(()=>{
         if(audioRef.current){            

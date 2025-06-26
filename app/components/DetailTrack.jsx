@@ -2,30 +2,30 @@ import { memo, useEffect, useState } from "react";
 import { formatDuration } from "~/utils/formatDuration";
 import ListMusicOfAlbum from "./ListMusicOfAlbum";
 import ButtonMusic from "~/utils/ButtonMusic";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PlayerControll from "./PlayerControll/PlayerControll";
+import { actionBtn } from "~/redux/features/music/musicSlice";
 
 function DetailTrack({ track }) {
     const { isPlaying } = useSelector((state) => state.songs);
-    const [isPlayerMounted, setIsPlayerMounted] = useState(false)
+    const dispatch = useDispatch()
     const [isPlayerVisible, setIsPlayeVisible] = useState(false)
     const words = track?.title?.split(" ") || [];
     const lastIndex = words.length > 0 ? words[words.length - 1] : "";
     const firstIndex = words.slice(0, words.length - 1).join(" ");
     const durations = track?.tracks?.map(item => item.duration) || [];
     const sumDurationMusics = durations.reduce((a, b) => a + b, 0);
-
     useEffect(() => {
         if (isPlaying) {
-            setIsPlayerMounted(true)
+            setIsPlayeVisible(true)
             setTimeout(() => {
-                setIsPlayeVisible(true)
+                dispatch(actionBtn(false))
             }, 10);
-        } else {
-            setIsPlayeVisible(false)
+        }
+        if (!isPlayerVisible) {
             setTimeout(() => {
-                setIsPlayerMounted(false)
-            }, 500);
+                dispatch(actionBtn(true))
+            }, 10);
         }
     }, [isPlaying])
     return (
@@ -48,8 +48,8 @@ function DetailTrack({ track }) {
                     </div>
                 </div>
             </div>
-            {isPlayerMounted && <PlayerControll track={track} open={isPlayerVisible} />}
-            {!isPlayerMounted && <ListMusicOfAlbum tracks={track?.tracks} />}
+            {isPlayerVisible && <PlayerControll track={track} open={isPlayerVisible} setIsPlayeVisible={setIsPlayeVisible} />}
+            {!isPlayerVisible && <ListMusicOfAlbum tracks={track?.tracks} />}
         </div>
     );
 }

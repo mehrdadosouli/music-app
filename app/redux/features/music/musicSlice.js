@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isPlaying:false,
+  volume: 0.5,
   currentAudio:null,
-  value: 0,
   topSongs: [],
   allSong: [],
   myFavorite: [],
@@ -13,6 +13,7 @@ const initialState = {
   trackLoading: false,
   trackError: "",
   theme: "dark",
+  btn:false,
 };
 export const fetchTopSongs = createAsyncThunk(
   "songs/fetchTopSongs",
@@ -43,6 +44,13 @@ const musicSlice = createSlice({
   name: "music",
   initialState,
   reducers: {
+    actionBtn:(state,action)=>{
+      if(action.payload){
+      state.btn=true
+    }else{
+      state.btn=false
+    }
+    },
     playAudio:(state,action)=>{
       state.currentAudio=action.payload;
       state.isPlaying=true;
@@ -80,5 +88,5 @@ const musicSlice = createSlice({
   },
 });
 
-export const { toggleTheme ,setTheme,playAudio,pauseAudio } = musicSlice.actions;
+export const { toggleTheme ,setTheme,playAudio,pauseAudio,actionBtn } = musicSlice.actions;
 export default musicSlice.reducer;
