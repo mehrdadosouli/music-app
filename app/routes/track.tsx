@@ -1,5 +1,5 @@
 import type { Route } from "./+types/home";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router";
 import DetailTrack from "~/components/DetailTrack";
@@ -14,7 +14,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Track() {
-  const {trackError,trackLoading,track,isPlaying}= useSelector(state => state.songs)
+  const {trackError,trackLoading,track}= useSelector(state => state.songs)
   const { trackId } = useParams();
   const dispatch=useDispatch()
 

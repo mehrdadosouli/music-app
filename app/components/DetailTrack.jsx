@@ -4,12 +4,11 @@ import ListMusicOfAlbum from "./ListMusicOfAlbum";
 import ButtonMusic from "~/utils/ButtonMusic";
 import { useDispatch, useSelector } from "react-redux";
 import PlayerControll from "./PlayerControll/PlayerControll";
-import { actionBtn } from "~/redux/features/music/musicSlice";
+import { actionBtn, setPlayerVisibility } from "~/redux/features/music/musicSlice";
 
 function DetailTrack({ track }) {
-    const { isPlaying } = useSelector((state) => state.songs);
+    const { isPlaying,isPlayerVisible } = useSelector((state) => state.songs);
     const dispatch = useDispatch()
-    const [isPlayerVisible, setIsPlayeVisible] = useState(false)
     const words = track?.title?.split(" ") || [];
     const lastIndex = words.length > 0 ? words[words.length - 1] : "";
     const firstIndex = words.slice(0, words.length - 1).join(" ");
@@ -17,7 +16,7 @@ function DetailTrack({ track }) {
     const sumDurationMusics = durations.reduce((a, b) => a + b, 0);
     useEffect(() => {
         if (isPlaying) {
-            setIsPlayeVisible(true)
+            setPlayerVisibility(true)
             setTimeout(() => {
                 dispatch(actionBtn(false))
             }, 10);
@@ -43,13 +42,13 @@ function DetailTrack({ track }) {
                                 <span className="text-primarytxt">{track?.tracks?.length || 0} اهنگ</span>
                                 <span className="text-primarytxt">{formatDuration(sumDurationMusics)} دقیقه</span>
                             </div>
-                            <ButtonMusic track={track.tracks[0].id} />
+                            <ButtonMusic track={track.tracks[0]} />
                         </div>
                     </div>
                 </div>
             </div>
-            {isPlayerVisible && <PlayerControll track={track} open={isPlayerVisible} setIsPlayeVisible={setIsPlayeVisible} />}
-            {!isPlayerVisible && <ListMusicOfAlbum tracks={track?.tracks} />}
+            {isPlayerVisible ? <PlayerControll track={track} open={isPlayerVisible} />
+            : <ListMusicOfAlbum tracks={track?.tracks} />}
         </div>
     );
 }

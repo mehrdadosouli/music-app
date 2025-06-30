@@ -1,50 +1,36 @@
-import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PlayIconmusic from "~/components/icons/PlayIconmusic";
 import { pauseAudio, playAudio } from "~/redux/features/music/musicSlice";
 
 export default function ButtonMusic({ track, bg = false }) {
-    const dispatch=useDispatch();
-    const {isPlaying,currentAudio}=useSelector((state)=>state.songs); 
-    const isCurrent=currentAudio === track;
-    const audioRef = useRef(null);
-    // const handlePlay = () => {
-    //     if (!audioRef.current) return
-    //     if (isPlaying && isCurrent) {
-    //         audioRef.current.pause()
-    //         dispatch(pauseAudio())
-    //     } else {
-    //         audioRef.current.play()
-    //         dispatch(playAudio(track))
-    //     }
-    // };
-    const handlePlay = () => {
-    //     if (!audioRef.current) return
-    //     if (isPlaying && isCurrent) {
-    //         audioRef.current.pause()
-    //         dispatch(pauseAudio())
-    //     } else {
-    //         audioRef.current.play()
-    //         dispatch(playAudio(track))
-    //     }
-    };
-    useEffect(()=>{
-        if(audioRef.current){            
-            if(isPlaying && isCurrent){
-                audioRef.current.play()
-            }else{
-                audioRef.current.pause()
-            }
-        }
-    },[isPlaying,isCurrent])
+    const dispatch = useDispatch();
+    const { isPlaying, currentAudio } = useSelector((state) => state.songs);
+
+    const isCurrentTrack = currentAudio?.id === track.id;
+
+    const handleTogglePlay = () => {
+    // اگر این آهنگ در حال پخش است، متوقفش کن
+    if (isPlaying && isCurrentTrack) {
+      dispatch(pauseAudio());
+    } else {
+      // در غیر این صورت، این آهنگ را پخش کن
+      dispatch(playAudio(track));
+    }
+  };
+
+
+    
+
     return (
-        <>
-            <button onClick={handlePlay} className={`${bg ? "size-14 bg-bgcard" : "size-14 bg-primarytxt"}  flex gap-2 justify-center items-center rounded-full`}>
-                {
-                 isCurrent  && isPlaying ? <img src="/photos/audio-wave.gif" className="rounded-lg" /> : <PlayIconmusic />
-                }
-            </button>
-            <audio ref={audioRef} src={`/music/${track}.mp3`} />
-        </>
-    )
+        <button 
+            onClick={handleTogglePlay} 
+            className={`${bg ? "size-14 bg-bgcard" : "size-14 bg-primarytxt"} flex justify-center items-center rounded-full transition-transform duration-200 hover:scale-110`}
+        >
+            {isCurrentTrack && isPlaying ? (
+                <img src="/photos/audio-wave.gif" className="rounded-lg size-8" alt="Playing" />
+            ) : (
+                <PlayIconmusic />
+            )}
+        </button>
+    );
 }

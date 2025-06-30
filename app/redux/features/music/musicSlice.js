@@ -1,9 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isPlaying:false,
+  currentTime: 0, // زمان فعلی پخش
+  duration: 0, // مدت زمان کل آهنگ
   volume: 0.5,
-  currentAudio:null,
+  song:[],
+  currentAudio: null,
+  isPlaying: false,
+  isPlayerVisible:false,
   topSongs: [],
   allSong: [],
   myFavorite: [],
@@ -13,7 +17,7 @@ const initialState = {
   trackLoading: false,
   trackError: "",
   theme: "dark",
-  btn:false,
+  btn: false,
 };
 export const fetchTopSongs = createAsyncThunk(
   "songs/fetchTopSongs",
@@ -44,25 +48,35 @@ const musicSlice = createSlice({
   name: "music",
   initialState,
   reducers: {
-    actionBtn:(state,action)=>{
-      if(action.payload){
-      state.btn=true
-    }else{
-      state.btn=false
-    }
+    actionBtn: (state, action) => {
+      if (action.payload) {
+        state.btn = true;
+      } else {
+        state.btn = false;
+      }
     },
-    playAudio:(state,action)=>{
-      state.currentAudio=action.payload;
-      state.isPlaying=true;
+    playAudio: (state, action) => {
+      state.currentAudio = action.payload;
+      state.isPlaying = true;
+      state.isPlayerVisible=true;
     },
-    pauseAudio:(state)=>{
-      state.isPlaying=false
+    pauseAudio: (state) => {
+      state.isPlaying = false;
+    },
+    setPlayerVisibility:(state,action)=>{
+      state.isPlayerVisible=action.payload
+    },
+    setCurrentMusic: (state, action) => {
+      state.currentAudio = action.payload;
+    },
+    setDuration: (state, action) => {
+      state.duration = action.payload;
     },
     setTheme(state, action) {
       state.theme = action.payload;
     },
     toggleTheme(state) {
-     state.theme = state.theme === "light" ? "dark" : "light";
+      state.theme = state.theme === "light" ? "dark" : "light";
     },
   },
   extraReducers: (builder) => {
@@ -88,5 +102,14 @@ const musicSlice = createSlice({
   },
 });
 
-export const { toggleTheme ,setTheme,playAudio,pauseAudio,actionBtn } = musicSlice.actions;
+export const {
+  toggleTheme,
+  setTheme,
+  playAudio,
+  pauseAudio,
+  actionBtn,
+  setCurrentMusic,
+  setDuration,
+  setPlayerVisibility
+} = musicSlice.actions;
 export default musicSlice.reducer;

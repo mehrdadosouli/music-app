@@ -1,16 +1,15 @@
 import { useDispatch } from "react-redux";
 import CloseBtn from "../icons/CloseIcon";
 import MinusIcon from "../icons/MinusIcon";
-import { actionBtn, pauseAudio } from "~/redux/features/music/musicSlice";
+import { actionBtn, pauseAudio, setPlayerVisibility } from "~/redux/features/music/musicSlice";
 
-
-export default function PlayerControllNavbar({ track, setIsPlayeVisible }) {
+export default function PlayerControllNavbar({ track }) {
   const dispatch = useDispatch()
   const buttonHandler = () => {
     dispatch(actionBtn(true))
     dispatch(pauseAudio())
     setTimeout(() => {
-      setIsPlayeVisible(false)
+      dispatch(setPlayerVisibility(false))
     }, 10);
   }
   return (
