@@ -1,13 +1,13 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
   currentTime: 0, // زمان فعلی پخش
   duration: 0, // مدت زمان کل آهنگ
   volume: 0.5,
-  song:[],
+  song: [],
   currentAudio: null,
   isPlaying: false,
-  isPlayerVisible:false,
+  isPlayerVisible: false,
   topSongs: [],
   allSong: [],
   myFavorite: [],
@@ -58,19 +58,41 @@ const musicSlice = createSlice({
     playAudio: (state, action) => {
       state.currentAudio = action.payload;
       state.isPlaying = true;
-      state.isPlayerVisible=true;
+      state.isPlayerVisible = true;
     },
     pauseAudio: (state) => {
       state.isPlaying = false;
     },
-    setPlayerVisibility:(state,action)=>{
-      state.isPlayerVisible=action.payload
+    setPlayerVisibility: (state, action) => {
+      state.isPlayerVisible = action.payload;
     },
     setCurrentMusic: (state, action) => {
       state.currentAudio = action.payload;
     },
     setDuration: (state, action) => {
       state.duration = action.payload;
+    },
+    nextMusicBtn: (state, action) => {
+      const alltracks = state.track;
+      const findindexTrack = alltracks.tracks.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (findindexTrack == -1) {
+        return;
+      }
+      const nextIndex = (findindexTrack + 1)  % alltracks.tracks.length;
+      state.currentAudio = alltracks.tracks[nextIndex];
+    },
+    prevMusicBtn: (state, action) => {
+      const alltracks = state.track;
+      const findindexTrack = alltracks.tracks.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (findindexTrack == -1) {
+        return;
+      }
+      const prevIndex = (findindexTrack - 1 + alltracks.tracks.length) % alltracks.tracks.length;
+      state.currentAudio = alltracks.tracks[prevIndex];
     },
     setTheme(state, action) {
       state.theme = action.payload;
@@ -110,6 +132,8 @@ export const {
   actionBtn,
   setCurrentMusic,
   setDuration,
-  setPlayerVisibility
+  setPlayerVisibility,
+  nextMusicBtn,
+  prevMusicBtn,
 } = musicSlice.actions;
 export default musicSlice.reducer;
