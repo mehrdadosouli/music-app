@@ -120,7 +120,7 @@ const musicSlice = createSlice({
         state.track = action.payload;
         state.trackLoading = false;
         state.trackError = "";
-      });
+      }); 
   },
 });
 
