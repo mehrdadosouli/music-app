@@ -119,7 +119,7 @@ const musicSlice = createSlice({
       .addCase(fetchTrackById.fulfilled, (state, action) => {
         state.track = action.payload;
         state.trackLoading = false;
-        state.trackError = ""; 
+        state.trackError = "";  
       }); 
   },
 });
