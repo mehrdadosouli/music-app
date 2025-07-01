@@ -6,62 +6,91 @@ import { formatDuration } from "~/utils/formatDuration";
 export default function MusicControll() {
     const dispatch = useDispatch();
     const audioRef = useRef(null);
-    const { isPlaying, currentAudio, track } = useSelector((state) => state.songs);
-    const [currentTime, setCurrentTime] = useState(null)
+    const timelineRef = useRef(null);
 
+    // State ها را از Redux بگیرید
+    const { isPlaying, currentAudio } = useSelector((state) => state.songs);
+
+    // State های محلی برای زمان حال و کل زمان آهنگ
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
+
+    // 1. useEffect برای مدیریت رویدادهای مدیا (فقط یکبار اجرا می‌شود)
     useEffect(() => {
-        if (currentAudio) {
-            audioRef.current.src = `/music/${currentAudio.id}.mp3`; // آدرس آهنگ 
+        const audio = audioRef.current;
 
-            // وقتی آهنگ جدیدی انتخاب می‌شود، بلافاصله آن را پخش می‌کنیم.
-            audioRef.current.play().catch(error => {
-                console.error("Autoplay was prevented:", error);
-                dispatch(pauseAudio());
-            });
-        }
-    }, [currentAudio, dispatch]); // <-- فقط به currentAudio وابسته است
+        const handleTimeUpdate = () => {
+            setCurrentTime(audio.currentTime);
+        };
 
-    useEffect(() => {
-        if (isPlaying) {
-            audioRef.current.play().catch(error => {
-                // این خطا ممکن است در بارگذاری اولیه هم رخ دهد
-                console.error("Play failed:", error);
-                dispatch(pauseAudio());
-            });
-        } else {
-            audioRef.current.pause();
-        }
-    }, [isPlaying, dispatch]); // <-- فقط به isPlaying وابسته است
+        const handleLoadedMetadata = () => {
+            setDuration(audio.duration);
+        };
 
-    useEffect(() => {
-        const audio = audioRef.current
-        const updateTime = () => {
-            setCurrentTime(audioRef.current.currentTime)
-        }
-        audio.addEventListener("timeupdate", updateTime)
+        // اضافه کردن Event Listener ها
+        audio.addEventListener("timeupdate", handleTimeUpdate);
+        audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+
+        // تابع پاکسازی برای حذف Listener ها هنگام unmount شدن کامپوننت
         return () => {
-            audio.removeEventListener("timeupdate", updateTime)
-        }
-    }, [])
+            audio.removeEventListener("timeupdate", handleTimeUpdate);
+            audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+        };
+    }, []); // <-- وابستگی خالی یعنی فقط یکبار در مانت اجرا شود
 
-    // تابع برای دکمه اصلی Play/Pause
+    // 2. useEffect برای تغییر آهنگ
+    useEffect(() => {
+        if (currentAudio && audioRef.current) {
+            audioRef.current.src = `/music/${currentAudio.id}.mp3`;
+            // مرورگر را مجبور به بارگذاری آهنگ جدید می‌کنیم
+            audioRef.current.load();
+            if (isPlaying) {
+                 // اگر در حالت پخش بودیم، آهنگ جدید را پلی کن
+                audioRef.current.play().catch(error => console.error("Error playing new track:", error));
+            }
+        }
+    }, [currentAudio]); // <-- فقط به تغییر آهنگ وابسته است
+
+    // 3. useEffect برای کنترل Play/Pause
+    useEffect(() => {
+        if (audioRef.current) {
+            if (isPlaying) {
+                audioRef.current.play().catch(error => {
+                    console.error("Play failed:", error);
+                    dispatch(pauseAudio());
+                });
+            } else {
+                audioRef.current.pause();
+            }
+        }
+    }, [isPlaying]); // <-- فقط به وضعیت پخش وابسته است
+
+
+    // --- توابع Handler ---
     const handlePlayPause = () => {
         if (isPlaying) {
             dispatch(pauseAudio());
         } else {
-            // فقط در صورتی که آهنگی برای پخش وجود دارد
             if (currentAudio) {
                 dispatch(playAudio(currentAudio));
             }
         }
-    }
-    const nextMusicHandler = () => {
-        dispatch(nextMusicBtn(currentAudio))
-    }
-    const prevMusicHandler = () => {
-        dispatch(prevMusicBtn(currentAudio))
-    }
+    };
+    
+    const nextMusicHandler = () => dispatch(nextMusicBtn(currentAudio));
+    const prevMusicHandler = () => dispatch(prevMusicBtn(currentAudio));
 
+    const handleSeek = (e) => {
+        if (duration > 0 && timelineRef.current) {
+            const timelineWidth = timelineRef.current.clientWidth;
+            const clickPositionX = e.nativeEvent.offsetX;
+            const newTime = (clickPositionX / timelineWidth) * duration;
+            audioRef.current.currentTime = newTime;
+            setCurrentTime(newTime);
+        }
+    };
+
+    const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
     return (
         <div className="flex items-start">
@@ -72,8 +101,7 @@ export default function MusicControll() {
                     <div className="min-w-0 flex-auto space-y-1 font-semibold">
                         <p className="text-cyan-500 transition-all duration-500 text-sm leading-6">
                             <abbr title="Episode">Ep.</abbr> 128
-                        </p>
-                        <h2 className="text-slate-500 transition-all duration-500 text-sm leading-6 truncate">
+                        </p><h2 className="text-slate-500 transition-all duration-500 text-sm leading-6 truncate">
                             Scaling CSS at Heroku with Utility ClassNamees
                         </h2>
                         <p className="text-slate-900 transition-all duration-500 text-lg">
@@ -84,23 +112,20 @@ export default function MusicControll() {
             </div>
             <div className="w-4/6 relative z-10 ">
                 <div className="border-slate-100 transition-all duration-500 border-b rounded-t-xl p-4 pb-6 ">
-                    {/* time range  */}
-                    <div className="space-y-2">
-                        <div className="relative">
-                            <div className="bg-slate-100 transition-all duration-500 rounded-full overflow-hidden">
-                                <div className="bg-cyan-500 transition-all duration-500 w-1/2 h-2" role="progressbar"
-                                    aria-label="music progress" aria-valuenow="1456" aria-valuemin="0" aria-valuemax="4550"></div>
+                   <div className="space-y-2">
+                        {/* Timeline */}
+                        <div dir="ltr" ref={timelineRef} onClick={handleSeek} className="relative cursor-pointer">
+                            <div className="bg-slate-100 rounded-full overflow-hidden h-2">
+                                <div className="bg-cyan-500 h-2" style={{ width: `${progressPercentage}%` }}></div>
                             </div>
-                            <div
-                                className="ring-cyan-500 transition-all duration-500 ring-2 absolute left-1/2 top-1/2 w-4 h-4 -mt-2 -ml-2 flex items-center justify-center bg-white rounded-full shadow">
-                                <div
-                                    className="w-1.5 h-1.5 bg-cyan-500 transition-all duration-500 rounded-full ring-1 ring-inset ring-slate-900/5">
-                                </div>
+                            <div className="ring-cyan-500 ring-2 absolute top-1/2 w-4 h-4 flex items-center justify-center bg-white rounded-full shadow" style={{ left: `${progressPercentage}%`, transform: 'translateX(-50%) translateY(-50%)',}} >
+                                <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full ring-1 ring-inset ring-slate-900/5"></div>
                             </div>
                         </div>
-                        <div className="flex justify-between text-sm leading-6 font-medium tabular-nums">
-                            <div className="text-cyan-500 transition-all duration-500">{currentAudio.duration ? formatDuration(currentTime) : "0:00"}</div>
-                            <div className="text-slate-500 transition-all duration-500">{formatDuration(currentAudio.duration)}</div>
+                        {/* Time Display */}
+                        <div className="flex justify-between text-sm font-medium tabular-nums">
+                            <div className="text-slate-500">{formatDuration(duration)}</div>
+                            <div className="text-cyan-500">{formatDuration(currentTime)}</div>
                         </div>
                     </div>
                 </div>
@@ -111,10 +136,10 @@ export default function MusicControll() {
                                 <path d="M7 6.931C7 5.865 7.853 5 8.905 5h6.19C16.147 5 17 5.865 17 6.931V19l-5-4-5 4V6.931Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                             </svg>
                         </button>
-                        <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Next" onClick={nextMusicHandler}>
+                        <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Next" onClick={prevMusicHandler}>
                             <svg width="24" height="24" fill="none">
-                                <path d="M14 12 6 6v12l8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                <path d="M18 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                <path d="m10 12 8-6v12l-8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                <path d="M6 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                             </svg>
                         </button>
                         <button type="button" aria-label="Rewind 10 seconds">
@@ -128,9 +153,8 @@ export default function MusicControll() {
                         type="button"
                         className="bg-white text-slate-900 transition-all duration-500 flex-none -my-2 mx-auto w-20 h-20 rounded-full ring-1 ring-slate-900/5 shadow-md flex items-center justify-center"
                         aria-label={isPlaying ? "Pause" : "Play"}
-                        onClick={handlePlayPause} // Add the click handler here
+                        onClick={handlePlayPause}
                     >
-                        {/* SVG changes based on isPlaying state */}
                         {isPlaying ? (
                             <svg width="30" height="32" fill="currentColor">
                                 <rect x="6" y="4" width="4" height="24" rx="2"></rect>
@@ -149,10 +173,10 @@ export default function MusicControll() {
                                 <path d="M19 5v3.111c0 .491-.398.889-.889.889H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                             </svg>
                         </button>
-                        <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Previous" onClick={prevMusicHandler}>
+                        <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Previous" onClick={nextMusicHandler}>
                             <svg width="24" height="24" fill="none">
-                                <path d="m10 12 8-6v12l-8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                <path d="M6 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                <path d="M14 12 6 6v12l8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                <path d="M18 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                             </svg>
                         </button>
                         <button type="button" className="rounded-lg text-xs leading-6 font-semibold px-2 ring-2 ring-inset ring-white text-white transition-all duration-500 ">
@@ -166,5 +190,5 @@ export default function MusicControll() {
             </div> */}
             <audio ref={audioRef} />
         </div>
-    )
+    );
 }
