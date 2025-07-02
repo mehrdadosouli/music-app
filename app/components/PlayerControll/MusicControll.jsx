@@ -7,13 +7,13 @@ export default function MusicControll() {
     const dispatch = useDispatch();
     const audioRef = useRef(null);
     const timelineRef = useRef(null);
-
     // State ها را از Redux بگیرید
     const { isPlaying, currentAudio } = useSelector((state) => state.songs);
 
     // State های محلی برای زمان حال و کل زمان آهنگ
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
+    const [volume, setVolume] = useState(1);
 
     // 1. useEffect برای مدیریت رویدادهای مدیا (فقط یکبار اجرا می‌شود)
     useEffect(() => {
@@ -45,7 +45,7 @@ export default function MusicControll() {
             // مرورگر را مجبور به بارگذاری آهنگ جدید می‌کنیم
             audioRef.current.load();
             if (isPlaying) {
-                 // اگر در حالت پخش بودیم، آهنگ جدید را پلی کن
+                // اگر در حالت پخش بودیم، آهنگ جدید را پلی کن
                 audioRef.current.play().catch(error => console.error("Error playing new track:", error));
             }
         }
@@ -76,7 +76,7 @@ export default function MusicControll() {
             }
         }
     };
-    
+
     const nextMusicHandler = () => dispatch(nextMusicBtn(currentAudio));
     const prevMusicHandler = () => dispatch(prevMusicBtn(currentAudio));
 
@@ -90,35 +90,45 @@ export default function MusicControll() {
         }
     };
 
-    const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
+    const changeVolumeHandler =(e)=>{
+        setVolume(e.target.value)
+    }
+    useEffect(()=>{
+        if(audioRef.current){
+            audioRef.current.volume=volume
+        }
+    },[volume])
 
+    const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
+    console.log(currentAudio);
+    
     return (
-        <div className="flex items-start">
+        <div className="flex items-start ">
             {/* info music */}
             <div className="w-1/6">
-                <div className="flex items-center space-x-4">
-                    <img src="https://tailwindcss.com/_next/static/media/full-stack-radio.afb14e4e.png" loading="lazy" decoding="async" alt="" className="flex-none rounded-lg bg-slate-100" width="88" height="88" />
+                <div className="flex items-center space-x-4 gap-3">
+                    <img src={currentAudio.cover_url} loading="lazy" decoding="async" alt="" className="flex-none rounded-lg bg-slate-100 object-cover" width="100" height="88" />
                     <div className="min-w-0 flex-auto space-y-1 font-semibold">
                         <p className="text-cyan-500 transition-all duration-500 text-sm leading-6">
-                            <abbr title="Episode">Ep.</abbr> 128
-                        </p><h2 className="text-slate-500 transition-all duration-500 text-sm leading-6 truncate">
-                            Scaling CSS at Heroku with Utility ClassNamees
+                            <abbr title="Episode">Ep.</abbr> {currentAudio.albumId}
+                        </p><h2 className="text-slate-200 transition-all duration-500 text-sm leading-6 truncate">
+                            {currentAudio.albumTitle} 
                         </h2>
-                        <p className="text-slate-900 transition-all duration-500 text-lg">
-                            Full Stack Radio
+                        <p className="text-slate-200 transition-all duration-500 text-lg">
+                            {currentAudio.artistName}
                         </p>
                     </div>
                 </div>
             </div>
             <div className="w-4/6 relative z-10 ">
                 <div className="border-slate-100 transition-all duration-500 border-b rounded-t-xl p-4 pb-6 ">
-                   <div className="space-y-2">
+                    <div className="space-y-2">
                         {/* Timeline */}
                         <div dir="ltr" ref={timelineRef} onClick={handleSeek} className="relative cursor-pointer">
                             <div className="bg-slate-100 rounded-full overflow-hidden h-2">
                                 <div className="bg-cyan-500 h-2" style={{ width: `${progressPercentage}%` }}></div>
                             </div>
-                            <div className="ring-cyan-500 ring-2 absolute top-1/2 w-4 h-4 flex items-center justify-center bg-white rounded-full shadow" style={{ left: `${progressPercentage}%`, transform: 'translateX(-50%) translateY(-50%)',}} >
+                            <div className="ring-cyan-500 ring-2 absolute top-1/2 w-4 h-4 flex items-center justify-center bg-white rounded-full shadow" style={{ left: `${progressPercentage}%`, transform: 'translateX(-50%) translateY(-50%)', }} >
                                 <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full ring-1 ring-inset ring-slate-900/5"></div>
                             </div>
                         </div>
@@ -185,9 +195,10 @@ export default function MusicControll() {
                     </div>
                 </div>
             </div>
-            {/* <div className="w-1/6 flex justify-center items-center h-36" ref={inputRef}>
-                <input type="range" id="volume" min="0" max="1" step="0.01" />
-            </div> */}
+            <div className="w-1/6 flex justify-center items-center h-36">
+                <input type="range" id="volume" min="0" max="1" step="0.01" value={volume}  onChange={changeVolumeHandler}/>
+                <span className="text-white px-2">{Math.round(volume * 100)}</span>
+            </div>
             <audio ref={audioRef} />
         </div>
     );
