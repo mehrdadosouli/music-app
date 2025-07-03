@@ -17,13 +17,13 @@ export default function MainLayout() {
   useEffect(() => {
     window.addEventListener('resize', () => {
       setWidth(window.innerWidth);
-      // setToggle(false)
+      setToggle(false)
     })
   }, [width])
 
   useEffect(() => {
     setWidth(window.innerWidth);
-    // setToggle(false)
+    setToggle(false)
   }, [])
 
   const MenuHandler = () => {

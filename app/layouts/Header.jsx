@@ -35,14 +35,14 @@ function Header() {
     dispatch(toggleTheme());
   };
   return (
-    <div className={`flex justify-between items-center fixed top-10 p-2 rounded-full overflow-hidden ${scrollY && 'backdrop-blur-xl'}`}>
-      <div className="flex gap-5">
+    <div className={`w-[75%] border-yellow-400 flex justify-between items-center fixed lg:top-10 top-5 p-2 rounded-full ${scrollY && 'lg:backdrop-blur-xl'}`}>
+      <div className="lg:flex hidden gap-5">
         <Link className="w-40 h-8 rounded-sm flex justify-center items-center text-white bg-primary hover:text-primary hover:bg-white border border-primary transition-all" to="/signup">Sign Up</Link>
         <Link className="w-40 h-8 rounded-sm flex justify-center items-center text-primary border border-primary hover:text-white hover:bg-primary transition-all" to="/login">Login</Link>
       </div>
       <Menu />
       <SearchHeader />
-      <button className='text-primarytxt' onClick={clickHandler}>{theme == "light" ? 
+      <button className='text-primarytxt mr-10' onClick={clickHandler}>{theme == "light" ? 
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="size-6 mr-2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
       </svg>
