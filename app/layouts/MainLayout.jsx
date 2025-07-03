@@ -8,19 +8,40 @@ import AddPlaylistIcon from "~/components/icons/AddPlaylistIcon";
 import HeartIcon from "~/components/icons/HeartIcon";
 import SignIcon from "~/components/icons/SignIcon";
 import ListIcon from "~/components/icons/ListIcon";
+import { useEffect, useState } from "react";
 
 export default function MainLayout() {
+  const [width, setWidth] = useState(null)
+  const [toggle, setToggle] = useState(false)
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setWidth(window.innerWidth);
+      // setToggle(false)
+    })
+  }, [width])
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    // setToggle(false)
+  }, [])
+
+  const MenuHandler = () => {
+    setToggle(!toggle)
+  }
+
   return (
     <div className="w-full px-10 relative flex">
-      <div className="w-5/6">
+      <div className="lg:w-[80%] w-full">
         <Header />
         <main className="">
           <Outlet />
         </main>
         <Footer />
       </div>
-      <aside className="w-1/6 flex flex-col items-end gap-5 pt-10">
-        <h1 className="textstroke">OSOULI</h1>
+      {width < 1024 && <img src="/photos/hamburgermenu.png" style={{ position: "fixed", top: "1%", left: "10%", width: "25px", height: "25px", margin: "1rem -1rem", zIndex: "100000", cursor: "pointer" }} onClick={MenuHandler} />}
+      <aside className={`fixed top-10 flex flex-col gap-7 px-3 ${width < 1024 ? (toggle ? "left-0 w-[20rem]" : "-left-[15rem]") : "left-0 w-[20%]"} h-full z-50 bg-bgbody pe-5 transition-all duration-300 ease-in-out`}>
+        <h1 className="textstroke mx-auto mt-4 lg:text-4xl xl:text-5xl">OSOULI</h1>
         <span className="text-primary text-sm">منو</span>
         <Link to="/" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">
           <HomeIcon />
