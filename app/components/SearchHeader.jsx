@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useState } from 'react';
 import SearchIcon from './icons/SearchIcon'
 
@@ -18,11 +17,13 @@ function SearchHeader() {
     return (
         width > 1024 ?
             <div className='w-full border-green-300 border-solid relative'>
-                <input onChange={(e) => setSearch(e.target.value)} className='w-full border rounded-full p-3 bg-bgcard text-white' type="text" placeholder="اهنگ مورد نظرتان را سرچ کنید" />
-                <SearchIcon clickHandler={clickHandler} left='5' top="20" />
+                <input onChange={(e) => setSearch(e.target.value)} className='w-full border rounded-full p-3 pr-12 bg-bgcard text-white' type="text" placeholder="اهنگ مورد نظرتان را سرچ کنید" />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <SearchIcon clickHandler={clickHandler} />
+                </div>
             </div>
             :
-            <SearchIcon clickHandler={clickHandler} left="500" top="20" />
+            null
     )
 }
 
