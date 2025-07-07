@@ -17,6 +17,7 @@ module.exports = {
         bgcard: "var(--bgcard)",
         bgrow: "var(--bgrow)",
         primarytxt: "var(--primarytxt)",
+        footertxt:"var(--footertext)",
         bgplayercontroll: "var(--bgplayercontroll)",
         bgplayercontrollCard: "var(--bgplayercontrollCard)",
       },

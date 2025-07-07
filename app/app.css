@@ -12,6 +12,7 @@
   --primarytxt: black;
   --bgplayercontroll: #373542;
   --bgplayercontrollcard: #4e4d52;
+  --footertext: #6b7280; 
   /* --bgbody: linear-gradient(to right, #0E9EEF, #053754) !important;  */
 }
 html[data-theme="dark"] {
@@ -23,6 +24,7 @@ html[data-theme="dark"] {
   --primarytxt: white;
   --bgplayercontroll: #373542;
   --bgplayercontrollcard: #4e4d52;
+  --footertext: #d1d5db; 
 }
 
 html,

@@ -52,10 +52,10 @@ export default function MainLayout() {
   }
 
   return (
-    <div className="w-full px-10 relative flex">
-      <div className="lg:w-[80%] w-full">
+    <div className="w-full relative flex">
+      <div className="w-full">
         <Header />
-        <main className="">
+        <main className="lg:w-[80%] w-full min-h-full flex-1 px-10">
           <Outlet />
         </main>
         <Footer />
