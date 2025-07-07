@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 export default function CardTopSongs({ song }) {
     return (
-        <Link to={`/album/${song.albumId}`} className="flex flex-col bg-bgcard rounded-xl gap-3 overflow-hidden hover:shadow-lg z-20 transition-all duration-300 hover:scale-105">
+        <Link to={`/album/${song.albumId}`} className="flex flex-col bg-bgcard rounded-xl gap-3 overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 z-0">
             <div className=" w-full aspect-square">
                 <img 
                     src={`/backend/public/photos/${song.artistName}.jpg`} 

@@ -1,5 +1,6 @@
 import Header from "./Header";
 import Footer from "./Footer";
+import Menu from "../components/Menu";
 import { Link, Outlet } from "react-router";
 import HomeIcon from "~/components/icons/HomeIcon";
 import LibraryIcon from "~/components/icons/LibraryIcon";
@@ -59,6 +60,7 @@ export default function MainLayout() {
           <Outlet />
         </main>
         <Footer />
+        <Menu className="flex lg:hidden" />
       </div>
       {/* همبرگر آیکون فقط در موبایل */}
       {isLoaded && width < 1024 && <img src="/photos/hamburgermenu.png" style={{ position: "fixed", top: "1%", left: "10%", width: "25px", height: "25px", margin: "1rem -1rem", zIndex: "100000", cursor: "pointer" }} onClick={MenuHandler} />}

@@ -53,7 +53,7 @@ function Header() {
         <Link className="w-40 h-8 rounded-sm flex justify-center items-center text-white bg-primary hover:text-primary hover:bg-white border border-primary transition-all" to="/signup">Sign Up</Link>
         <Link className="w-40 h-8 rounded-sm flex justify-center items-center text-primary border border-primary hover:text-white hover:bg-primary transition-all" to="/login">Login</Link>
       </div>
-      <Menu />
+      <Menu className="hidden lg:flex" />
       <SearchHeader />
       <div className="flex items-center gap-3">
         {width <= 1024 && <SearchIcon clickHandler={searchClickHandler} />}
