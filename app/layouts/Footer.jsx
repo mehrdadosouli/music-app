@@ -11,7 +11,7 @@ function Footer() {
           </p>
         </div>
         {/* Links */}
-        <div className="flex flex-1 flex-col md:flex-row gap-8 md:gap-16 justify-between">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-40 justify-between">
           <div>
             <h4 className="font-bold border-b border-white/40 pb-1 mb-2 w-fit">ملودیز</h4>
             <ul className="text-sm space-y-2 text-footertxt">
