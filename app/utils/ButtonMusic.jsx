@@ -24,7 +24,7 @@ export default function ButtonMusic({ track, bg = false }) {
     return (
         <button 
             onClick={handleTogglePlay} 
-            className={`${bg ? "size-14 bg-bgcard" : "size-14 bg-primarytxt"} flex justify-center items-center rounded-full transition-transform duration-200 hover:scale-110`}
+            className={`${bg ? "size-14 bg-bgcard" : "md:size-14 size-8 bg-primarytxt"} flex justify-center items-center rounded-full transition-transform duration-200 hover:scale-110`}
         >
             {isCurrentTrack && isPlaying ? (
                 <img src="/photos/audio-wave.gif" className="rounded-lg size-8" alt="Playing" />

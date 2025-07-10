@@ -30,21 +30,19 @@ function DetailTrack({ track }) {
     return (
         <div className="flex flex-col ">
             <div className="flex gap-10 mt-36 ">
-                <img src={track?.cover_url} className="size-72 rounded-xl shadow-black shadow-bottom object-cover" alt="" />
+                <img src={track?.cover_url} className="md:size-72 size-44 rounded-xl shadow-black shadow-bottom object-cover" alt="" />
                 <div className="flex flex-col justify-between gap-10">
-                    <h1 className="text-primarytxt text-4xl">
-                        {firstIndex} <span className="text-primary text-4xl">{lastIndex}</span>
+                    <h1 className="text-primarytxt md:text-4xl text-2xl">
+                        {firstIndex} <span className="text-primary md:text-4xl text-2xl">{lastIndex}</span>
                     </h1>
-                    <span className="text-primarytxt text-sm">{track?.description}</span>
-                    <div>
-                        <div className="flex justify-between items-center gap-10">
+                    <span className="text-primarytxt text-sm md:flex hidden">{track?.description}</span>
+                        <div className="flex justify-between items-center md:gap-10 gap-5">
                             <div className="flex gap-5">
-                                <span className="text-primarytxt">{track?.tracks?.length || 0} اهنگ</span>
-                                <span className="text-primarytxt">{formatDuration(sumDurationMusics)} دقیقه</span>
+                                <span className="text-primarytxt md:text-xl text-sm">{track?.tracks?.length || 0} اهنگ</span>
+                                <span className="text-primarytxt md:text-xl text-sm">{formatDuration(sumDurationMusics)} دقیقه</span>
                             </div>
                             <ButtonMusic track={track.tracks[0]} />
                         </div>
-                    </div>
                 </div>
             </div>
             {isPlayerVisible ? <PlayerControll track={track} open={isPlayerVisible} />
