@@ -56,11 +56,10 @@ export default function MainLayout() {
     <div className="w-full relative flex">
       <div className="w-full">
         <Header />
-        <main className="lg:w-[80%] w-full min-h-full flex-1 px-10">
+        <main className="lg:w-[80%] w-full flex-1 px-10">
           <Outlet />
         </main>
         <Footer />
-        <Menu className="flex lg:hidden" />
       </div>
       {/* همبرگر آیکون فقط در موبایل */}
       {isLoaded && width < 1024 && <img src="/photos/hamburgermenu.png" style={{ position: "fixed", top: "1%", left: "8%", width: "25px", height: "25px", margin: "1rem -1rem", zIndex: "100000", cursor: "pointer" }} onClick={MenuHandler} />}
