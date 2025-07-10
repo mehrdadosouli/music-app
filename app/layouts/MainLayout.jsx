@@ -63,11 +63,11 @@ export default function MainLayout() {
         <Menu className="flex lg:hidden" />
       </div>
       {/* همبرگر آیکون فقط در موبایل */}
-      {isLoaded && width < 1024 && <img src="/photos/hamburgermenu.png" style={{ position: "fixed", top: "1%", left: "10%", width: "25px", height: "25px", margin: "1rem -1rem", zIndex: "100000", cursor: "pointer" }} onClick={MenuHandler} />}
+      {isLoaded && width < 1024 && <img src="/photos/hamburgermenu.png" style={{ position: "fixed", top: "1%", left: "8%", width: "25px", height: "25px", margin: "1rem -1rem", zIndex: "100000", cursor: "pointer" }} onClick={MenuHandler} />}
       
       {/* Sidebar */}
       {isLoaded && (
-        <aside className={`fixed top-10 flex flex-col gap-7 px-3 h-full z-50 bg-bgbody pe-5 ${
+        <aside className={`fixed top-0 flex flex-col gap-7 px-3 h-full z-50 bg-bgbody pe-5 ${
           width < 1024 
             ? (toggle ? "left-0 w-[20rem]" : "-left-[20rem]") + " transition-all duration-300 ease-in-out"
             : "left-0 w-[20%]"

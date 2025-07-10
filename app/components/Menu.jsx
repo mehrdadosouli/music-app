@@ -10,7 +10,7 @@ function Menu() {
     return (
         <div className="w-full lg:static fixed bottom-0 left-0 right-0 mx-auto flex justify-center items-center z-[9999999999] lg:bg-transparent bg-bgcard py-2 gap-5 lg:mx-5 ">
             {items.map(menu => <ul className="flex lg:flex-row flex-col items-center" key={menu.id}>
-                <span className="lg:hidden flex pb-2">{menu.icon}</span>
+                <span className="lg:hidden flex pb-2 text-primarytxt">{menu.icon}</span>
                 <li><Link className="text-primarytxt hover:text-secondary flex justify-center items-center w-20 z-0" to={menu.link}>{menu.name}</Link></li>
             </ul>)}
         </div>

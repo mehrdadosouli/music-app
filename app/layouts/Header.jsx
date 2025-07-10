@@ -48,7 +48,7 @@ function Header() {
   };
 
   return (
-    <div className={`w-[75%] border-yellow-400 flex justify-between items-center fixed lg:top-10 top-5 p-2 rounded-full ${scrollY && 'lg:backdrop-blur-xl'}`}>
+    <div className={`lg:w-[75%] w-full flex justify-between items-center fixed lg:top-10 top-6 lg:p-2 mx-10 rounded-full z-50 ${scrollY && 'lg:backdrop-blur-xl'}`}>
       <div className="lg:flex hidden gap-5">
         <Link className="w-40 h-8 rounded-sm flex justify-center items-center text-white bg-primary hover:text-primary hover:bg-white border border-primary transition-all" to="/signup">Sign Up</Link>
         <Link className="w-40 h-8 rounded-sm flex justify-center items-center text-primary border border-primary hover:text-white hover:bg-primary transition-all" to="/login">Login</Link>
