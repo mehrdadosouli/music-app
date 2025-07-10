@@ -1,15 +1,85 @@
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { fetchTopSongs } from "~/redux/features/music/musicSlice"
-import CardTopSongs from "./CardTopSongs"
+import { useEffect, useState, useMemo, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTopSongs } from "~/redux/features/music/musicSlice";
+import CardTopSongs from "./CardTopSongs";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
 
 export default function TopSongs({ title }) {
-    const { isLoading, error, topSongs } = useSelector(state => state.songs)
-    const dispatch = useDispatch()
+    const { isLoading, error, topSongs } = useSelector(state => state.songs);
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [loaded, setLoaded] = useState(false);
+    const [trackDetails, setTrackDetails] = useState(null); // State for track details
+
+    const [sliderRef, instanceRef] = useKeenSlider({
+        initial: 0,
+        slides: { perView: 1, spacing: 10 },
+        breakpoints: {
+            "(min-width :480px)": {
+                slides: {
+                    perView: 2,
+                    spacing: 10
+                }
+            },
+            "(min-width :768px)": {
+                slides: {
+                    perView: 4,
+                    spacing: 20
+                }
+            }
+        },
+        slideChanged(slider) {
+            setCurrentSlide(slider.track.details.rel);
+        },
+        created(slider) {
+            setLoaded(true);
+            setTrackDetails(slider.track.details); // Store track details
+        },
+    });
+
+    const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchTopSongs())
-    }, [dispatch])
+        dispatch(fetchTopSongs());
+    }, [dispatch]);
+
+    // استفاده از useMemo برای جلوگیری از ساخت مجدد keen-slider
+    const sliderContent = useMemo(() => {
+        return (
+            <>
+                <div ref={sliderRef} className="keen-slider">
+                    {topSongs.map(song => (
+                        <div key={song.id} className="keen-slider__slide">
+                            <CardTopSongs song={song} />
+                        </div>
+                    ))}
+                </div>
+                {loaded && trackDetails && ( // Check if trackDetails is available
+                    <>
+                        <Arrow
+                            left
+                            onClick={(e) =>
+                                e.stopPropagation() || instanceRef.current?.prev()
+                            }
+                            disabled={currentSlide === 0}
+                        />
+
+                        <Arrow
+                            onClick={(e) =>
+                                e.stopPropagation() || instanceRef.current?.next()
+                            }
+                            disabled={
+                                currentSlide ===
+                                trackDetails.slides.length - 1
+                            }
+                        />
+                    </>
+                )}
+            </>
+        );
+    }, [topSongs, loaded, currentSlide, instanceRef, sliderRef, trackDetails]); // dependencies for memoization
+
     if (error) return <p>خطا: {error}</p>;
+
     return (
         <div className="flex flex-col min-h-[400px]">
             <h3 className="text-primarytxt text-2xl font-bold my-6">{title}</h3>
@@ -26,10 +96,31 @@ export default function TopSongs({ title }) {
                     ))}
                 </div>
             ) : (
-                <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-6 mt-5">
-                    {topSongs.map(song => <CardTopSongs key={song.id} song={song} />)}
+                <div className="navigation-wrapper">
+                    {sliderContent}
                 </div>
             )}
         </div>
-    )
+    );
+}
+
+
+function Arrow(props) {
+    const disabled = props.disabled ? " arrow--disabled" : "";
+    return (
+        <svg
+            onClick={props.onClick}
+            className={`arrow ${props.left ? "arrow--left" : "arrow--right"
+                } ${disabled}`}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+        >
+            {props.left && (
+                <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+            )}
+            {!props.left && (
+                <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
+            )}
+        </svg>
+    );
 }
