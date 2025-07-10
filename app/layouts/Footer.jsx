@@ -1,7 +1,7 @@
 
 function Footer() {
   return (
-    <footer className="w-full bg-bgbody text-primary pt-10 pb-4 px-4 md:px-16 border-t border-gray-700">
+    <footer className="md:flex hidden w-full bg-bgbody text-primary pt-10 pb-4 px-4 md:px-16 border-t border-gray-700">
       <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-10 mx-auto">
         {/* About */}
         <div className="md:w-1/3">
