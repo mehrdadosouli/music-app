@@ -7,7 +7,8 @@ import Sound from "../icons/Sound";
 export default function MusicControll() {
     const dispatch = useDispatch();
     const audioRef = useRef(null);
-    const timelineRef = useRef(null);
+    const timelineDesktopRef = useRef(null);
+    const timelineMobileRef = useRef(null);
     const [showSound, setShowSound] = useState(false)
     // State ها را از Redux بگیرید
     const { isPlaying, currentAudio } = useSelector((state) => state.songs);
@@ -19,6 +20,7 @@ export default function MusicControll() {
 
     // 1. useEffect برای مدیریت رویدادهای مدیا (فقط یکبار اجرا می‌شود)
     useEffect(() => {
+        if (!audioRef.current) return;
         const audio = audioRef.current;
 
         const handleTimeUpdate = () => {
@@ -44,28 +46,25 @@ export default function MusicControll() {
     useEffect(() => {
         if (currentAudio && audioRef.current) {
             audioRef.current.src = `/music/${currentAudio.id}.mp3`;
-            // مرورگر را مجبور به بارگذاری آهنگ جدید می‌کنیم
             audioRef.current.load();
             if (isPlaying) {
-                // اگر در حالت پخش بودیم، آهنگ جدید را پلی کن
                 audioRef.current.play().catch(error => console.error("Error playing new track:", error));
             }
         }
-    }, [currentAudio]); // <-- فقط به تغییر آهنگ وابسته است
+    }, [currentAudio, isPlaying]); // اضافه کردن isPlaying برای اطمینان از هماهنگی
 
     // 3. useEffect برای کنترل Play/Pause
     useEffect(() => {
-        if (audioRef.current) {
-            if (isPlaying) {
-                audioRef.current.play().catch(error => {
-                    console.error("Play failed:", error);
-                    dispatch(pauseAudio());
-                });
-            } else {
-                audioRef.current.pause();
-            }
+        if (!audioRef.current) return;
+        if (isPlaying) {
+            audioRef.current.play().catch(error => {
+                console.error("Play failed:", error);
+                dispatch(pauseAudio());
+            });
+        } else {
+            audioRef.current.pause();
         }
-    }, [isPlaying]); // <-- فقط به وضعیت پخش وابسته است
+    }, [isPlaying]);
 
 
     // --- توابع Handler ---
@@ -82,9 +81,10 @@ export default function MusicControll() {
     const nextMusicHandler = () => dispatch(nextMusicBtn(currentAudio));
     const prevMusicHandler = () => dispatch(prevMusicBtn(currentAudio));
 
-    const handleSeek = (e) => {
-        if (duration > 0 && timelineRef.current) {
-            const timelineWidth = timelineRef.current.clientWidth;
+    const handleSeek = (e, isMobile = false) => {
+        const ref = isMobile ? timelineMobileRef : timelineDesktopRef;
+        if (duration > 0 && ref.current) {
+            const timelineWidth = ref.current.clientWidth;
             const clickPositionX = e.nativeEvent.offsetX;
             const newTime = (clickPositionX / timelineWidth) * duration;
             audioRef.current.currentTime = newTime;
@@ -103,23 +103,39 @@ export default function MusicControll() {
 
     const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
+    // هندلرهای جدید برای عقب/جلو بردن 10 ثانیه
+    const handleRewind10 = () => {
+        if (audioRef.current) {
+            audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 10);
+            setCurrentTime(audioRef.current.currentTime);
+        }
+    };
+    const handleSkip10 = () => {
+        if (audioRef.current) {
+            audioRef.current.currentTime = Math.min(duration, audioRef.current.currentTime + 10);
+            setCurrentTime(audioRef.current.currentTime);
+        }
+    };
 
 
     return (
-        <div className="fixed bottom-0 left-10 right-10 mx-auto flex items-start px-2">
-            {/* info music */}
-            {/* <div className="w-1/6">
+        <div>
+            {/* music controll for desctop */}
+            <div className="md:fixed hidden md:bottom-0 md:left-10 md:right-10 md:mx-auto md:flex md:items-start md:px-2 md:py-10">
+            <div className="w-1/6">
                 <div className="flex items-center space-x-4 gap-3">
-                    <img src={currentAudio.cover_url} loading="lazy" decoding="async" alt="" className="flex-none rounded-lg bg-slate-100 object-cover" width="100" height="88" />
+                    {currentAudio && (
+                        <img src={currentAudio.cover_url} loading="lazy" decoding="async" alt="" className="flex-none rounded-lg bg-slate-100 object-cover" width="100" height="88" />
+                    )}
                     <div className="min-w-0 flex-auto space-y-1 font-semibold">
                         <p className="text-cyan-500 transition-all duration-500 text-sm leading-6">
-                            <abbr title="Episode">Ep.</abbr> {currentAudio.albumId}
+                            <abbr title="Episode">Ep.</abbr> {currentAudio ? currentAudio.albumId : "-"}
                         </p>
                         <h2 className="text-slate-200 transition-all duration-500 text-sm leading-6 truncate">
-                            {currentAudio.albumTitle}
+                            {currentAudio ? currentAudio.albumTitle : "-"}
                         </h2>
                         <p className="text-slate-200 transition-all duration-500 text-lg">
-                            {currentAudio.artistName}
+                            {currentAudio ? currentAudio.artistName : "-"}
                         </p>
                     </div>
                 </div>
@@ -127,7 +143,7 @@ export default function MusicControll() {
             <div className="w-4/6 relative z-10 ">
                 <div className="border-slate-100 transition-all duration-500 border-b rounded-t-xl p-4 pb-6 ">
                     <div className="space-y-2">
-                        <div dir="ltr" ref={timelineRef} onClick={handleSeek} className="relative cursor-pointer">
+                        <div dir="ltr" ref={timelineDesktopRef} onClick={e => handleSeek(e, false)} className="relative cursor-pointer">
                             <div className="bg-slate-100 rounded-full overflow-hidden h-2">
                                 <div className="bg-cyan-500 h-2" style={{ width: `${progressPercentage}%` }}></div>
                             </div>
@@ -148,13 +164,13 @@ export default function MusicControll() {
                                 <path d="M7 6.931C7 5.865 7.853 5 8.905 5h6.19C16.147 5 17 5.865 17 6.931V19l-5-4-5 4V6.931Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                             </svg>
                         </button>
-                        <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Next" onClick={prevMusicHandler}>
+                        <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Previous" onClick={prevMusicHandler}>
                             <svg width="24" height="24" fill="none">
                                 <path d="m10 12 8-6v12l-8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                 <path d="M6 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                             </svg>
                         </button>
-                        <button type="button" aria-label="Rewind 10 seconds">
+                        <button type="button" aria-label="Rewind 10 seconds" onClick={handleRewind10}>
                             <svg width="24" height="24" fill="none">
                                 <path d="M6.492 16.95c2.861 2.733 7.5 2.733 10.362 0 2.861-2.734 2.861-7.166 0-9.9-2.862-2.733-7.501-2.733-10.362 0A7.096 7.096 0 0 0 5.5 8.226" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                 <path d="M5 5v3.111c0 .491.398.889.889.889H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -179,13 +195,13 @@ export default function MusicControll() {
                         )}
                     </button>
                     <div className="flex-auto flex items-center justify-evenly">
-                        <button type="button" aria-label="Skip 10 seconds" className="">
+                        <button type="button" aria-label="Skip 10 seconds" onClick={handleSkip10}>
                             <svg width="24" height="24" fill="none">
                                 <path d="M17.509 16.95c-2.862 2.733-7.501 2.733-10.363 0-2.861-2.734-2.861-7.166 0-9.9 2.862-2.733 7.501-2.733 10.363 0 .38.365.711.759.991 1.176" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                 <path d="M19 5v3.111c0 .491-.398.889-.889.889H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                             </svg>
                         </button>
-                        <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Previous" onClick={nextMusicHandler}>
+                        <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Next" onClick={nextMusicHandler}>
                             <svg width="24" height="24" fill="none">
                                 <path d="M14 12 6 6v12l8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                 <path d="M18 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -200,24 +216,26 @@ export default function MusicControll() {
             <div className="w-1/6 flex justify-center items-center h-36">
                 <input className="w-fit md:flex hidden" type="range" id="volume" min="0" max="1" step="0.01" value={volume} onChange={changeVolumeHandler} />
                 <span className="text-white px-2">{Math.round(volume * 100)}</span>
-            </div> */}
-
-            <div className="fixed bottom-0 left-10 right-10 mx-auto flex items-start px-2 gap-5">
-                <img src={currentAudio.cover_url} loading="lazy" decoding="async" alt="" className="size-24 rounded-lg bg-slate-100 object-cover" />
-
+            </div>
+            </div>
+            {/* music controll for mobile */}
+            <div className="md:hidden fixed bottom-0 left-10 right-10 mx-auto flex items-start px-2 gap-5">
+                {currentAudio && (
+                    <img src={currentAudio.cover_url} loading="lazy" decoding="async" alt="" className="size-24 rounded-lg bg-slate-100 object-cover" />
+                )}
                 <div className="relative w-full">
                     <div className="flex justify-between items-center">
                         <div>
                             <h2 className="text-slate-200 transition-all duration-500 text-sm leading-6 truncate">
-                                {currentAudio.albumTitle}
+                                {currentAudio ? currentAudio.albumTitle : "-"}
                             </h2>
                             <p className="text-slate-200 transition-all duration-500 text-lg">
-                                {currentAudio.artistName}
+                                {currentAudio ? currentAudio.artistName : "-"}
                             </p>
                         </div>
                         <div className=" text-white transition-all duration-500 rounded-b-xl flex items-center gap-5">
                             <div className="flex-auto flex items-center justify-end">
-                                <button type="button" className="text-primary" aria-label="Previous" onClick={nextMusicHandler}>
+                                <button type="button" className="text-primary" aria-label="Previous" onClick={prevMusicHandler}>
                                     <svg width="24" height="24" fill="none">
                                         <path d="M14 12 6 6v12l8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                         <path d="M18 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -242,7 +260,7 @@ export default function MusicControll() {
                                 )}
                             </button>
                             <div className="flex-auto flex items-center justify-start">
-                                <button type="button" className="text-primary" aria-label="Next" onClick={prevMusicHandler}>
+                                <button type="button" className="text-primary" aria-label="Next" onClick={nextMusicHandler}>
                                     <svg width="24" height="24" fill="none">
                                         <path d="m10 12 8-6v12l-8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                         <path d="M6 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -273,7 +291,7 @@ export default function MusicControll() {
                     </div>
                     <div className="border-slate-100 transition-all duration-500 border-b rounded-t-xl py-4 pb-6 ">
                         <div className="space-y-2">
-                            <div dir="ltr" ref={timelineRef} onClick={handleSeek} className="relative cursor-pointer">
+                            <div dir="ltr" ref={timelineMobileRef} onClick={e => handleSeek(e, true)} className="relative cursor-pointer">
                                 <div className="bg-pink-800 rounded-full overflow-hidden h-2">
                                     <div className="bg-primary h-2" style={{ width: `${progressPercentage}%` }}></div>
                                 </div>
@@ -289,7 +307,6 @@ export default function MusicControll() {
                     </div>
                 </div>
             </div>
-
             <audio ref={audioRef} />
         </div>
     );
