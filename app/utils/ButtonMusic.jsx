@@ -6,20 +6,16 @@ export default function ButtonMusic({ track, bg = false }) {
     const dispatch = useDispatch();
     const { isPlaying, currentAudio } = useSelector((state) => state.songs);
 
-    const isCurrentTrack = currentAudio?.id === track.id;
+    // مقایسه بر اساس src به جای id
+    const isCurrentTrack = currentAudio?.src === track.src;
 
     const handleTogglePlay = () => {
-    // اگر این آهنگ در حال پخش است، متوقفش کن
-    if (isPlaying && isCurrentTrack) {
-      dispatch(pauseAudio());
-    } else {
-      // در غیر این صورت، این آهنگ را پخش کن
-      dispatch(playAudio(track));
-    }
-  };
-
-
-    
+      if (isPlaying && isCurrentTrack) {
+        dispatch(pauseAudio());
+      } else {
+        dispatch(playAudio(track));
+      }
+    };
 
     return (
         <button 

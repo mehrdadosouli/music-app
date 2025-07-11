@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { albums, tracks, artists } from "~/data/mockData";
 
 const initialState = {
   currentTime: 0, // زمان فعلی پخش
@@ -21,27 +22,20 @@ const initialState = {
 };
 export const fetchTopSongs = createAsyncThunk(
   "songs/fetchTopSongs",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await fetch("http://localhost:4000/charts/top");
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue("خطا در دریافت اطلاعات از سرور");
-    }
+  async () => {
+    // فرض: top songs همان ۵ ترک اول tracks است
+    return tracks.slice(0, 5);
   }
 );
 
 export const fetchTrackById = createAsyncThunk(
   "song/fetchTrackById",
-  async (trackId, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`http://localhost:4000/album/${trackId}`);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue("خطا در دریافت اطلاعات از سرور");
-    }
+  async (trackId) => {
+    // پیدا کردن آلبوم و ترک‌هایش از mockData
+    const album = albums.find(a => a.id === trackId);
+    if (!album) return null;
+    const albumTracks = tracks.filter(t => t.albumId === album.id);
+    return { ...album, tracks: albumTracks };
   }
 );
 const musicSlice = createSlice({
@@ -77,7 +71,7 @@ const musicSlice = createSlice({
       const findindexTrack = alltracks.tracks.findIndex(
         (item) => item.id === action.payload.id
       );
-      if (findindexTrack == -1) {
+      if (findindexTrack === -1) {
         return;
       }
       const nextIndex = (findindexTrack + 1)  % alltracks.tracks.length;

@@ -29,7 +29,7 @@ function DetailTrack({ track }) {
     }, [isPlaying])
     return (
         <div className="flex flex-col ">
-            <div className="flex gap-10 mt-36 ">
+            <div className="flex gap-10 mt-36 " style={{ display: isPlayerVisible ? 'none' : undefined }}>
                 <img src={track?.cover_url} className="md:size-72 size-44 rounded-xl shadow-black shadow-bottom object-cover" alt="" />
                 <div className="flex flex-col justify-between gap-10">
                     <h1 className="text-primarytxt md:text-4xl text-2xl">

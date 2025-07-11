@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import SearchIcon from './icons/SearchIcon'
+import { albums, tracks, artists } from '~/data/mockData';
 
 function SearchHeader() {
     const [width, setWidth] = useState(null)
@@ -7,7 +8,12 @@ function SearchHeader() {
     const clickHandler = useCallback((e) => {
         e.preventDefault();
         if (search.trim()) {
-            // اینجا می‌توانید جستجو رو انجام بدید (مثل درخواست API)
+            const q = search.trim().toLowerCase();
+            const trackResults = tracks.filter(t => t.title.toLowerCase().includes(q));
+            const artistResults = artists.filter(a => a.name.toLowerCase().includes(q));
+            const albumResults = albums.filter(a => a.title.toLowerCase().includes(q));
+            // فعلاً فقط نمایش در کنسول
+            console.log({ tracks: trackResults, artists: artistResults, albums: albumResults });
         }
     }, [search])
     useEffect(() => {

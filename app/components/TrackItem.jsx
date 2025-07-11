@@ -7,7 +7,7 @@ export default function TrackItem({ track }) {
             <ButtonMusic bg={true} track={track} />
             <div className="flex w-full items-center justify-between [&>*]:text-primarytxt"> {/* تغییرات در این قسمت */}
                 <div className="flex items-center"> {/* Container برای عکس و اطلاعات ترک */}
-                    <img src={`/backend/public/photos/${track.artistName}.jpg`} className="size-12 object-cover mr-2" alt="" /> {/* اضافه کردن margin-right */}
+                    <img src={`/photos/${track.artistName}.jpg`} className="size-12 object-cover mr-2" alt="" /> {/* اضافه کردن margin-right */}
                     <div className="flex flex-col gap-1 mr-5"> {/* تغییر gap به gap-1 */}
                         <h5 className="[&>*]:text-primarytxt">{track.title}</h5>
                         <h5 className="[&>*]:text-primarytxt">{track.albumTitle}</h5> {/* نمایش اسم آلبوم */}
