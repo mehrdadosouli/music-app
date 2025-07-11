@@ -56,14 +56,14 @@ export default function MusicControll() {
     // 3. useEffect برای کنترل Play/Pause
     useEffect(() => {
         if (!audioRef.current) return;
-        if (isPlaying) {
-            audioRef.current.play().catch(error => {
-                console.error("Play failed:", error);
-                dispatch(pauseAudio());
-            });
-        } else {
-            audioRef.current.pause();
-        }
+            if (isPlaying) {
+                audioRef.current.play().catch(error => {
+                    console.error("Play failed:", error);
+                    dispatch(pauseAudio());
+                });
+            } else {
+                audioRef.current.pause();
+            }
     }, [isPlaying]);
 
 
@@ -125,7 +125,7 @@ export default function MusicControll() {
             <div className="w-1/6">
                 <div className="flex items-center space-x-4 gap-3">
                     {currentAudio && (
-                        <img src={currentAudio.cover_url} loading="lazy" decoding="async" alt="" className="flex-none rounded-lg bg-slate-100 object-cover" width="100" height="88" />
+                    <img src={currentAudio.cover_url} loading="lazy" decoding="async" alt="" className="flex-none rounded-lg bg-slate-100 object-cover" width="100" height="88" />
                     )}
                     <div className="min-w-0 flex-auto space-y-1 font-semibold">
                         <p className="text-cyan-500 transition-all duration-500 text-sm leading-6">
@@ -221,7 +221,7 @@ export default function MusicControll() {
             {/* music controll for mobile */}
             <div className="md:hidden fixed bottom-0 left-10 right-10 mx-auto flex items-start px-2 gap-5">
                 {currentAudio && (
-                    <img src={currentAudio.cover_url} loading="lazy" decoding="async" alt="" className="size-24 rounded-lg bg-slate-100 object-cover" />
+                <img src={currentAudio.cover_url} loading="lazy" decoding="async" alt="" className="size-24 rounded-lg bg-slate-100 object-cover" />
                 )}
                 <div className="relative w-full">
                     <div className="flex justify-between items-center">
