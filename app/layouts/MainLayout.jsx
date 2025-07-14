@@ -1,6 +1,5 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import Menu from "../components/Menu";
 import { Link, Outlet } from "react-router";
 import HomeIcon from "~/components/icons/HomeIcon";
 import LibraryIcon from "~/components/icons/LibraryIcon";
