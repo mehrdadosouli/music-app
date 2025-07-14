@@ -1,11 +1,9 @@
 import { Link } from "react-router";
 
-export function meta({}: any) {
+export function meta() {
   return [
     { title: "صفحه ی 404" },
-    { name: "description", content: "این صفحه موجود نمی‌باشد. صفحه ی 404" },
-    { property: "og:title", content: "صفحه ی 404" },
-    { property: "og:description", content: "این صفحه موجود نمی‌باشد. صفحه ی 404" },
+    { name: "description", content: "صفحه مورد نظر پیدا نشد" },
   ];
 }
 

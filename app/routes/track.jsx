@@ -5,7 +5,7 @@ import DetailTrack from "~/components/DetailTrack";
 import { fetchTrackById } from "~/redux/features/music/musicSlice";
 
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "صفحه ی موزیک " },
     { name: "موزیک", content: "خوش آمدید به صفحه موزیک" },
