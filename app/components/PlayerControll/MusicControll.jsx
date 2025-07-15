@@ -51,7 +51,7 @@ export default function MusicControll() {
                 audioRef.current.play().catch(error => console.error("Error playing new track:", error));
             }
         }
-    }, [currentAudio, isPlaying]); // اضافه کردن isPlaying برای اطمینان از هماهنگی
+    }, [currentAudio]); // فقط currentAudio
 
     // 3. useEffect برای کنترل Play/Pause
     useEffect(() => {
