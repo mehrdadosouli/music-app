@@ -21,8 +21,8 @@ export default function MusicControll() {
     // 1. useEffect برای مدیریت رویدادهای مدیا (فقط یکبار اجرا می‌شود)
     useEffect(() => {
         if (!audioRef.current) return;
+        // بروزر بودن تایم لانگ با تغییر currentTime
         const audio = audioRef.current;
-
         const handleTimeUpdate = () => {
             setCurrentTime(audio.currentTime);
         };
@@ -66,6 +66,15 @@ export default function MusicControll() {
         }
     }, [isPlaying]);
 
+    useEffect(() => {
+        if (audioRef.current && duration > 0 && Math.abs(currentTime - duration) < 0.5) {
+            audioRef.current.pause();
+            dispatch(pauseAudio());
+            audioRef.current.currentTime = 0; // ریست تایم‌لاین به ابتدا
+            setCurrentTime(0); // اگر state محلی داری
+        }
+    }, [currentTime, duration]);
+
 
     // --- توابع Handler ---
     const handlePlayPause = () => {
@@ -100,7 +109,7 @@ export default function MusicControll() {
             audioRef.current.volume = volume
         }
     }, [volume])
-
+    // مدیریت پیشرفت تایم لانگ 
     const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
     // هندلرهای جدید برای عقب/جلو بردن 10 ثانیه
     const handleRewind10 = () => {
