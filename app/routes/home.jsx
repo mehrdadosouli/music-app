@@ -1,5 +1,6 @@
 import Banner from "~/layouts/Banner";
 import TopSongs from "~/components/TopSongs";
+import TrendingSongs from "~/components/TrendingSongs";
 
 export function meta() {
   return [
@@ -9,10 +10,13 @@ export function meta() {
 }
 
 export default function Home() {
+
   return (
     <>
       <Banner />
-      <TopSongs title="بهترین موزیک هفته" />  
+      <TopSongs title="بهترین موزیک هفته" />
+      <TopSongs title="بهترین موزیک ماه" />
+      <TrendingSongs title="موزیک های معروف" />
     </>
   );
 }

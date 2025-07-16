@@ -27,9 +27,7 @@ function getuniqueAlbumes(tracks) {
       if(!uniqueAlbume[track.albumId]){
         uniqueAlbume[track.albumId]=true;
         result.push(track)
-      } 
-      console.log(uniqueAlbume);
-      
+      }       
     }
     return result
 }
