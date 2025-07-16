@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { nextMusicBtn, pauseAudio, playAudio, prevMusicBtn ,setDurations} from "~/redux/features/music/musicSlice";
+import { nextMusicBtn, pauseAudio, playAudio, prevMusicBtn, setDurations } from "~/redux/features/music/musicSlice";
 import { formatDuration } from "~/utils/formatDuration";
 import Sound from "../icons/Sound";
 
@@ -11,7 +11,7 @@ export default function MusicControll() {
     const timelineMobileRef = useRef(null);
     const [showSound, setShowSound] = useState(false)
     // State ها را از Redux بگیرید
-    const { isPlaying, currentAudio } = useSelector((state) => state.songs);
+    const { isPlaying, currentAudio, track } = useSelector((state) => state.songs);
 
     // State های محلی برای زمان حال و کل زمان آهنگ
     const [currentTime, setCurrentTime] = useState(0);
@@ -44,7 +44,7 @@ export default function MusicControll() {
 
     // 2. useEffect برای تغییر آهنگ
     useEffect(() => {
-        if (currentAudio && audioRef.current) {            
+        if (currentAudio && audioRef.current) {
             audioRef.current.src = `${currentAudio.src}`;
             audioRef.current.load();
             if (isPlaying) {

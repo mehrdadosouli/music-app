@@ -13,7 +13,7 @@ export default function PlayerControllNavbar({ track }) {
     }, 10);
   }
   return (
-    <div className="flex justify-between items-center p-5 rounded-2xl bg-black">
+    <div className="fixed left-5 right-5 mx-auto flex justify-between items-center p-5 z-[9999999999] rounded-2xl bg-black">
       <div className="flex gap-3 ">
         <CloseBtn buttonHandler={buttonHandler} />
         <MinusIcon />
