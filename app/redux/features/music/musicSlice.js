@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { albums, tracks, artists } from "~/data/mockData";
 
 const initialState = {
@@ -20,18 +20,31 @@ const initialState = {
   theme: "dark",
   btn: false,
 };
+function getuniqueAlbumes(tracks) {
+  const uniqueAlbume={};
+    const result=[];
+    for (const track of tracks) {
+      if(!uniqueAlbume[track.albumId]){
+        uniqueAlbume[track.albumId]=true;
+        result.push(track)
+      } 
+      console.log(uniqueAlbume);
+      
+    }
+    return result
+}
 export const fetchTopSongs = createAsyncThunk(
   "songs/fetchTopSongs",
   async () => {
-    // فرض: top songs همان ۵ ترک اول tracks است
-    return tracks.slice(0, 5);
+    // return tracks.slice(0, 5);
+        const uniqueTracks=getuniqueAlbumes(tracks)        
+        return uniqueTracks
   }
 );
 
 export const fetchTrackById = createAsyncThunk(
   "song/fetchTrackById",
   async (trackId) => {
-    // پیدا کردن آلبوم و ترک‌هایش از mockData
     const album = albums.find(a => a.id === trackId);
     if (!album) return null;
     const albumTracks = tracks.filter(t => t.albumId === album.id);
@@ -63,7 +76,7 @@ const musicSlice = createSlice({
     setCurrentMusic: (state, action) => {
       state.currentAudio = action.payload;
     },
-    setDuration: (state, action) => {
+    setDurations: (state, action) => {
       state.duration = action.payload;
     },
     nextMusicBtn: (state, action) => {
@@ -80,7 +93,7 @@ const musicSlice = createSlice({
     prevMusicBtn: (state, action) => {
       const alltracks = state.track;
       const findindexTrack = alltracks.tracks.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item.id === action.payload.id 
       );
       if (findindexTrack == -1) {
         return;
@@ -125,7 +138,7 @@ export const {
   pauseAudio,
   actionBtn,
   setCurrentMusic,
-  setDuration,
+  setDurations,
   setPlayerVisibility,
   nextMusicBtn,
   prevMusicBtn,
