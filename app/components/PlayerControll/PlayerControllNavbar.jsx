@@ -10,6 +10,7 @@ export default function PlayerControllNavbar({ track }) {
     dispatch(pauseAudio())
     setTimeout(() => {
       dispatch(setPlayerVisibility(false))
+      document.body.classList.remove('noScroll');
     }, 10);
   }
   return (

@@ -1,15 +1,21 @@
+import { useEffect } from "react";
 import ListMusicOfAlbum from "./ListMusicOfAlbum";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTrendSongs } from "~/redux/features/music/musicSlice";
 
 export default function TrendingSongs({ title }) {
-    const select = useSelector(state => state.songs.topSongs)
-    const titleArray=title.split(" ");
-    const lastChar=titleArray[titleArray.length - 1]
-    
+    const dispatch = useDispatch()
+    const select = useSelector(state => state.songs.track)
+    const titleArray = title.split(" ");
+    const lastChar = titleArray[titleArray.length - 1]
+    useEffect(() => {
+        dispatch(fetchTrendSongs());
+    }, [])
+
     return (
         <div>
-            <h2 className="py-2 text-primarytxt text-3xl">{titleArray.slice(0,-1).join(" ")} <span className="text-primary">{lastChar}</span></h2>
-            <ListMusicOfAlbum tracks={select} />
+            <h2 className="py-2 text-primarytxt text-3xl">{titleArray.slice(0, -1).join(" ")} <span className="text-primary">{lastChar}</span></h2>
+            {select && <ListMusicOfAlbum tracks={select} />}
         </div>
     )
 }

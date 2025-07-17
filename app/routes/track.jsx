@@ -13,18 +13,18 @@ export function meta() {
 }
 
 export default function Track() {
+  
   const {trackError,trackLoading,track}= useSelector(state => state.songs)
   const { trackId } = useParams();
   const dispatch=useDispatch()
-
+  
   useEffect(()=>{
     if (trackId) dispatch(fetchTrackById(trackId));
   },[dispatch,trackId])
+  useEffect(()=>{
+    dispatch(fetchTrackById(trackId));
+  },[])
 
-  ///////// music play handler
-  // const playMusicHandler=useCallback(()=>{
-
-  // },[])
   
   if (trackLoading) { return (<h1>IsLoading.....</h1>) }
   if (trackError) return <p>خطا: {trackError}</p>;

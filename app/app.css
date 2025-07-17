@@ -41,6 +41,13 @@ body {
   direction: rtl;
   background: var(--bgbody);
 }
+.noScroll {
+  overflow: hidden;
+}
+.musicPlayer {
+  overflow-y: auto; 
+  height: 100vh;    
+}
 @layer components {
   .textstroke {
     font-size: 3rem;
@@ -68,9 +75,10 @@ body {
   .playerControllOpen {
     animation-name: controllOpen;
     animation-duration: 1s;
-    position: absolute;
+    position: fixed;
     right: 0;
     left: 0;
+    height: 100%;
     transition: all;
   }
   @keyframes controllOpen {
@@ -80,29 +88,28 @@ body {
     }
     100% {
       top: 0%;
-      opacity: 10;
+      opacity: 1;
     }
   }
   .playerControllClose {
     animation-name: controllClose;
     animation-duration: 1s;
-    position: absolute;
+    position: fixed;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     right: 0;
     left: 0;
     transition: all;
+    visibility: visible;
   }
   @keyframes controllClose {
     0% {
       top: 0%;
-      opacity: 100;
-      visibility: visible;
+      opacity: 1;
     }
     100% {
       top: 100%;
       opacity: 0;
-      visibility: hidden;
     }
   }
 }

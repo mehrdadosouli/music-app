@@ -21,31 +21,39 @@ const initialState = {
   btn: false,
 };
 function getuniqueAlbumes(tracks) {
-  const uniqueAlbume={};
-    const result=[];
-    for (const track of tracks) {
-      if(!uniqueAlbume[track.albumId]){
-        uniqueAlbume[track.albumId]=true;
-        result.push(track)
-      }       
+  const uniqueAlbume = {};
+  const result = [];
+  for (const track of tracks) {
+    if (!uniqueAlbume[track.albumId]) {
+      uniqueAlbume[track.albumId] = true;
+      result.push(track);
     }
-    return result
+  }
+  return result;
 }
 export const fetchTopSongs = createAsyncThunk(
   "songs/fetchTopSongs",
   async () => {
     // return tracks.slice(0, 5);
-        const uniqueTracks=getuniqueAlbumes(tracks)        
-        return uniqueTracks
+    const uniqueTracks = getuniqueAlbumes(tracks);
+    return uniqueTracks;
   }
 );
-
+export const fetchTrendSongs = createAsyncThunk(
+  "songs/fetchTrendSongs",
+  async () => {
+    const uniqueTracks = getuniqueAlbumes(tracks);
+    console.log(uniqueTracks);
+    
+    return uniqueTracks;
+  }
+);
 export const fetchTrackById = createAsyncThunk(
   "song/fetchTrackById",
   async (trackId) => {
-    const album = albums.find(a => a.id === trackId);
+    const album = albums.find((a) => a.id === trackId);
     if (!album) return null;
-    const albumTracks = tracks.filter(t => t.albumId === album.id);
+    const albumTracks = tracks.filter((t) => t.albumId === album.id);
     return { ...album, tracks: albumTracks };
   }
 );
@@ -85,18 +93,20 @@ const musicSlice = createSlice({
       if (findindexTrack === -1) {
         return;
       }
-      const nextIndex = (findindexTrack + 1)  % alltracks.tracks.length;
+      const nextIndex = (findindexTrack + 1) % alltracks.tracks.length;
       state.currentAudio = alltracks.tracks[nextIndex];
     },
     prevMusicBtn: (state, action) => {
       const alltracks = state.track;
       const findindexTrack = alltracks.tracks.findIndex(
-        (item) => item.id === action.payload.id 
+        (item) => item.id === action.payload.id
       );
       if (findindexTrack == -1) {
         return;
       }
-      const prevIndex = (findindexTrack - 1 + alltracks.tracks.length) % alltracks.tracks.length;
+      const prevIndex =
+        (findindexTrack - 1 + alltracks.tracks.length) %
+        alltracks.tracks.length;
       state.currentAudio = alltracks.tracks[prevIndex];
     },
     setTheme(state, action) {
@@ -121,11 +131,24 @@ const musicSlice = createSlice({
         state.error = action.error.message;
         state.isLoading = false;
       })
+      .addCase(fetchTrendSongs.fulfilled, (state, action) => {
+        state.track = action.payload;
+        state.isLoading = false;
+        state.error = "";
+      })
+      .addCase(fetchTrendSongs.pending, (state, action) => {
+        state.isLoading = true;
+        state.error = "";
+      })
+      .addCase(fetchTrendSongs.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isLoading = false;
+      })
       .addCase(fetchTrackById.fulfilled, (state, action) => {
         state.track = action.payload;
         state.trackLoading = false;
-        state.trackError = "";  
-      }); 
+        state.trackError = "";
+      });
   },
 });
 

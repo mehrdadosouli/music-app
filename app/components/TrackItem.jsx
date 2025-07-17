@@ -1,10 +1,10 @@
 import ButtonMusic from "~/utils/ButtonMusic";
 import { formatDuration } from "~/utils/formatDuration";
 
-export default function TrackItem({ track }) {
+export default function TrackItem({ track }) {    
     return (
-        <div className="flex bg-bgcard rounded-md px-2 shadow-sm items-center">
-            <ButtonMusic bg={true} track={track} />
+        <div className="flex bg-bgcard rounded-md px-2 shadow-sm items-center ">
+            {track && <ButtonMusic bg={true} track={track} />}
             <div className="flex w-full items-center justify-between [&>*]:text-primarytxt"> {/* تغییرات در این قسمت */}
                 <div className="flex items-center"> {/* Container برای عکس و اطلاعات ترک */}
                     <img src={`/photos/${track.artistName}.jpg`} className="size-12 object-cover mr-2" alt="" /> {/* اضافه کردن margin-right */}

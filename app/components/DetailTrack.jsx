@@ -1,13 +1,13 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 import { formatDuration } from "~/utils/formatDuration";
 import ListMusicOfAlbum from "./ListMusicOfAlbum";
 import ButtonMusic from "~/utils/ButtonMusic";
 import { useDispatch, useSelector } from "react-redux";
-import PlayerControll from "./PlayerControll/PlayerControll";
 import { actionBtn, setPlayerVisibility } from "~/redux/features/music/musicSlice";
 
-function DetailTrack({ track }) {
-    const { isPlaying,isPlayerVisible } = useSelector((state) => state.songs);
+function DetailTrack() {
+    const { isPlaying,isPlayerVisible,track } = useSelector((state) => state.songs);
+
     const dispatch = useDispatch()
     const words = track?.title?.split(" ") || [];
     const lastIndex = words.length > 0 ? words[words.length - 1] : "";
@@ -41,12 +41,11 @@ function DetailTrack({ track }) {
                                 <span className="text-primarytxt md:text-xl text-sm">{track?.tracks?.length || 0} اهنگ</span>
                                 <span className="text-primarytxt md:text-xl text-sm">{formatDuration(sumDurationMusics)} دقیقه</span>
                             </div>
-                            <ButtonMusic track={track.tracks[0]} />
+                            {track?.tracks?.length > 0 && <ButtonMusic track={track?.tracks[0]} />}
                         </div>
                 </div>
             </div>
-            {isPlayerVisible ? <PlayerControll track={track} open={isPlayerVisible} />
-            : <ListMusicOfAlbum tracks={track?.tracks} />}
+            <ListMusicOfAlbum tracks={track?.tracks} />
         </div>
     );
 }
