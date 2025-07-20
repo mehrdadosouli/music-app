@@ -42,9 +42,7 @@ export const fetchTopSongs = createAsyncThunk(
 export const fetchTrendSongs = createAsyncThunk(
   "songs/fetchTrendSongs",
   async () => {
-    const uniqueTracks = getuniqueAlbumes(tracks);
-    console.log(uniqueTracks);
-    
+    const uniqueTracks = getuniqueAlbumes(tracks);    
     return uniqueTracks;
   }
 );

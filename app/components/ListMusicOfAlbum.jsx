@@ -1,6 +1,5 @@
 import TrackItem from "./TrackItem";
 export default function ListMusicOfAlbum({ tracks }) {
-        console.log('trackkkks',tracks);
          
     return (
         <div className={`w-full flex flex-col gap-10 p-2 my-10 mb-28 flex-1`}>
@@ -13,4 +12,4 @@ export default function ListMusicOfAlbum({ tracks }) {
         </div>
 
     )
-}مشسکل 
+}
