@@ -16,7 +16,13 @@ export default function TopSongs({ title }) {
         initial: 0,
         slides: { perView: 1, spacing: 10 },
         breakpoints: {
-            "(min-width :480px)": {
+            "(min-width :200px)": {
+                slides: {
+                    perView: 1,
+                    spacing: 10
+                }
+            },
+            "(min-width :510px)": {
                 slides: {
                     perView: 2,
                     spacing: 10

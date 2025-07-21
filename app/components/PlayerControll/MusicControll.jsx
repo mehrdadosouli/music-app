@@ -227,7 +227,7 @@ export default function MusicControll() {
                 </div>
             </div>
             {/* music controll for mobile */}
-            <div className="md:hidden flex flex-col items-start px-2 gap-5">
+            <div className="md:hidden flex flex-col items-start px-2 gap-5 mt-20">
                 {currentAudio && (
                     <img src={currentAudio.cover_url} loading="lazy" decoding="async" alt="" className="size-full rounded-lg bg-slate-100 object-cover" />
                 )}

@@ -14,7 +14,6 @@ export function meta() {
 export default function Artist() {
     const dispatch = useDispatch();
     const { track } = useSelector(state => state.songs);
-    console.log(track);
 
     useEffect(() => {
         dispatch(fetchBestSongs());
