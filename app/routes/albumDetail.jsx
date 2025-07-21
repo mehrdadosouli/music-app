@@ -12,7 +12,7 @@ export function meta() {
   ];
 }
 
-export default function Track() {
+export default function albumDetail() {
   
   const {trackError,trackLoading,track}= useSelector(state => state.songs)
   const { trackId } = useParams();
@@ -31,7 +31,6 @@ export default function Track() {
   return (<>
     <div className="flex flex-col">
         {track ? <DetailTrack track={track} /> : <p>داده موجود نیست</p>}
-        <div></div>
     </div>  
   </>);
 }

@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-export default function CardSongs({ song, h = "15rem", w = "18rem", rounded = "0", bg = "bgcard", txt = "start" }) {
+export default function CardSongs({ song, h = "15rem", w = "100%", rounded = "0", bg = "bgcard", txt = "start" }) {
     return (
         <Link to={`/album/${song.albumId}`} className={`flex flex-col bg-${bg} gap-3 hover:shadow-lg transition-all duration-300 hover:scale-105 z-0`}>
             <div className=" w-full flex items-center justify-center">

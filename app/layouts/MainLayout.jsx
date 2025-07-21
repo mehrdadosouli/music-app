@@ -79,11 +79,11 @@ export default function MainLayout() {
             <HomeIcon />
             خانه
           </Link>
-          <Link to="/" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">
+          <Link to="/album" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">
             <ListIcon />
             آلبوم ها
           </Link>
-          <Link to="/" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">
+          <Link to="/artist" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">
             <SignIcon />
             خواننده ها
           </Link>
