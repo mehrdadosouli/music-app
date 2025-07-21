@@ -11,6 +11,7 @@ const initialState = {
   isPlayerVisible: false,
   topSongs: [],
   allSong: [],
+  allAlbum:[],
   myFavorite: [],
   isLoading: false,
   error: "",
@@ -34,9 +35,14 @@ function getuniqueAlbumes(tracks) {
 export const fetchTopSongs = createAsyncThunk(
   "songs/fetchTopSongs",
   async () => {
-    // return tracks.slice(0, 5);
     const uniqueTracks = getuniqueAlbumes(tracks);
     return uniqueTracks;
+  }
+);
+export const fetchAllAlbum = createAsyncThunk(
+  "songs/fetchAllAlbum",
+  async () => {
+    return albums
   }
 );
 export const fetchTrendSongs = createAsyncThunk(
@@ -139,6 +145,19 @@ const musicSlice = createSlice({
         state.error = "";
       })
       .addCase(fetchTrendSongs.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isLoading = false;
+      })
+      .addCase(fetchAllAlbum.fulfilled, (state, action) => {
+        state.allAlbum = action.payload;
+        state.isLoading = false;
+        state.error = "";
+      })
+      .addCase(fetchAllAlbum.pending, (state, action) => {
+        state.isLoading = true;
+        state.error = "";
+      })
+      .addCase(fetchAllAlbum.rejected, (state, action) => {
         state.error = action.error.message;
         state.isLoading = false;
       })

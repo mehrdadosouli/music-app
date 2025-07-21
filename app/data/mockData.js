@@ -1,9 +1,9 @@
 export const albums = [
-  { id: '100', title: 'آلبوم شیدایی', artistId: '1', release_date: '2000-01-01', cover_url: '/photos/محمدرضا شجریان.jpg', description: "آلبوم سنتی از شجریان" },
-  { id: '101', title: 'آلبوم تیک تاک', artistId: '2', release_date: '2013-04-15', cover_url: '/photos/محسن یگانه.jpg', description: "آلبوم پاپ از یگانه" },
-  { id: '102', title: 'آلبوم خاطره', artistId: '3', release_date: '2017-09-20', cover_url: '/photos/سیروان خسروی.jpg', description: "آلبوم خاطره انگیز از سیروان" },
-  { id: '103', title: 'آلبوم رویا', artistId: '4', release_date: '2019-05-10', cover_url: '/photos/ابی.jpg', description: "آلبوم رویا از ابی" },
-  { id: '104', title: 'آلبوم آرایش غلیظ', artistId: '5', release_date: '2014-06-01', cover_url: '/photos/همایون شجریان.jpg', description: "آلبوم ز غلیظ از همایون شجریان" },
+  { id: '100',albumId: '100',artistName:'محمدرضا شجریان' ,title: 'آلبوم شیدایی', artistId: '1', release_date: '2000-01-01', cover_url: '/photos/محمدرضا شجریان.jpg', description: "آلبوم سنتی از شجریان" },
+  { id: '101',albumId: '101',artistName:'محسن یگانه' ,title: 'آلبوم تیک تاک', artistId: '2', release_date: '2013-04-15', cover_url: '/photos/محسن یگانه.jpg', description: "آلبوم پاپ از یگانه" },
+  { id: '102',albumId: '102',artistName:'سیروان خسروی' ,title: 'آلبوم خاطره', artistId: '3', release_date: '2017-09-20', cover_url: '/photos/سیروان خسروی.jpg', description: "آلبوم خاطره انگیز از سیروان" },
+  { id: '103',albumId: '103',artistName:'ابی' ,title: 'آلبوم رویا', artistId: '4', release_date: '2019-05-10', cover_url: '/photos/ابی.jpg', description: "آلبوم رویا از ابی" },
+  { id: '104',albumId: '104',artistName:'همایون شجریان' ,title: 'آلبوم آرایش غلیظ', artistId: '5', release_date: '2014-06-01', cover_url: '/photos/همایون شجریان.jpg', description: "آلبوم ز غلیظ از همایون شجریان" },
 ];
 
 export const tracks = [
@@ -15,10 +15,10 @@ export const tracks = [
   { id: '21', title: 'Bade To', artistId: '2', artistName: 'محسن یگانه', albumId: '101', duration: 240, genre: 'Pop', style: 'Pop', score: 7.9, cover_url: '/photos/محسن یگانه.jpg', lyrics: '...', release_date: '2013-04-15', albumTitle: 'آلبوم تیک تاک', src: '/music/Mohsen Yeganeh - Bade To (320).mp3' },
   { id: '22', title: 'Behet Ghol Midam', artistId: '2', artistName: 'محسن یگانه', albumId: '101', duration: 250, genre: 'Pop', style: 'Pop', score: 7.9, cover_url: '/photos/محسن یگانه.jpg', lyrics: '...', release_date: '2013-04-15', albumTitle: 'آلبوم تیک تاک', src: '/music/Mohsen Yeganeh - Behet Ghol Midam (320).mp3' },
   { id: '23', title: 'Sokoot', artistId: '2', artistName: 'محسن یگانه', albumId: '101', duration: 260, genre: 'Pop', style: 'Pop', score: 7.9, cover_url: '/photos/محسن یگانه.jpg', lyrics: '...', release_date: '2013-04-15', albumTitle: 'آلبوم تیک تاک', src: '/music/Mohsen Yeganeh - Sokoot (320).mp3' },
-  { id: '30', title: 'Aadat', artistId: '2', artistName: 'ابی', albumId: '103', duration: 280, genre: 'Pop', style: 'Pop', score: 7.4, cover_url: '/photos/ابی.jpg', lyrics: '...', release_date: '2013-04-15', albumTitle: 'آلبوم رویا', src: '/music/Ebi - Aadat.mp3' },
-  { id: '31', title: 'Asir', artistId: '2', artistName: 'ابی', albumId: '103', duration: 280, genre: 'Pop', style: 'Pop', score: 7.4, cover_url: '/photos/ابی.jpg', lyrics: '...', release_date: '2013-04-15', albumTitle: 'آلبوم رویا', src: '/music/Ebi - Asir [320].mp3' },
-  { id: '32', title: 'Delpoosh', artistId: '2', artistName: 'ابی', albumId: '103', duration: 250, genre: 'Pop', style: 'Pop', score: 7.4, cover_url: '/photos/ابی.jpg', lyrics: '...', release_date: '2013-04-15', albumTitle: 'آلبوم رویا', src: '/music/Ebi - Delpoosh [320].mp3' },
-  { id: '33', title: 'Rahi', artistId: '2', artistName: 'ابی', albumId: '103', duration: 220, genre: 'Pop', style: 'Pop', score: 7.4, cover_url: '/photos/ابی.jpg', lyrics: '...', release_date: '2013-04-15', albumTitle: 'آلبوم رویا', src: '/music/Ebi - Do Rahi [320].mp3' },
+  { id: '30', title: 'Aadat', artistId: '4', artistName: 'ابی', albumId: '103', duration: 280, genre: 'Pop', style: 'Pop', score: 7.4, cover_url: '/photos/ابی.jpg', lyrics: '...', release_date: '2013-04-15', albumTitle: 'آلبوم رویا', src: '/music/Ebi - Aadat.mp3' },
+  { id: '31', title: 'Asir', artistId: '4', artistName: 'ابی', albumId: '103', duration: 280, genre: 'Pop', style: 'Pop', score: 7.4, cover_url: '/photos/ابی.jpg', lyrics: '...', release_date: '2013-04-15', albumTitle: 'آلبوم رویا', src: '/music/Ebi - Asir [320].mp3' },
+  { id: '32', title: 'Delpoosh', artistId: '4', artistName: 'ابی', albumId: '103', duration: 250, genre: 'Pop', style: 'Pop', score: 7.4, cover_url: '/photos/ابی.jpg', lyrics: '...', release_date: '2013-04-15', albumTitle: 'آلبوم رویا', src: '/music/Ebi - Delpoosh [320].mp3' },
+  { id: '33', title: 'Rahi', artistId: '4', artistName: 'ابی', albumId: '103', duration: 220, genre: 'Pop', style: 'Pop', score: 7.4, cover_url: '/photos/ابی.jpg', lyrics: '...', release_date: '2013-04-15', albumTitle: 'آلبوم رویا', src: '/music/Ebi - Do Rahi [320].mp3' },
   { id: '40', title: 'Bargaye Narenji', artistId: '3', artistName: 'سیروان خسروی', albumId: '102', duration: 226, genre: 'Pop', style: 'Pop', score: 7.7, cover_url: '/photos/سیروان خسروی.jpg', lyrics: '...', release_date: '2017-09-20', albumTitle: 'آلبوم خاطره', src: '/music/Sirvan Khosravi-Bargaye Narenji.mp3' },
   { id: '60', title: 'Bargaye Narenji', artistId: '3', artistName: 'سیروان خسروی', albumId: '102', duration: 226, genre: 'Pop', style: 'Pop', score: 7.7, cover_url: '/photos/سیروان خسروی.jpg', lyrics: '...', release_date: '2017-09-20', albumTitle: 'آلبوم خاطره', src: '/music/Sirvan Khosravi-Bargaye Narenji.mp3' },
   { id: '70', title: 'Bargaye Narenji', artistId: '3', artistName: 'سیروان خسروی', albumId: '102', duration: 226, genre: 'Pop', style: 'Pop', score: 7.7, cover_url: '/photos/سیروان خسروی.jpg', lyrics: '...', release_date: '2017-09-20', albumTitle: 'آلبوم خاطره', src: '/music/Sirvan Khosravi-Bargaye Narenji.mp3' },

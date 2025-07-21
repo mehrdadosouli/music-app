@@ -1,15 +1,15 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTopSongs } from "~/redux/features/music/musicSlice";
+import { fetchAllAlbum } from "~/redux/features/music/musicSlice";
 import CardSongs from "./CardSongs";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
-export default function TopSongs({ title }) {
-    const { isLoading, error, topSongs } = useSelector(state => state.songs);
+export default function AllAlbum({ title }) {
+    const { isLoading, error, allAlbum } = useSelector(state => state.songs);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [loaded, setLoaded] = useState(false);
-    const [trackDetails, setTrackDetails] = useState(null); // State for track details
+    const [albumDetails, setAlbumDetails] = useState(null); // State for track details
     const dispatch = useDispatch();
 
     const [sliderRef, instanceRef] = useKeenSlider({
@@ -34,12 +34,12 @@ export default function TopSongs({ title }) {
         },
         created(slider) {
             setLoaded(true);
-            setTrackDetails(slider.track.details); // Store track details
+            setAlbumDetails(slider.track.details); // Store track details
         },
     });
 
     useEffect(() => {
-        dispatch(fetchTopSongs());
+        dispatch(fetchAllAlbum());
     }, [dispatch]);
 
     // استفاده از useMemo برای جلوگیری از ساخت مجدد keen-slider
@@ -47,13 +47,13 @@ export default function TopSongs({ title }) {
         return (
             <>
                 <div ref={sliderRef} className="keen-slider">
-                    { topSongs.map(song => (
-                        <div key={song.id} className="keen-slider__slide overflow-hidden rounded-xl">
-                            <CardSongs song={song} />
+                    { allAlbum.map(song => (
+                        <div key={song.id} className="keen-slider__slide overflow-hidden rounded-xl ">
+                            <CardSongs song={song} w="12rem" h='12rem' bg="inherit" rounded="full" txt="center" />
                         </div>
                     ))}
                 </div>
-                {loaded && trackDetails && ( // Check if trackDetails is available
+                {loaded && albumDetails && ( // Check if albumDetails is available
                     <>
                         <Arrow
                             left
@@ -69,14 +69,14 @@ export default function TopSongs({ title }) {
                             }
                             disabled={
                                 currentSlide ===
-                                trackDetails.slides.length - 1
+                                albumDetails.slides.length - 1
                             }
                         />
                     </>
                 )}
             </>
         );
-    }, [topSongs, loaded, currentSlide, instanceRef, sliderRef, trackDetails]); // dependencies for memoization
+    }, [allAlbum, loaded, currentSlide, instanceRef, sliderRef, albumDetails]); // dependencies for memoization
 
     if (error) return <p>خطا: {error}</p>;
 
