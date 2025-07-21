@@ -1,7 +1,7 @@
 
 function Footer() {
   return (
-    <footer className="lg:flex lg:flex-col lg:w-[75%] hidden w-full justify-center bg-bgbody text-primary pt-10 pb-4 px-4 border-t border-gray-700">
+    <footer className="lg:flex lg:flex-col lg:w-[75%] hidden w-full justify-center bg-bgbody text-primary pt-10 pb-4 ps-10 border-t border-gray-700">
       <div className="w-full mx-auto flex flex-col md:flex-row md:justify-between md:items-start gap-10">
         {/* About */}
         <div className="md:w-1/3">

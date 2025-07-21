@@ -52,6 +52,13 @@ export const fetchTrendSongs = createAsyncThunk(
     return uniqueTracks;
   }
 );
+export const fetchBestSongs = createAsyncThunk(
+  "songs/fetchBestSongs",
+  async () => {
+    const bestSong=tracks.filter(music=>music.score >= 9).slice(0,6)
+    return bestSong
+  }
+);
 export const fetchTrackById = createAsyncThunk(
   "song/fetchTrackById",
   async (trackId) => {
@@ -162,6 +169,11 @@ const musicSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(fetchTrackById.fulfilled, (state, action) => {
+        state.track = action.payload;
+        state.trackLoading = false;
+        state.trackError = "";
+      })
+      .addCase(fetchBestSongs.fulfilled, (state, action) => {
         state.track = action.payload;
         state.trackLoading = false;
         state.trackError = "";
