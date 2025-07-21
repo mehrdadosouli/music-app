@@ -54,7 +54,7 @@ export default function TopSongs({ title }) {
             <>
                 <div ref={sliderRef} className="keen-slider">
                     { topSongs.map(song => (
-                        <div key={song.id} className="keen-slider__slide overflow-hidden rounded-xl">
+                        <div key={song.id} className="keen-slider__slide overflow-hidden rounded-xl" data-aos="fade-up">
                             <CardSongs song={song} />
                         </div>
                     ))}
@@ -92,7 +92,7 @@ export default function TopSongs({ title }) {
             {isLoading ? (
                 <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4 mt-5">
                     {[...Array(4)].map((_, index) => (
-                        <div key={index} className="flex flex-col bg-bgcard rounded-xl gap-3 animate-pulse">
+                        <div key={index} className="flex flex-col bg-bgcard rounded-xl gap-3 animate-pulse"  data-aos="fade-up">
                             <div className="w-full h-56 bg-gray-300 rounded-t-xl"></div>
                             <div className="p-4 h-28">
                                 <div className="h-4 bg-gray-300 rounded w-3/4"></div>

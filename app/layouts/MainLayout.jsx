@@ -8,16 +8,18 @@ import AddPlaylistIcon from "~/components/icons/AddPlaylistIcon";
 import HeartIcon from "~/components/icons/HeartIcon";
 import SignIcon from "~/components/icons/SignIcon";
 import ListIcon from "~/components/icons/ListIcon";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import PlayerControll from "~/components/PlayerControll/PlayerControll";
 import { useSelector } from "react-redux";
+import 'aos/dist/aos.css';
 
 export default function MainLayout() {
   const { isPlayerVisible, track } = useSelector((state) => state.songs);
   const [width, setWidth] = useState(0)
   const [toggle, setToggle] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
-  const asideRed = useRef(null)
+  // aos
+  
 
   useEffect(() => {
     // Set initial width before component mounts
@@ -51,9 +53,10 @@ export default function MainLayout() {
     }
   }, [width, isLoaded])
 
-  const MenuHandler = () => {
-    setToggle(!toggle)
-  }
+  const MenuHandler = useCallback(() => {
+    setToggle(prevToggle => !prevToggle);
+  }, []);
+
   const closeHandler = (e) => {
     setToggle(false)
   }
@@ -69,12 +72,12 @@ export default function MainLayout() {
         <Footer />
       </div>
       {/* همبرگر آیکون فقط در موبایل */}
-      {isLoaded && width < 1024 && <img src="/photos/hamburgermenu.png" style={{ position: "fixed", top: "1%", left: "8%", width: "25px", height: "25px", margin: "1rem -1rem", zIndex: "100000", cursor: "pointer" }} onClick={MenuHandler} />}
+      {isLoaded && width < 1024 && <img src="/photos/hamburgermenu.png" style={{ position: "fixed", top: "1%", left: "8%", width: "25px", height: "25px", margin: "1rem -1rem", zIndex: "104", cursor: "pointer" }} onClick={MenuHandler} />}
 
       {/* Sidebar */}
       {isLoaded && (
         <>
-          <aside className={`fixed top-0 flex flex-col gap-7 px-3 h-full z-[9999999999999999999] overflow-y-auto pb-10 bg-bgbody pe-5 ${width < 1024
+          <aside className={`fixed top-0 flex flex-col gap-7 px-3 h-full md:z-0 z-[105] overflow-y-auto pb-10 bg-bgbody pe-5 ${width < 1024
             ? (toggle ? "left-0 w-[20rem]" : "-left-[20rem]") + " transition-all duration-300 ease-in-out"
             : "left-0 w-[20%]"
             }`}>
@@ -120,6 +123,6 @@ export default function MainLayout() {
 
 function Overlay({ visible, onClose }) {
   return (
-    <div onClick={onClose} aria-hidden={!visible} className={`lg:hidden fixed inset-0 bg-red-100/50 z-[100] transition-all duration-200 ease-in-out transform ${visible ? 'opacity-100 pointer-events-auto translate-x-0' : 'opacity-0 pointer-events-none -translate-x-full'}`} />
+    <div onClick={onClose} aria-hidden={!visible} className={`lg:hidden fixed inset-0 bg-red-100/50 z-[104] transition-all duration-200 ease-in-out transform ${visible ? 'opacity-100 pointer-events-auto translate-x-0' : 'opacity-0 pointer-events-none -translate-x-full'}`} />
   );
 }

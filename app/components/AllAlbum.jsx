@@ -54,7 +54,7 @@ export default function AllAlbum({ title }) {
             <>
                 <div ref={sliderRef} className="keen-slider">
                     { allAlbum.map(song => (
-                        <div key={song.id} className="keen-slider__slide overflow-hidden rounded-xl ">
+                        <div key={song.id} className="keen-slider__slide overflow-hidden rounded-xl " data-aos="flip-right" data-aos-offset="1000">
                             <CardSongs song={song} w="12rem" h='12rem' bg="inherit" rounded="full" txt="center" />
                         </div>
                     ))}
