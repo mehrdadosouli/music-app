@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import PlayIconmusic from "~/components/icons/PlayIconmusic";
-import { pauseAudio, playAudio } from "~/redux/features/music/musicSlice";
+import { fetchTrackById, pauseAudio, playAudio } from "~/redux/features/music/musicSlice";
 
 export default function ButtonMusic({ track, bg = false }) {
   const dispatch = useDispatch();
@@ -8,15 +8,17 @@ export default function ButtonMusic({ track, bg = false }) {
 
   // مقایسه بر اساس src به جای id
   const isCurrentTrack = currentAudio?.src === track.src;
-
+  
   const handleTogglePlay = () => {
     if (isPlaying && isCurrentTrack) {
       dispatch(pauseAudio());
     } else {
       dispatch(playAudio(track));
+      // dispatch(fetchTrackById(track.albumId))
       document.body.classList.add('noScroll');
     }
   };
+  
 
   return (
     <button

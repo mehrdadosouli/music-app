@@ -12,15 +12,17 @@ import { useCallback, useEffect, useState } from "react";
 import PlayerControll from "~/components/PlayerControll/PlayerControll";
 import { useSelector } from "react-redux";
 import 'aos/dist/aos.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export default function MainLayout() {
   const { isPlayerVisible, track } = useSelector((state) => state.songs);
   const [width, setWidth] = useState(0)
   const [toggle, setToggle] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
-  // aos
+  // aos  
+  console.log(track);
   
-
   useEffect(() => {
     // Set initial width before component mounts
     setWidth(window.innerWidth)
@@ -66,6 +68,18 @@ export default function MainLayout() {
       <div className="w-full flex flex-col flex-1">
         <Header />
         <main className="lg:w-[80%] w-full flex-1 px-10 flex flex-col">
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
           {isPlayerVisible && <PlayerControll track={track} open={isPlayerVisible} />}
           <Outlet />
         </main>

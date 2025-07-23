@@ -2,6 +2,7 @@ import ButtonMusic from "~/utils/ButtonMusic";
 import { formatDuration } from "~/utils/formatDuration";
 
 export default function TrackItem({ track }) {    
+
     return (
         <div className="flex bg-bgcard rounded-md px-2 shadow-sm items-center ">
             {track && <ButtonMusic bg={true} track={track} />}

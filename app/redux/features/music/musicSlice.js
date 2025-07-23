@@ -12,14 +12,17 @@ const initialState = {
   topSongs: [],
   allSong: [],
   allAlbum:[],
+  albumDetail:[],
   myFavorite: [],
   isLoading: false,
   error: "",
   track: null,
+  trend: null,
   trackLoading: false,
   trackError: "",
   theme: "dark",
   btn: false,
+  searchTrack:""
 };
 function getuniqueAlbumes(tracks) {
   const uniqueAlbume = {};
@@ -59,8 +62,23 @@ export const fetchBestSongs = createAsyncThunk(
     return bestSong
   }
 );
+export const fetchAllSongs = createAsyncThunk(
+  "songs/fetchAllSongs",
+  async () => {
+    return tracks
+  }
+);
 export const fetchTrackById = createAsyncThunk(
   "song/fetchTrackById",
+  async (trackId) => {
+    const album = albums.find((a) => a.id === trackId);
+    if (!album) return null;
+    const albumTracks = tracks.filter((t) => t.albumId === album.id);
+    return { ...album, tracks: albumTracks };
+  }
+);
+export const fetchAlbumDetail = createAsyncThunk(
+  "song/fetchAlbumDetail",
   async (trackId) => {
     const album = albums.find((a) => a.id === trackId);
     if (!album) return null;
@@ -78,6 +96,12 @@ const musicSlice = createSlice({
       } else {
         state.btn = false;
       }
+    },
+    setSearchTrack: (state, action) => {
+      state.searchTrack = action.payload;
+    },
+    setTrackListMusic: (state, action) => {
+      state.track = action.payload;
     },
     playAudio: (state, action) => {
       state.currentAudio = action.payload;
@@ -143,7 +167,7 @@ const musicSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(fetchTrendSongs.fulfilled, (state, action) => {
-        state.track = action.payload;
+        state.trend = action.payload;
         state.isLoading = false;
         state.error = "";
       })
@@ -173,7 +197,15 @@ const musicSlice = createSlice({
         state.trackLoading = false;
         state.trackError = "";
       })
+      .addCase(fetchAlbumDetail.fulfilled, (state, action) => {
+        state.albumDetail = action.payload;
+      })
       .addCase(fetchBestSongs.fulfilled, (state, action) => {
+        state.track = action.payload;
+        state.trackLoading = false;
+        state.trackError = "";
+      })
+      .addCase(fetchAllSongs.fulfilled, (state, action) => {
         state.track = action.payload;
         state.trackLoading = false;
         state.trackError = "";
@@ -192,5 +224,7 @@ export const {
   setPlayerVisibility,
   nextMusicBtn,
   prevMusicBtn,
+  setTrackListMusic,
+  setSearchTrack
 } = musicSlice.actions;
 export default musicSlice.reducer;

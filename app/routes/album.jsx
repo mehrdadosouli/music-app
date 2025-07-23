@@ -14,7 +14,6 @@ export function meta() {
 export default function Albums() {
   const { allAlbum } = useSelector(state => state.songs);
   const dispatch = useDispatch();
-  console.log(allAlbum);
 
   useEffect(() => {
     dispatch(fetchAllAlbum());

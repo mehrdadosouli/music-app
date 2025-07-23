@@ -1,17 +1,16 @@
 import { useDispatch } from "react-redux";
 import CloseBtn from "../icons/CloseIcon";
 import MinusIcon from "../icons/MinusIcon";
-import { actionBtn, pauseAudio, setPlayerVisibility } from "~/redux/features/music/musicSlice";
+import { actionBtn, pauseAudio, setPlayerVisibility, setTrackListMusic } from "~/redux/features/music/musicSlice";
 
 export default function PlayerControllNavbar({ track }) {
   const dispatch = useDispatch()
   const buttonHandler = () => {
     dispatch(actionBtn(true))
     dispatch(pauseAudio())
-    setTimeout(() => {
+    dispatch(setTrackListMusic([]))      
       dispatch(setPlayerVisibility(false))
       document.body.classList.remove('noScroll');
-    }, 10);
   }
   return (
     <div className="fixed left-5 right-5 mx-auto flex justify-between items-center p-5 z-[103] rounded-2xl bg-black">
