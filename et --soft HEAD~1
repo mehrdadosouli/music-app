@@ -1,0 +1,266 @@
+[33mcommit efcfeb6a40c1d7a2d2172be723c895cf15390687[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Thu Jul 24 17:06:47 2025 +0330
+
+    ADD MUSIC NEW
+
+[33mcommit da4d7bac0a2c473a4d00c42c45d4c0b6f1039494[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Thu Jul 24 16:59:56 2025 +0330
+
+    add music new
+
+[33mcommit 437cfce3689cf1e96e808b31218562918b1fd755[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Wed Jul 23 17:16:45 2025 +0330
+
+    fixed and debog searchHeader
+    set search header
+    fixed trending component
+
+[33mcommit a3059d18fb3dd271b691995f3ac89e78e2c932c0[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Tue Jul 22 10:31:18 2025 +0330
+
+    set contact us page
+    edite aboute us ui
+
+[33mcommit 82fe6731fad17c384d46bad7b0d71ea3781eefe6[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Tue Jul 22 09:13:15 2025 +0330
+
+    set about us page
+
+[33mcommit 0248d881c8a8adecc066b6292be331dcce37d344[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Mon Jul 21 17:12:47 2025 +0330
+
+    fixed z-index
+    install aos animation and set home page
+
+[33mcommit 2a7055e4074016e72587944362398717b53908a6[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Mon Jul 21 13:54:52 2025 +0330
+
+    set overlay for menu mainlayout component
+    set responsive mobile min-width:200px for keenslider
+
+[33mcommit ea57b2dd61ef1f6e63c15382166465d4fab91221[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Mon Jul 21 11:06:29 2025 +0330
+
+    set page artist
+
+[33mcommit 5e15f2f1b35de6432b200d5dccc8663a8f905a7b[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Mon Jul 21 10:26:14 2025 +0330
+
+    set page album
+    set and change name albumDetail
+
+[33mcommit 2bc5c484b601235e1b0c74aa133400538338adf0[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Mon Jul 21 08:24:49 2025 +0330
+
+    set AllAlbum component
+    fix mockData file js
+    responsive and fix CardSongs component
+    change name component to CardSongs
+
+[33mcommit 651f0144a4e202aba9b818663790c3df5837783f[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Sun Jul 20 10:38:08 2025 +0330
+
+    fixed and debog trending song component
+
+[33mcommit 223db591c6f25c5b99376b88cf93f93bc302b31b[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Thu Jul 17 17:19:32 2025 +0330
+
+    fixed
+
+[33mcommit d4c8180a40fec462c0ab3aa6456aeabd745d3bf2[m
+Merge: 9ef7d33 b9baa51
+Author: mehrdad Osouli Saran <mehrdadosoulisaran@gmail.com>
+Date:   Wed Jul 16 22:59:43 2025 +0330
+
+    Merge branch 'main' of https://github.com/mehrdadosouli/music-app into minimise-musicplayer
+
+[33mcommit b9baa51f9aad9f3314cb700f7c28f082e99794c9[m
+Author: mehrdad Osouli Saran <mehrdadosoulisaran@gmail.com>
+Date:   Wed Jul 16 22:44:53 2025 +0330
+
+    fixed player
+
+[33mcommit 9ef7d338ca0c3c0bf4651aeb95287c4ada3ed839[m[33m ([m[1;31morigin/minimise-musicplayer[m[33m, [m[1;32mminimise-musicplayer[m[33m)[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Wed Jul 16 17:20:30 2025 +0330
+
+    add player for home page
+
+[33mcommit 17688338221aa0ca5fc51c1728f670d0760192f7[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Wed Jul 16 16:59:17 2025 +0330
+
+    set trending songs
+
+[33mcommit 3737c76e32531131ac570cdbd0d1cd80277bfdf7[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Wed Jul 16 16:02:13 2025 +0330
+
+    add and fixed music src
+    fixed responsive for mobile
+
+[33mcommit 312e9a18fb5621d94aad3eae2e0e3768d1513fb0[m
+Author: mehrdad Osouli Saran <mehrdadosoulisaran@gmail.com>
+Date:   Tue Jul 15 18:30:27 2025 +0330
+
+    fixed musiccontroll when play and pause music  get to current time music
+
+[33mcommit f60ee6f5a3350db6245a02973963bd1dde272812[m
+Author: mehrdad Osouli Saran <mehrdadosoulisaran@gmail.com>
+Date:   Tue Jul 15 00:10:16 2025 +0330
+
+    changes
+
+[33mcommit 2a178429b30f33d45a1a3c1e4bcafadcc126f672[m
+Author: mehrdad Osouli Saran <mehrdadosoulisaran@gmail.com>
+Date:   Mon Jul 14 23:52:24 2025 +0330
+
+    Remove all .tsx files and migrate to .jsx
+
+[33mcommit 733541981818916fa2e0fae43b67ac56bafcac5a[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Mon Jul 14 10:40:22 2025 +0330
+
+    add file types
+
+[33mcommit 72704bd6fb729cce159d5e2d6050967c3e5b7432[m
+Author: mehrdad Osouli Saran <mehrdadosoulisaran@gmail.com>
+Date:   Fri Jul 11 23:57:56 2025 +0330
+
+    transform files backend to front
+
+[33mcommit 90d1d1aa7c3c483595f5e34343ca2a68c6b26ce5[m
+Author: mehrdad Osouli Saran <mehrdadosoulisaran@gmail.com>
+Date:   Fri Jul 11 23:55:43 2025 +0330
+
+    transform file backend to front
+
+[33mcommit 37b90c8d23265265bc95f177f57408e8600bde34[m
+Author: mehrdad Osouli Saran <mehrdadosoulisaran@gmail.com>
+Date:   Fri Jul 11 14:28:37 2025 +0330
+
+    fix and response footer
+
+[33mcommit a5c44568058914ee781badb78d4e11acdadeb3ac[m
+Author: mehrdad Osouli Saran <mehrdadosoulisaran@gmail.com>
+Date:   Fri Jul 11 13:51:32 2025 +0330
+
+    set handleskip10 sec for desktop musiccontroll
+    fix and debog musiccontroll
+
+[33mcommit a7c5c83f52dcadb5e637adcf84a1d14f5344cca7[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Thu Jul 10 17:01:18 2025 +0330
+
+    ..musiccontrol
+
+[33mcommit 2d0c460b3823248b80efa5a6050f4e89a73b5fac[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Thu Jul 10 11:22:45 2025 +0330
+
+    set response for mobile components (listmusicalbum and trackitem and detailtrack)
+
+[33mcommit 23e19802c075eb4a69160ff03cf5973052dad53a[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Thu Jul 10 10:47:22 2025 +0330
+
+    fixed sticky topsong card
+
+[33mcommit 9ebb6461e2b374e7c8296a7b43e4fd3a91aa2c04[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Thu Jul 10 09:19:03 2025 +0330
+
+    install keen-slider
+    and set slider for topsong component
+
+[33mcommit 36dfbaad7ee591f2b2db1167db925f4ead5d6599[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Thu Jul 10 07:57:37 2025 +0330
+
+    fixed menu and header icon color
+
+[33mcommit fe9870f2d818edbe7285cb8d9739c14865f67f38[m
+Author: mehrdad Osouli Saran <mehrdadosoulisaran@gmail.com>
+Date:   Mon Jul 7 22:39:27 2025 +0330
+
+    fixed menu
+
+[33mcommit b292e973349d73f2814be6d24897edd2ca2c71c8[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Mon Jul 7 17:16:44 2025 +0330
+
+    set menu footer for mobile and tablet
+
+[33mcommit 4524fef81b3d97f123b0990cc6c6d9f8a42ba096[m
+Author: mehrdad Osouli Saran <mehrdadosoulisaran@gmail.com>
+Date:   Mon Jul 7 08:24:01 2025 +0330
+
+    change detail, tailwind config, layout and topsongs
+
+[33mcommit 4e91ec5b5c4598a816d441954f2ecb2300e38d00[m
+Author: mehrdad Osouli Saran <mehrdadosoulisaran@gmail.com>
+Date:   Sat Jul 5 14:46:13 2025 +0330
+
+    fixed header code
+
+[33mcommit 0bc88e360c2d75faef97777ca2cf2868e7483a09[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Thu Jul 3 17:18:26 2025 +0330
+
+    fixed grid cardtopsong
+
+[33mcommit 942ca8a044e31ed0ad3a6defb2588d05ce3b870a[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Thu Jul 3 17:06:16 2025 +0330
+
+    fixed and set responsive for header main menu
+
+[33mcommit 2859669db189730db299c495e3d077b02b5168d8[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Thu Jul 3 13:14:06 2025 +0330
+
+    set response menu mobile asidebar
+
+[33mcommit 20890fca7feaa0bdb42876a1f0c8944f037c96bf[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Wed Jul 2 14:26:07 2025 +0330
+
+    set volume input for music
+
+[33mcommit eee289cf553f536f45068f8f88ac722363078c75[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Tue Jul 1 13:29:03 2025 +0330
+
+    set time line music
+
+[33mcommit 1f2d407acc34f2ac4239cbae9513b774e90f5b11[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Tue Jul 1 08:17:29 2025 +0330
+
+    .
+
+[33mcommit e4df49959adc62c6dcba109f4f378cb29d94c303[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Tue Jul 1 08:17:02 2025 +0330
+
+    .
+
+[33mcommit 8f2450f765012c88b83471b6774afc889ee559b9[m
+Author: mehrdad <mehrdadosoulisaran@gmail.com>
+Date:   Tue Jul 1 08:16:02 2025 +0330
+
+    .
+
+[33mcommit 142b6e8
