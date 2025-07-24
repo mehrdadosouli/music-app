@@ -4,6 +4,7 @@ export const albums = [
   { id: '102',albumId: '102',artistName:'سیروان خسروی' ,title: 'آلبوم خاطره', artistId: '3', release_date: '2017-09-20', cover_url: '/photos/سیروان خسروی.jpg', description: "آلبوم خاطره انگیز از سیروان" },
   { id: '103',albumId: '103',artistName:'ابی' ,title: 'آلبوم رویا', artistId: '4', release_date: '2019-05-10', cover_url: '/photos/ابی.jpg', description: "آلبوم رویا از ابی" },
   { id: '104',albumId: '104',artistName:'همایون شجریان' ,title: 'آلبوم آرایش غلیظ', artistId: '5', release_date: '2014-06-01', cover_url: '/photos/همایون شجریان.jpg', description: "آلبوم ز غلیظ از همایون شجریان" },
+  { id: '105',albumId: '105',artistName:'حامد برادران' ,title: 'آلبوم اعتماد', artistId: '6', release_date: '2018-06-01', cover_url: '/photos/حامد برادران.jpg', description: "آلبوم اعتماد از حامد برادران" },
 ];
 
 export const tracks = [
@@ -27,6 +28,10 @@ export const tracks = [
   { id: '18', title: 'Az Doost Dashtan', artistId: '5', artistName: 'همایون شجریان', albumId: '104', duration: 280, genre: 'Fusion', style: 'Fusion', score: 8.5, cover_url: '/photos/همایون شجریان.jpg', lyrics: '...', release_date: '2014-06-01', albumTitle: 'آلبوم آرایش غلیظ', src: '/music/Homayoun Shajaryan - Az Doost Dashtan (320).mp3' },
   { id: '19', title: 'Jahane Setam', artistId: '5', artistName: 'همایون شجریان', albumId: '104', duration: 270, genre: 'Fusion', style: 'Fusion', score: 8.5, cover_url: '/photos/همایون شجریان.jpg', lyrics: '...', release_date: '2014-06-01', albumTitle: 'آلبوم آرایش غلیظ', src: '/music/Homayoun Shajarian - Jahane Setam (320).mp3' },
   { id: '20', title: 'Yadegare Omr', artistId: '5', artistName: 'همایون شجریان', albumId: '104', duration: 220, genre: 'Fusion', style: 'Fusion', score: 8.5, cover_url: '/photos/همایون شجریان.jpg', lyrics: '...', release_date: '2014-06-01', albumTitle: 'آلبوم آرایش غلیظ', src: '/music/Homayoun Shajaryan - Yadegare Omr (320).mp3' },
+  { id: '21', title: 'Delam Gire', artistId: '6', artistName: 'حامد برادران', albumId: '105', duration: 220, genre: 'Fusion', style: 'Fusion', score: 8.5, cover_url: '/photos/حامد برادران.jpg', lyrics: '...', release_date: '2014-06-01', albumTitle: 'آلبوم اعتماد', src: '/music/Hamed Baradaran - Delam Gire.mp3' },
+  { id: '22', title: 'Deltang', artistId: '6', artistName: 'حامد برادران', albumId: '105', duration: 220, genre: 'Fusion', style: 'Fusion', score: 8.5, cover_url: '/photos/حامد برادران.jpg', lyrics: '...', release_date: '2014-06-01', albumTitle: 'آلبوم اعتماد', src: '/music/Hamed Baradaran - Deltang (New Version).mp3' },
+  { id: '23', title: 'Ma Do Nafar', artistId: '6', artistName: 'حامد برادران', albumId: '105', duration: 220, genre: 'Fusion', style: 'Fusion', score: 8.5, cover_url: '/photos/حامد برادران.jpg', lyrics: '...', release_date: '2014-06-01', albumTitle: 'آلبوم اعتماد', src: '/music/Hamed Baradaran - Ma Do Nafar.mp3' },
+  { id: '24', title: 'Mahe Man', artistId: '6', artistName: 'حامد برادران', albumId: '105', duration: 220, genre: 'Fusion', style: 'Fusion', score: 8.5, cover_url: '/photos/حامد برادران.jpg', lyrics: '...', release_date: '2014-06-01', albumTitle: 'آلبوم اعتماد', src: '/music/Hamed Baradaran - Mahe Man.mp3' },
 ];
 
 export const artists = [
@@ -35,4 +40,5 @@ export const artists = [
   { id: '3', name: 'سیروان خسروی', bio: 'خواننده خاطره انگیز.', photo: '/photos/سیروان خسروی.jpg' },
   { id: '4', name: 'ابی', bio: 'خواننده آلبوم رویا.', photo: '/photos/ابی.jpg' },
   { id: '5', name: 'همایون شجریان', bio: 'خواننده و نوازنده موسیقی سنتی ایرانی.', photo: '/photos/همایون شجریان.jpg' },
+  { id: '6', name: 'حامد برادران', bio: 'خواننده و نوازنده موسیقی پاپ ایرانی.', photo: '/photos/حامد برادران.jpg' },
 ]; 
