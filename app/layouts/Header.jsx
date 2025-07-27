@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import Menu from "~/components/Menu";
 import SearchHeader from "~/components/SearchHeader";
 import SearchIcon from "~/components/icons/SearchIcon";
-import { fetchTrackById, setSearchTrack, setTheme, setTrackListMusic, toggleTheme } from "~/redux/features/music/musicSlice";
+import { setSearchTrack, setTheme, setTrackListMusic, toggleTheme } from "~/redux/features/music/musicSlice";
 import { albums, tracks } from '~/data/mockData';
 import ListMusicOfAlbum from "~/components/ListMusicOfAlbum";
 import CloseBtn from "~/components/icons/CloseIcon";
@@ -110,12 +110,12 @@ function Header() {
   };
 
   return (
-    <div className={`lg:w-[75%] w-full flex justify-between items-center fixed ${background ? 'bg-gray-200/50' : ''} lg:top-10 top-6 lg:p-2 mx-10 rounded-full z-50 ${scrollY ? 'lg:backdrop-blur-xl' : ''}`}>
+    <div className={`lg:w-[75%] w-full flex justify-between items-center fixed ${background && 'bg-gray-200/50' } lg:top-10 top-6 lg:p-2 mx-10 rounded-full z-50 ${scrollY ? 'lg:backdrop-blur-xl' : ''}`}>
       <div className="lg:flex hidden gap-5">
         <Link className="w-40 h-8 rounded-sm flex justify-center items-center text-white bg-primary hover:text-primary hover:bg-white border border-primary transition-all" to="/signup">Sign Up</Link>
         <Link className="w-40 h-8 rounded-sm flex justify-center items-center text-primary border border-primary hover:text-white hover:bg-primary transition-all" to="/login">Login</Link>
       </div>
-      <Menu className="hidden lg:flex" />
+      <Menu />
       <SearchHeader searchClickHandler={searchClickHandler} search={searchs} setSearch={setSearch} width={width} />
       <div className="flex items-center gap-3">
         {width <= 1024 && <SearchIcon clickHandler={searchClickHandler} />}

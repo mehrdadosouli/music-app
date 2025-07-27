@@ -91,7 +91,7 @@ export default function MainLayout() {
       {/* Sidebar */}
       {isLoaded && (
         <>
-          <aside className={`fixed top-0 flex flex-col gap-7 px-3 h-full md:z-0 z-[105] overflow-y-auto pb-10 bg-bgbody pe-5 ${width < 1024
+          <aside className={`fixed top-0 flex flex-col gap-7 px-3 h-full lg:z-0 z-[106] overflow-y-auto pb-10 bg-bgbody pe-5 ${width < 1024
             ? (toggle ? "left-0 w-[20rem]" : "-left-[20rem]") + " transition-all duration-300 ease-in-out"
             : "left-0 w-[20%]"
             }`}>
