@@ -278,7 +278,7 @@ export default function MusicControll() {
                             </div>
                         </div>
                         <div className="flex size-10 justify-center items-center">
-                            <div className="hover:cursor-pointer relative group" onMouseEnter={() => setShowSound(true)} onMouseLeave={() => setShowSound(false)}>
+                            <div className="hover:cursor-pointer relative group" onClick={()=>setShowSound(!showSound)} >
                                 <Sound />
                                 {
                                     showSound && (
