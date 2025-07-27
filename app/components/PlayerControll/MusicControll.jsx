@@ -172,10 +172,10 @@ export default function MusicControll() {
                                     <path d="M7 6.931C7 5.865 7.853 5 8.905 5h6.19C16.147 5 17 5.865 17 6.931V19l-5-4-5 4V6.931Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                 </svg>
                             </button>
-                            <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Previous" onClick={prevMusicHandler}>
+                            <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Next" onClick={nextMusicHandler}>
                                 <svg width="24" height="24" fill="none">
-                                    <path d="m10 12 8-6v12l-8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                    <path d="M6 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    <path d="M14 12 6 6v12l8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    <path d="M18 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                 </svg>
                             </button>
                             <button type="button" aria-label="Rewind 10 seconds" onClick={handleRewind10}>
@@ -209,10 +209,11 @@ export default function MusicControll() {
                                     <path d="M19 5v3.111c0 .491-.398.889-.889.889H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                 </svg>
                             </button>
-                            <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Next" onClick={nextMusicHandler}>
+                            
+                            <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Previous" onClick={prevMusicHandler}>
                                 <svg width="24" height="24" fill="none">
-                                    <path d="M14 12 6 6v12l8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                    <path d="M18 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    <path d="m10 12 8-6v12l-8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                    <path d="M6 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                 </svg>
                             </button>
                             <button type="button" className="rounded-lg text-xs leading-6 font-semibold px-2 ring-2 ring-inset ring-white text-white transition-all duration-500 ">

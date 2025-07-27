@@ -6,7 +6,7 @@ import { useLocation } from "react-router";
 
 export default function TrendingSongs({ title }) {
     const dispatch = useDispatch()
-    const { isLoading, trend, isPlayerVisible,searchTrack } = useSelector(state => state.songs);
+    const { isLoading, trend, isPlayerVisible, searchTrack } = useSelector(state => state.songs);
     const titleArray = title.split(" ");
     const lastChar = titleArray[titleArray.length - 1]
     const { pathname } = useLocation()
@@ -14,15 +14,14 @@ export default function TrendingSongs({ title }) {
     useEffect(() => {
         dispatch(fetchTrendSongs());
     }, [dispatch])
-    console.log(searchTrack == "");
 
     useEffect(() => {
         if (trend && trend.length > 0 && pathname === "/" && isPlayerVisible && searchTrack == "") {
-            dispatch(setTrackListMusic(trend));
-        }else{
+            dispatch(setTrackListMusic({ tracks: trend }));
+        } else {
             dispatch(setTrackListMusic([]));
         }
-    }, [trend, pathname, dispatch, isPlayerVisible,searchTrack]);
+    }, [trend, pathname, dispatch, isPlayerVisible, searchTrack]);
 
     return (
         <div>
