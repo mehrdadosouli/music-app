@@ -15,8 +15,6 @@ export function meta() {
 export default function albumDetail() {
   const { trackError, trackLoading, albumDetail,track } = useSelector(state => state.songs)
   const { trackId } = useParams();
-  console.log(trackId);
-
   const dispatch = useDispatch()
 
   useEffect(() => {

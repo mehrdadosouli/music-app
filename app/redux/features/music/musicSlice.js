@@ -22,7 +22,8 @@ const initialState = {
   trackError: "",
   theme: "dark",
   btn: false,
-  searchTrack:""
+  searchTrack:"",
+  minusMusic:false
 };
 function getuniqueAlbumes(tracks) {
   const uniqueAlbume = {};
@@ -103,6 +104,9 @@ const musicSlice = createSlice({
     setTrackListMusic: (state, action) => {
       state.track = action.payload;
     },
+    setMinustMusic: (state, action) => {
+      state.minusMusic = action.payload;
+    },
     playAudio: (state, action) => {
       state.currentAudio = action.payload;
       state.isPlaying = true;
@@ -144,7 +148,7 @@ const musicSlice = createSlice({
       if (findindexTrack == -1) {
         return;
       }
-      const prevIndex = (findindexTrack - 1 + alltracks.tracks ? alltracks.tracks.length : alltracks.length) % (alltracks.tracks ? alltracks?.tracks?.length : alltracks.length)
+      const prevIndex = ((findindexTrack - 1 + (alltracks.tracks ? alltracks.tracks.length : alltracks.length)) % (alltracks.tracks ? alltracks.tracks.length : alltracks.length));
       state.currentAudio = alltracks.tracks ? alltracks.tracks[prevIndex] : alltracks[prevIndex];
     },
     setTheme(state, action) {
@@ -228,6 +232,7 @@ export const {
   nextMusicBtn,
   prevMusicBtn,
   setTrackListMusic,
-  setSearchTrack
+  setSearchTrack,
+  setMinustMusic
 } = musicSlice.actions;
 export default musicSlice.reducer;

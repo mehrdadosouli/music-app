@@ -32,6 +32,9 @@ module.exports = {
       boxShadow: {
         bottom: "5px 9px 9px 2px rgba(0,0,0,0.75)",
       },
+      spacing:{
+        '86' : '22vw' 
+      }
     },
   },
   plugins: [],

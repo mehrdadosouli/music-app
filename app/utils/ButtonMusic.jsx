@@ -15,7 +15,7 @@ export default function ButtonMusic({ track, bg = false }) {
     } else {
       dispatch(playAudio(track));
       // dispatch(fetchTrackById(track.albumId))
-      document.body.classList.add('noScroll');
+      // document.body.classList.add('noScroll');
     }
   };
   

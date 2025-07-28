@@ -72,6 +72,9 @@ body {
     background: linear-gradient(to right, #0b77b3, #053754);
     background: -webkit-linear-gradient(to right, #0b77b3, #053754);
   }
+
+
+  /* player open */
   .playerControllOpen {
     animation-name: controllOpen;
     animation-duration: 1s;
@@ -91,6 +94,7 @@ body {
       opacity: 1;
     }
   }
+  /* player close */
   .playerControllClose {
     animation-name: controllClose;
     animation-duration: 1s;
