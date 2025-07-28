@@ -21,7 +21,6 @@ export default function MainLayout() {
   const [toggle, setToggle] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   // aos  
-  console.log(track);
   
   useEffect(() => {
     // Set initial width before component mounts

@@ -1,8 +1,7 @@
 import SearchIcon from './icons/SearchIcon';
 
 function SearchHeader({ searchClickHandler, setSearch, search, width }) {
-  if (width <= 1024) return null;
-
+  if (width <= 1024) return null;  
   return (
     <div className='w-full border-green-300 border-solid relative'>
       <input
@@ -13,7 +12,7 @@ function SearchHeader({ searchClickHandler, setSearch, search, width }) {
         placeholder="اهنگ مورد نظرتان را سرچ کنید"
       />
       <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-        <SearchIcon clickHandler={searchClickHandler} />
+        <SearchIcon searchClickHandler={searchClickHandler} width={width} setSearch={setSearch} search={search} />
       </div>
     </div>
   );

@@ -116,9 +116,9 @@ function Header() {
         <Link className="w-40 h-8 rounded-sm flex justify-center items-center text-primary border border-primary hover:text-white hover:bg-primary transition-all" to="/login">Login</Link>
       </div>
       <Menu />
-      <SearchHeader searchClickHandler={searchClickHandler} search={searchs} setSearch={setSearch} width={width} />
+      {width && <SearchHeader searchClickHandler={searchClickHandler} search={searchs} setSearch={setSearch} width={width} /> }
       <div className="flex items-center gap-3">
-        {width <= 1024 && <SearchIcon clickHandler={searchClickHandler} />}
+        {width && width <= 1024 && <SearchIcon searchClickHandler={searchClickHandler} search={searchs} setSearch={setSearch} width={width} />}
         <button className='text-primarytxt' onClick={clickHandler}>
           {theme === "light" ? (
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="size-6">
@@ -131,7 +131,7 @@ function Header() {
           )}
         </button>
       </div>
-      <div className={`${trackSearch.length ? "fixed" : "hidden"} top-32 w-[73rem] h-96 overflow-y-scroll bg-bgplayercontroll z-[999999999]`}>
+      <div className={`${trackSearch.length ? "fixed" : "hidden"} top-32 w-[85%]  h-96 overflow-y-scroll bg-bgplayercontroll z-[999999999]`}>
         {trackSearch.length ? (
           <div>
             <span className="p-2 inline-flex rounded-full bg-bgplayercontroll fixed top-28 right-8" onClick={closeHandler}><CloseBtn /></span>

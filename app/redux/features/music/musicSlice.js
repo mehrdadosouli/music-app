@@ -121,28 +121,31 @@ const musicSlice = createSlice({
       state.duration = action.payload;
     },
     nextMusicBtn: (state, action) => {
-      const alltracks = state.track;
-      const findindexTrack = alltracks.tracks.findIndex(
+      const alltracks = state.track;      
+      const findindexTrack = alltracks.tracks ? alltracks.tracks.findIndex(
+        (item) => item.id === action.payload.id
+      ) : alltracks.findIndex(
         (item) => item.id === action.payload.id
       );
       if (findindexTrack === -1) {
         return;
       }
-      const nextIndex = (findindexTrack + 1) % alltracks.tracks.length;
-      state.currentAudio = alltracks.tracks[nextIndex];
+      const nextIndex = (findindexTrack + 1) % (alltracks.tracks ? alltracks?.tracks?.length : alltracks.length);
+      
+      state.currentAudio = alltracks.tracks ? alltracks?.tracks[nextIndex] : alltracks[nextIndex];
     },
     prevMusicBtn: (state, action) => {
       const alltracks = state.track;
-      const findindexTrack = alltracks.tracks.findIndex(
+      const findindexTrack = alltracks.tracks ? alltracks.tracks.findIndex(
+        (item) => item.id === action.payload.id
+      ) : alltracks.findIndex(
         (item) => item.id === action.payload.id
       );
       if (findindexTrack == -1) {
         return;
       }
-      const prevIndex =
-        (findindexTrack - 1 + alltracks.tracks.length) %
-        alltracks.tracks.length;
-      state.currentAudio = alltracks.tracks[prevIndex];
+      const prevIndex = (findindexTrack - 1 + alltracks.tracks ? alltracks.tracks.length : alltracks.length) % (alltracks.tracks ? alltracks?.tracks?.length : alltracks.length)
+      state.currentAudio = alltracks.tracks ? alltracks.tracks[prevIndex] : alltracks[prevIndex];
     },
     setTheme(state, action) {
       state.theme = action.payload;
