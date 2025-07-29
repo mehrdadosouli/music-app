@@ -1,37 +1,29 @@
-import ReactPaginate from 'react-paginate';
+import ReactPaginate from "react-paginate";
 
-function PaginatedItems({ itemsPerPage }) {
-  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-
-  const [itemOffset, setItemOffset] = useState(0);
-
-  const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / itemsPerPage);
-
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
-  };
-
+export default function Pagination({
+  pageCount,
+  currentPage,
+  handlePageChange,
+}) {
   return (
-    <>
-      <Items currentItems={currentItems} />
+    <div className="flex justify-center mt-12">
       <ReactPaginate
+        forcePage={currentPage}
         breakLabel="..."
-        nextLabel="next >"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
+        nextLabel="بعدی >"
+        onPageChange={handlePageChange}
+        pageRangeDisplayed={3}
         pageCount={pageCount}
-        previousLabel="< previous"
-        renderOnZeroPageCount={null}
+        previousLabel="< قبلی"
+        containerClassName="flex gap-2"
+        pageClassName="w-10 h-10 flex items-center justify-center border border-gray-300 rounded text-primarytxt hover:bg-blue-500"
+        pageLinkClassName="w-full h-full flex items-center justify-center"
+        previousClassName="px-4 py-2 border border-gray-300 rounded hover:bg-blue-500 text-primarytxt"
+        previousLinkClassName="w-full h-full flex items-center justify-center"
+        nextClassName="px-4 py-2 border border-gray-300 rounded hover:bg-blue-500 text-primarytxt"
+        nextLinkClassName="w-full h-full flex items-center justify-center"
+        activeClassName="bg-primary text-white border-primary"
       />
-    </>
+    </div>
   );
 }
-
-export default PaginatedItems
