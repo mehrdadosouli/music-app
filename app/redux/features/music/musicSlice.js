@@ -23,7 +23,9 @@ const initialState = {
   theme: "dark",
   btn: false,
   searchTrack:"",
-  minusMusic:false
+  minusMusic:false,
+  currentPage: 0,
+  itemsPerPage: 5,
 };
 function getuniqueAlbumes(tracks) {
   const uniqueAlbume = {};
@@ -97,6 +99,12 @@ const musicSlice = createSlice({
       } else {
         state.btn = false;
       }
+    },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    setItemsPerPage: (state, action) => {
+      state.itemsPerPage = action.payload;
     },
     setSearchTrack: (state, action) => {
       state.searchTrack = action.payload;
@@ -233,6 +241,8 @@ export const {
   prevMusicBtn,
   setTrackListMusic,
   setSearchTrack,
-  setMinustMusic
+  setMinustMusic,
+  setCurrentPage,
+  setItemsPerPage
 } = musicSlice.actions;
 export default musicSlice.reducer;
