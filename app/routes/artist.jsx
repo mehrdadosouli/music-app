@@ -21,7 +21,7 @@ export default function Artist() {
 
 
     return (
-        <div className="mt-28">
+        <div className="mt-28 mb-10">
             <TrendingSongs title="موزیک های معروف" />
             <AllAlbum title="پیشنهاد ها" />
         </div>

@@ -14,14 +14,14 @@ import { useSelector } from "react-redux";
 import 'aos/dist/aos.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { useLocation } from "react-router";
 
 export default function MainLayout() {
   const { isPlayerVisible, track } = useSelector((state) => state.songs);
   const [width, setWidth] = useState(0)
   const [toggle, setToggle] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
-  // aos  
-  
+  const location = useLocation()
   useEffect(() => {
     // Set initial width before component mounts
     setWidth(window.innerWidth)
@@ -53,6 +53,10 @@ export default function MainLayout() {
       }
     }
   }, [width, isLoaded])
+
+  useEffect(() => {
+    setToggle(false)
+  }, [location.pathname])
 
   const MenuHandler = useCallback(() => {
     setToggle(prevToggle => !prevToggle);
@@ -90,10 +94,9 @@ export default function MainLayout() {
       {/* Sidebar */}
       {isLoaded && (
         <>
-          <aside className={`fixed top-0 flex flex-col gap-7 px-3 h-full lg:z-0 z-[106] overflow-y-auto pb-10 bg-bgbody pe-5 ${width < 1024
-            ? (toggle ? "left-0 w-[20rem]" : "-left-[20rem]") + " transition-all duration-300 ease-in-out"
-            : "left-0 w-[20%]"
-            }`}>
+          <aside className={`fixed top-0 flex flex-col gap-7 px-3 h-full lg:z-0 z-[106] overflow-y-auto pb-10 bg-bgbody pe-5
+           ${width < 1024 ? (toggle ? "left-0 w-[20rem]" : "-left-[20rem]") + " transition-all duration-300 ease-in-out" : "left-0 w-[20%]"}`}
+          >
             <h1 className="textstroke mx-auto mt-4 lg:text-4xl xl:text-5xl">OSOULI</h1>
             <span className="text-primary text-sm">منو</span>
             <Link to="/" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">

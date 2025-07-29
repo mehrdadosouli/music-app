@@ -337,11 +337,11 @@ export default function MusicControll() {
             }
             {/* minus music controll */}
             {
-                minusMusic && <div onClick={minusHandle} className="fixed md:top-0 lg:left-86 left-5 lg:right-10 right-0 mx-auto flex justify-between items-start px-2 pl-20 bg-bgplayercontroll cursor-pointer ">
-                    <div className="w-1/6">
+                minusMusic && <div className="fixed bottom-20 lg:left-86 left-0 lg:right-10 right-0 mx-auto flex justify-between items-start px-2 pl-5 bg-bgplayercontroll ">
+                    <div className="w-1/6 cursor-pointer" onClick={minusHandle}>
                         <div className="flex items-center space-x-4 gap-3">
                             {currentAudio && (
-                                <img src={currentAudio.cover_url} loading="lazy" decoding="async" alt="" className="flex-none rounded-lg bg-slate-100 object-cover" width="40" height="50" />
+                                <img src={currentAudio.cover_url} loading="lazy" decoding="async" alt="" className="flex-none rounded-lg bg-slate-100 object-cover" width="55" height="50" />
                             )}
                             <div className="min-w-0 flex-auto space-y-1 font-semibold">
                                 <p className="text-slate-200 transition-all duration-500 md:text-lg min-w-52 text-xs">
@@ -380,7 +380,7 @@ export default function MusicControll() {
                                     </svg>
                                 )}
                             </button>
-                            <div className="flex-none items-center justify-end ml-5">
+                            <div className="flex-none items-center justify-end ml-24">
                                 <button type="button" className="flex" aria-label="Previous" onClick={prevMusicHandler}>
                                     <svg width="24" height="24" fill="none">
                                         <path d="m10 12 8-6v12l-8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>

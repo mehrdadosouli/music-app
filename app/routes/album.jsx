@@ -21,7 +21,7 @@ export default function Albums() {
 
 
   return (
-    <div className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-3 mt-36 ">
+    <div className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-3 my-32 ">
       {allAlbum ? (
         allAlbum.map(album => (
           <div key={album.id} className="keen-slider__slide overflow-hidden rounded-xl ">
