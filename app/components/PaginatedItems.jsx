@@ -1,10 +1,6 @@
 import ReactPaginate from "react-paginate";
 
-export default function Pagination({
-  pageCount,
-  currentPage,
-  handlePageChange,
-}) {
+export default function Pagination({ pageCount, currentPage, handlePageChange }) {
   return (
     <div className="flex justify-center mt-12">
       <ReactPaginate

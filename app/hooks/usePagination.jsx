@@ -1,37 +1,28 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllAlbum, setCurrentPage } from "~/redux/features/music/musicSlice";
 import { useSearchParams } from "react-router";
+import { setCurrentPage } from "~/redux/features/music/musicSlice";
 
-export function usePagination() {
-    const dispatch = useDispatch();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const { itemsPerPage, currentPage, allAlbum } = useSelector(state => state.songs);
+export function usePagination({ items = [], itemsPerPage = 5 }) {
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-    const pageFromUrl = parseInt(searchParams.get("page") || "1", 10);
+  const currentPage = useSelector((state) => state.songs.currentPage || 0);
 
-    useEffect(() => {
-        dispatch(fetchAllAlbum());
-        dispatch(setCurrentPage(pageFromUrl - 1));
-    }, [dispatch, pageFromUrl]);
+  const pageFromUrl = parseInt(searchParams.get("page") || "1", 10);
 
-    const handlePageChange = ({ selected }) => {
-        dispatch(setCurrentPage(selected));
-        if (selected !== 0) {
-            setSearchParams({ page: selected + 1 });
-        } else {
-            setSearchParams();
-        }
-    };
+  useEffect(() => {
+    dispatch(setCurrentPage(pageFromUrl - 1));
+  }, [dispatch, pageFromUrl]);
 
-    const offset = currentPage * itemsPerPage;
-    const currentItems = allAlbum?.slice(offset, offset + itemsPerPage) || [];
-    const pageCount = Math.ceil((allAlbum?.length || 0) / itemsPerPage);
+  const pageCount = Math.max(1, Math.ceil(items.length / itemsPerPage));
+  const offset = currentPage * itemsPerPage;
+  const currentItems = items.slice(offset, offset + itemsPerPage);
 
-    return {
-        currentItems,
-        pageCount,
-        currentPage,
-        handlePageChange,
-    };
+  const handlePageChange = ({ selected }) => {
+    dispatch(setCurrentPage(selected));
+    setSearchParams(selected === 0 ? {} : { page: selected + 1 });
+  };
+
+  return { currentItems, pageCount, currentPage, handlePageChange };
 }

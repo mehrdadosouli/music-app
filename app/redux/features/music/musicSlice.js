@@ -25,7 +25,7 @@ const initialState = {
   searchTrack:"",
   minusMusic:false,
   currentPage: 0,
-  itemsPerPage: 5,
+  itemsPerPage: 0,
 };
 function getuniqueAlbumes(tracks) {
   const uniqueAlbume = {};

@@ -1,10 +1,22 @@
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CardSongs from "~/components/CardSongs";
-import Pagination from "../components/PaginatedItems";  // مسیر فایل رو درست وارد کن
+import Pagination from "../components/PaginatedItems";
+import { fetchAllAlbum } from "~/redux/features/music/musicSlice";
 import { usePagination } from "../hooks/usePagination";
 
 export default function Albums() {
-  const { currentItems, pageCount, currentPage, handlePageChange } = usePagination();
+  const dispatch = useDispatch();
+  const { allAlbum } = useSelector(state => state.songs);
+
+  useEffect(() => {
+    dispatch(fetchAllAlbum());
+  }, [dispatch]);
+
+  const { currentItems, pageCount, currentPage, handlePageChange } = usePagination({
+    items: allAlbum,
+    itemsPerPage: 5,
+  });
 
   return (
     <div className="container mx-auto px-4 my-32">
