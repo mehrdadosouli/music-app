@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { albums, tracks, artists } from "~/data/mockData";
+import { supabase } from "../../../utils/supabaseClient";
 
 const initialState = {
   currentTime: 0, // زمان فعلی پخش
@@ -11,8 +12,8 @@ const initialState = {
   isPlayerVisible: false,
   topSongs: [],
   allSong: [],
-  allAlbum:[],
-  albumDetail:[],
+  allAlbum: [],
+  albumDetail: [],
   myFavorite: [],
   isLoading: false,
   error: "",
@@ -22,83 +23,167 @@ const initialState = {
   trackError: "",
   theme: "dark",
   btn: false,
-  searchTrack:"",
-  minusMusic:false,
+  searchTrack: "",
+  minusMusic: false,
   currentPage: 0,
   itemsPerPage: 0,
+  isLoadingUploadTrack: false,
+  UploadTrack: [],
+  errorUploadTrack: "",
+  FetchTrackUpload: [],
+  isLoadingFetchTrackUpload: false,
+  errorFetchTrackUpload: "",
 };
-function getuniqueAlbumes(tracks) {
-  const uniqueAlbume = {};
+
+export const fetchUploadTrack = createAsyncThunk(
+  "music/uploadTrack",
+  async ({ file, customTitle, customArtist }, { rejectWithValue }) => {
+    try {
+      const fileNameWithoutExt = file.name.replace(/\.[^/.]+$/, "");
+      const title =
+        customTitle && customTitle.trim() !== ""
+          ? customTitle
+          : fileNameWithoutExt;
+      const artist =
+        customArtist && customArtist.trim() !== "" ? customArtist : "artist";
+
+      const sanitizedFileName = encodeURIComponent(file.name);
+      const filePath = `music/${Date.now()}_${sanitizedFileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("music-files")
+        .upload(filePath, file, { upsert: false });
+
+      if (uploadError) throw uploadError;
+
+      if (uploadError) throw uploadError;
+
+      // گرفتن لینک عمومی
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("music-files").getPublicUrl(filePath);
+
+      // گرفتن اطلاعات کاربر
+      const { data: userData, error: userError } =
+        await supabase.auth.getUser();
+      if (userError) throw userError;
+      const user = userData.user;
+
+      // درج رکورد تو جدول tracks
+      const { data: insertData, error: insertError } = await supabase
+        .from("tracks")
+        .insert([
+          {
+            title,
+            artist,
+            audio_url: publicUrl,
+            user_id: user?.id || null,
+          },
+        ])
+        .select();
+
+      if (insertError) throw insertError;
+
+      return insertData[0];
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchAllTracksUploaded = createAsyncThunk(
+  "songs/fetchAllTracksUploaded",
+  async (_, thunkAPI) => {
+    try {
+      const { data, error } = await supabase.from("tracks").select("*");
+
+      if (error) throw error;
+
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+// تابع برای گرفتن آلبوم‌های یکتا از بین ترک‌ها
+function getUniqueAlbums(tracks) {
+  const uniqueAlbums = {};
   const result = [];
   for (const track of tracks) {
-    if (!uniqueAlbume[track.albumId]) {
-      uniqueAlbume[track.albumId] = true;
+    if (!uniqueAlbums[track.albumId]) {
+      uniqueAlbums[track.albumId] = true;
       result.push(track);
     }
   }
   return result;
 }
+
 export const fetchTopSongs = createAsyncThunk(
   "songs/fetchTopSongs",
   async () => {
-    const uniqueTracks = getuniqueAlbumes(tracks);
+    const uniqueTracks = getUniqueAlbums(tracks);
     return uniqueTracks;
   }
 );
+
 export const fetchAllAlbum = createAsyncThunk(
   "songs/fetchAllAlbum",
   async () => {
-    return albums
+    return albums;
   }
 );
+
 export const fetchTrendSongs = createAsyncThunk(
   "songs/fetchTrendSongs",
   async () => {
-    const uniqueTracks = getuniqueAlbumes(tracks);    
+    const uniqueTracks = getUniqueAlbums(tracks);
     return uniqueTracks;
   }
 );
+
 export const fetchBestSongs = createAsyncThunk(
   "songs/fetchBestSongs",
   async () => {
-    const bestSong=tracks.filter(music=>music.score >= 9).slice(0,6)
-    return bestSong
+    const bestSong = tracks.filter((music) => music.score >= 9).slice(0, 6);
+    return bestSong;
   }
 );
+
 export const fetchAllSongs = createAsyncThunk(
   "songs/fetchAllSongs",
   async () => {
-    return tracks
+    return tracks;
   }
 );
+
+// توجه: trackId اینجا در واقع id آلبوم است
 export const fetchTrackById = createAsyncThunk(
   "song/fetchTrackById",
-  async (trackId) => {
-    const album = albums.find((a) => a.id === trackId);
+  async (albumId) => {
+    const album = albums.find((a) => a.id === albumId);
     if (!album) return null;
     const albumTracks = tracks.filter((t) => t.albumId === album.id);
     return { ...album, tracks: albumTracks };
   }
 );
+
 export const fetchAlbumDetail = createAsyncThunk(
   "song/fetchAlbumDetail",
-  async (trackId) => {
-    const album = albums.find((a) => a.id === trackId);
+  async (albumId) => {
+    const album = albums.find((a) => a.id === albumId);
     if (!album) return null;
     const albumTracks = tracks.filter((t) => t.albumId === album.id);
     return { ...album, tracks: albumTracks };
   }
 );
+
 const musicSlice = createSlice({
   name: "music",
   initialState,
   reducers: {
     actionBtn: (state, action) => {
-      if (action.payload) {
-        state.btn = true;
-      } else {
-        state.btn = false;
-      }
+      state.btn = !!action.payload;
     },
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
@@ -133,31 +218,27 @@ const musicSlice = createSlice({
       state.duration = action.payload;
     },
     nextMusicBtn: (state, action) => {
-      const alltracks = state.track;      
-      const findindexTrack = alltracks.tracks ? alltracks.tracks.findIndex(
-        (item) => item.id === action.payload.id
-      ) : alltracks.findIndex(
+      const allTracks = state.track;
+      if (!allTracks) return;
+      const tracksArray = allTracks.tracks ? allTracks.tracks : allTracks;
+      const currentIndex = tracksArray.findIndex(
         (item) => item.id === action.payload.id
       );
-      if (findindexTrack === -1) {
-        return;
-      }
-      const nextIndex = (findindexTrack + 1) % (alltracks.tracks ? alltracks?.tracks?.length : alltracks.length);
-      
-      state.currentAudio = alltracks.tracks ? alltracks?.tracks[nextIndex] : alltracks[nextIndex];
+      if (currentIndex === -1) return;
+      const nextIndex = (currentIndex + 1) % tracksArray.length;
+      state.currentAudio = tracksArray[nextIndex];
     },
     prevMusicBtn: (state, action) => {
-      const alltracks = state.track;
-      const findindexTrack = alltracks.tracks ? alltracks.tracks.findIndex(
-        (item) => item.id === action.payload.id
-      ) : alltracks.findIndex(
+      const allTracks = state.track;
+      if (!allTracks) return;
+      const tracksArray = allTracks.tracks ? allTracks.tracks : allTracks;
+      const currentIndex = tracksArray.findIndex(
         (item) => item.id === action.payload.id
       );
-      if (findindexTrack == -1) {
-        return;
-      }
-      const prevIndex = ((findindexTrack - 1 + (alltracks.tracks ? alltracks.tracks.length : alltracks.length)) % (alltracks.tracks ? alltracks.tracks.length : alltracks.length));
-      state.currentAudio = alltracks.tracks ? alltracks.tracks[prevIndex] : alltracks[prevIndex];
+      if (currentIndex === -1) return;
+      const prevIndex =
+        (currentIndex - 1 + tracksArray.length) % tracksArray.length;
+      state.currentAudio = tracksArray[prevIndex];
     },
     setTheme(state, action) {
       state.theme = action.payload;
@@ -173,7 +254,7 @@ const musicSlice = createSlice({
         state.isLoading = false;
         state.error = "";
       })
-      .addCase(fetchTopSongs.pending, (state, action) => {
+      .addCase(fetchTopSongs.pending, (state) => {
         state.isLoading = true;
         state.error = "";
       })
@@ -186,7 +267,7 @@ const musicSlice = createSlice({
         state.isLoading = false;
         state.error = "";
       })
-      .addCase(fetchTrendSongs.pending, (state, action) => {
+      .addCase(fetchTrendSongs.pending, (state) => {
         state.isLoading = true;
         state.error = "";
       })
@@ -199,7 +280,7 @@ const musicSlice = createSlice({
         state.isLoading = false;
         state.error = "";
       })
-      .addCase(fetchAllAlbum.pending, (state, action) => {
+      .addCase(fetchAllAlbum.pending, (state) => {
         state.isLoading = true;
         state.error = "";
       })
@@ -224,6 +305,41 @@ const musicSlice = createSlice({
         state.track = action.payload;
         state.trackLoading = false;
         state.trackError = "";
+      })
+      // اصلاح نام تو extraReducers به fetchUploadTrack
+      .addCase(fetchUploadTrack.pending, (state) => {
+        state.isLoadingUploadTrack = true;
+        state.errorUploadTrack = "";
+        state.uploadSuccess = false;
+      })
+      .addCase(fetchUploadTrack.fulfilled, (state, action) => {
+        state.isLoadingUploadTrack = false;
+        state.errorUploadTrack = "";
+        state.uploadSuccess = true; // اضافه کردن وضعیت موفقیت
+        if (!state.FetchTrackUpload) state.FetchTrackUpload = [];
+        state.FetchTrackUpload.unshift(action.payload);
+      })
+      .addCase(fetchUploadTrack.rejected, (state, action) => {
+        state.isLoadingUploadTrack = false;
+        state.errorUploadTrack = action.payload || action.error.message;
+        state.uploadSuccess = false;
+      })
+      .addCase(fetchAllTracksUploaded.pending, (state) => {
+        state.isLoadingFetchTrackUpload = true;
+        state.errorFetchTrackUpload = "";
+      })
+      .addCase(fetchAllTracksUploaded.fulfilled, (state, action) => {
+        state.isLoadingFetchTrackUpload = false;
+        state.FetchTrackUpload = action.payload;
+        state.errorFetchTrackUpload = "";
+      })
+      .addCase(fetchAllTracksUploaded.rejected, (state, action) => {
+        console.error(
+          "fetchAllTracksUploaded error:",
+          action.payload || action.error.message
+        );
+        state.isLoadingFetchTrackUpload = false;
+        state.errorFetchTrackUpload = action.payload || action.error.message;
       });
   },
 });
@@ -243,6 +359,7 @@ export const {
   setSearchTrack,
   setMinustMusic,
   setCurrentPage,
-  setItemsPerPage
+  setItemsPerPage,
 } = musicSlice.actions;
+
 export default musicSlice.reducer;
