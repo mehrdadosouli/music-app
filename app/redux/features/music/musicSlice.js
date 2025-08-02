@@ -30,6 +30,7 @@ const initialState = {
   isLoadingUploadTrack: false,
   UploadTrack: [],
   errorUploadTrack: "",
+  uploadSuccess: false,
   FetchTrackUpload: [],
   isLoadingFetchTrackUpload: false,
   errorFetchTrackUpload: "",
@@ -47,29 +48,26 @@ export const fetchUploadTrack = createAsyncThunk(
       const artist =
         customArtist && customArtist.trim() !== "" ? customArtist : "artist";
 
-      const sanitizedFileName = encodeURIComponent(file.name);
-      const filePath = `music/${Date.now()}_${sanitizedFileName}`;
+      // حذف encodeURIComponent برای جلوگیری از double encoding
+      const filePath = `music/${Date.now()}_${file.name}`;
 
-      const { error: uploadError } = await supabase.storage
+      // آپلود فایل و گرفتن response
+      const { data: uploadData, error: uploadError } = await supabase.storage
         .from("music-files")
         .upload(filePath, file, { upsert: false });
 
       if (uploadError) throw uploadError;
 
-      if (uploadError) throw uploadError;
+      console.log("uploadData", uploadData);
 
-      // گرفتن لینک عمومی
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from("music-files").getPublicUrl(filePath);
+      // گرفتن URL صحیح از response آپلود
+      const { data: { publicUrl } } = supabase.storage
+        .from("music-files")
+        .getPublicUrl(uploadData.path);
 
-      // گرفتن اطلاعات کاربر
-      const { data: userData, error: userError } =
-        await supabase.auth.getUser();
-      if (userError) throw userError;
-      const user = userData.user;
+      console.log("publicUrl", publicUrl);
 
-      // درج رکورد تو جدول tracks
+      // درج رکورد تو جدول tracks بدون نیاز به user_id
       const { data: insertData, error: insertError } = await supabase
         .from("tracks")
         .insert([
@@ -77,7 +75,7 @@ export const fetchUploadTrack = createAsyncThunk(
             title,
             artist,
             audio_url: publicUrl,
-            user_id: user?.id || null,
+            // user_id را حذف کردیم چون anonymous upload می‌خواهیم
           },
         ])
         .select();

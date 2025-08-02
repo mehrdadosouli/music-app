@@ -6,6 +6,7 @@ import UploadMusic from "~/components/UploadMusic";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchAllTracksUploaded } from "~/redux/features/music/musicSlice";
+import ToastifyNotif from "~/utils/ToastifyNotif";
 
 export function meta() {
   return [
@@ -16,11 +17,26 @@ export function meta() {
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { FetchTrackUpload } = useSelector((state) => state.songs);
+  const { FetchTrackUpload, isLoadingUploadTrack, uploadSuccess, errorUploadTrack } = useSelector((state) => state.songs);
 
   useEffect(() => {
     dispatch(fetchAllTracksUploaded());
   }, [dispatch]);
+
+  // بعد از آپلود موفق، لیست را به‌روزرسانی کن
+  useEffect(() => {
+    if (uploadSuccess) {
+      console.log('🎉 آپلود موفق - به‌روزرسانی لیست');
+      dispatch(fetchAllTracksUploaded());
+    }
+  }, [uploadSuccess, dispatch]);
+
+  // نمایش خطاهای آپلود
+  useEffect(() => {
+    if (errorUploadTrack) {
+      console.error('❌ خطای آپلود:', errorUploadTrack);
+    }
+  }, [errorUploadTrack]);
 
   return (
     <>
@@ -30,6 +46,41 @@ export default function Home() {
       <TrendingSongs title="موزیک های معروف" />
       <AllAlbum title="البوم ها" />
       <UploadMusic />
+      <button 
+        onClick={async () => {
+          try {
+            console.log('🔍 Dispatch function available:', !!dispatch);
+            await ToastifyNotif(dispatch);
+          } catch (error) {
+            console.error('خطا:', error);
+          }
+        }}
+        disabled={isLoadingUploadTrack}
+        style={{
+          backgroundColor: isLoadingUploadTrack ? '#ccc' : '#4CAF50',
+          color: 'white',
+          padding: '12px 24px',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: isLoadingUploadTrack ? 'not-allowed' : 'pointer',
+          fontSize: '16px',
+          marginBottom: '20px'
+        }}
+      >
+        {isLoadingUploadTrack ? "در حال آپلود..." : "آپلود موسیقی"}
+      </button>
+      
+      {/* نمایش وضعیت */}
+      {errorUploadTrack && (
+        <p style={{ color: 'red', marginTop: '10px' }}>
+          خطا: {errorUploadTrack}
+        </p>
+      )}
+      {uploadSuccess && (
+        <p style={{ color: 'green', marginTop: '10px' }}>
+          ✅ آپلود موفق!
+        </p>
+      )}
       <div>
         <h2>موزیک‌های شما</h2>
         {FetchTrackUpload && FetchTrackUpload.length > 0 ? (

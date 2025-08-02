@@ -46,10 +46,21 @@ export default function MusicControll() {
     // 2. useEffect برای تغییر آهنگ
     useEffect(() => {
         if (currentAudio && audioRef.current) {
+            console.log("Loading audio file:", currentAudio.src); // برای debug
             audioRef.current.src = `${currentAudio.src}`;
             audioRef.current.load();
+            
+            // اضافه کردن error handling
+            audioRef.current.onerror = (e) => {
+                console.error("Audio loading error:", e);
+                console.error("Audio URL:", currentAudio.src);
+            };
+            
             if (isPlaying) {
-                audioRef.current.play().catch(error => console.error("Error playing new track:", error));
+                audioRef.current.play().catch(error => {
+                    console.error("Error playing new track:", error);
+                    console.error("Audio URL:", currentAudio.src);
+                });
             }
         }
     }, [currentAudio]); // فقط currentAudio
