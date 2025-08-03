@@ -36,19 +36,17 @@ const initialState = {
   errorFetchTrackUpload: "",
 };
 
-export const fetchUploadTrack = createAsyncThunk(
+export const funcUploadTrack = createAsyncThunk(
   "music/uploadTrack",
   async ({ file, customTitle, customArtist }, { rejectWithValue }) => {
     try {
       const fileNameWithoutExt = file.name.replace(/\.[^/.]+$/, "");
-      const title =
-        customTitle && customTitle.trim() !== ""
+      const title = customTitle && customTitle.trim() !== ""
           ? customTitle
           : fileNameWithoutExt;
-      const artist =
-        customArtist && customArtist.trim() !== "" ? customArtist : "artist";
+      const artistName = "trackBg";
+      // const artistName = customArtist && customArtist.trim() !== "" ? customArtist : "artistName";
 
-      // حذف encodeURIComponent برای جلوگیری از double encoding
       const filePath = `music/${Date.now()}_${file.name}`;
 
       // آپلود فایل و گرفتن response
@@ -58,14 +56,10 @@ export const fetchUploadTrack = createAsyncThunk(
 
       if (uploadError) throw uploadError;
 
-      console.log("uploadData", uploadData);
-
       // گرفتن URL صحیح از response آپلود
       const { data: { publicUrl } } = supabase.storage
         .from("music-files")
         .getPublicUrl(uploadData.path);
-
-      console.log("publicUrl", publicUrl);
 
       // درج رکورد تو جدول tracks بدون نیاز به user_id
       const { data: insertData, error: insertError } = await supabase
@@ -73,8 +67,8 @@ export const fetchUploadTrack = createAsyncThunk(
         .insert([
           {
             title,
-            artist,
-            audio_url: publicUrl,
+            artistName,
+            src: publicUrl,
             // user_id را حذف کردیم چون anonymous upload می‌خواهیم
           },
         ])
@@ -304,20 +298,20 @@ const musicSlice = createSlice({
         state.trackLoading = false;
         state.trackError = "";
       })
-      // اصلاح نام تو extraReducers به fetchUploadTrack
-      .addCase(fetchUploadTrack.pending, (state) => {
+      // اصلاح نام تو extraReducers به funcUploadTrack
+      .addCase(funcUploadTrack.pending, (state) => {
         state.isLoadingUploadTrack = true;
         state.errorUploadTrack = "";
         state.uploadSuccess = false;
       })
-      .addCase(fetchUploadTrack.fulfilled, (state, action) => {
+      .addCase(funcUploadTrack.fulfilled, (state, action) => {
         state.isLoadingUploadTrack = false;
         state.errorUploadTrack = "";
         state.uploadSuccess = true; // اضافه کردن وضعیت موفقیت
         if (!state.FetchTrackUpload) state.FetchTrackUpload = [];
         state.FetchTrackUpload.unshift(action.payload);
       })
-      .addCase(fetchUploadTrack.rejected, (state, action) => {
+      .addCase(funcUploadTrack.rejected, (state, action) => {
         state.isLoadingUploadTrack = false;
         state.errorUploadTrack = action.payload || action.error.message;
         state.uploadSuccess = false;

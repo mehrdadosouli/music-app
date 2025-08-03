@@ -124,6 +124,10 @@ export default function MainLayout() {
               <AddPlaylistIcon />
               اظافه کردن پلی لیست
             </Link>
+            <Link to="/uploadmusic" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">
+              <AddPlaylistIcon />
+              اظافه کردن موزیک دلخواه
+            </Link>
             <span className="text-primary text-sm">عمومی</span>
             <Link to="/" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">
               <LogOutIcon />

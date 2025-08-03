@@ -5,8 +5,7 @@ import PlayerControllNavbar from "./PlayerControllNavbar";
 
 
 export default function PlayerControll({ track, open }) {
-  const { minusMusic } = useSelector((state) => state.songs);
-
+  const { minusMusic } = useSelector((state) => state.songs);  
 
   return (
     <div className={`${!minusMusic && (open ? 'playerControllOpen md:pb-28' : 'playerControllClose')} px-5 z-[100] bg-bgplayercontroll overflow-y-auto`}>
