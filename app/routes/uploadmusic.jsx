@@ -59,7 +59,7 @@ function UploadMusic() {
 
 
     return (
-        <form onSubmit={handleSubmit} style={styles.form}>
+        <form onSubmit={handleSubmit} style={styles.form} className="bg-bgcard">
             <h2 style={styles.title}>🎵 آپلود آهنگ جدید</h2>
 
             <label style={styles.label}>فایل صوتی:</label>
@@ -94,7 +94,6 @@ function UploadMusic() {
 
 const styles = {
     form: {
-        backgroundColor: "#1e1e1e",
         color: "#fff",
         padding: "24px",
         borderRadius: "10px",

@@ -11,10 +11,10 @@ export default function Banner() {
                 هر سبک موسیقی که دوست دارید، همه‌اش اینجا منتظر شماست!
             </p>
             <div className="flex gap-5 mx-auto md:mx-0">
-                <span className="w-36 h-8 rounded-sm flex justify-center items-center text-white bg-primary hover:text-primary hover:bg-white border border-primary transition-all select-none" to="/signup">
+                <span className="md:w-36 w-32 h-8 md:text-base text-sm rounded-sm flex justify-center items-center text-white bg-primary hover:text-primary hover:bg-white border border-primary transition-all select-none" to="/signup">
                     همین حالا کشف کن
                 </span>
-                <Link className="w-36 h-8 rounded-sm flex justify-center items-center text-secondary border border-secondary hover:text-white hover:bg-secondary transition-all select-none" to="/login">
+                <Link className="md:w-36 w-32 h-8 md:text-base text-sm rounded-sm flex justify-center items-center text-secondary border border-secondary hover:text-white hover:bg-secondary transition-all select-none" to="/login">
                     ساخت لیست پخش
                 </Link>
             </div>

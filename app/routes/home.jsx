@@ -5,7 +5,6 @@ import AllAlbum from "~/components/AllAlbum";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchAllTracksUploaded } from "~/redux/features/music/musicSlice";
-import ToastifyNotif from "~/utils/ToastifyNotif.js";
 import AllTracksAlbum from "~/components/AllTracksAlbum";
 
 export function meta() {
@@ -45,28 +44,6 @@ export default function Home() {
       <TrendingSongs title="موزیک های معروف" />
       <AllAlbum title="البوم ها" />
       <AllTracksAlbum title="آهنگ های آپلود شده"/>
-      <button 
-        onClick={async () => {
-          try {
-            await ToastifyNotif(dispatch);
-          } catch (error) {
-            console.error('خطا:', error);
-          }
-        }}
-        disabled={isLoadingUploadTrack}
-        style={{
-          backgroundColor: isLoadingUploadTrack ? '#ccc' : '#4CAF50',
-          color: 'white',
-          padding: '12px 24px',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: isLoadingUploadTrack ? 'not-allowed' : 'pointer',
-          fontSize: '16px',
-          marginBottom: '20px'
-        }}
-      >
-        {isLoadingUploadTrack ? "در حال آپلود..." : "آپلود موسیقی"}
-      </button>
     </>
   );
 }

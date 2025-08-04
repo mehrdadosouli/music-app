@@ -112,7 +112,7 @@ export default function MainLayout() {
               خواننده ها
             </Link>
             <span className="text-primary text-sm">پلی لیست و مورد علاقه ها</span>
-            <Link to="/" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">
+            <Link to="/myfavorite" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">
               <HeartIcon />
               مورد علاقه های من
             </Link>
