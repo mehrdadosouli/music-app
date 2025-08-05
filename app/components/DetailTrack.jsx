@@ -14,6 +14,8 @@ function DetailTrack() {
     const firstIndex = words.slice(0, words.length - 1).join(" ");
     const durations = albumDetail?.tracks?.map(item => item.duration) || [];
     const sumDurationMusics = durations.reduce((a, b) => a + b, 0);
+    console.log('asdsadasdasd',albumDetail);
+    
     useEffect(() => {
         if (isPlaying) {
             setPlayerVisibility(true)

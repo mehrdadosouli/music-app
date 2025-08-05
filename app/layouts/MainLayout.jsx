@@ -6,7 +6,7 @@ import LibraryIcon from "~/components/icons/LibraryIcon";
 import LogOutIcon from "~/components/icons/LogOutIcon";
 import AddPlaylistIcon from "~/components/icons/AddPlaylistIcon";
 import HeartIcon from "~/components/icons/HeartIcon";
-import SignIcon from "~/components/icons/SignIcon";
+import HeartIconFill from "~/components/icons/HeartIconFill";
 import ListIcon from "~/components/icons/ListIcon";
 import { useCallback, useEffect, useState } from "react";
 import PlayerControll from "~/components/PlayerControll/PlayerControll";
@@ -108,7 +108,7 @@ export default function MainLayout() {
               آلبوم ها
             </Link>
             <Link to="/artist" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">
-              <SignIcon />
+              <HeartIconFill />
               خواننده ها
             </Link>
             <span className="text-primary text-sm">پلی لیست و مورد علاقه ها</span>

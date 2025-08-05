@@ -10,17 +10,19 @@ export default function TrendingSongs({ title }) {
     const titleArray = title.split(" ");
     const lastChar = titleArray[titleArray.length - 1]
     const { pathname } = useLocation()
-
+    
     useEffect(() => {
         dispatch(fetchTrendSongs());
-    }, [dispatch])
-
+    }, [])
+    
     useEffect(() => {
+        
         if (trend && trend.length > 0 && pathname === "/" && isPlayerVisible && searchTrack == "") {
             dispatch(setTrackListMusic({ tracks: trend }));
         } else {
             dispatch(setTrackListMusic([]));
         }
+        
     }, [trend, pathname, dispatch, isPlayerVisible, searchTrack]);
 
     return (
@@ -33,6 +35,6 @@ export default function TrendingSongs({ title }) {
             ) : (
                 <div className="text-white">No songs found.</div>
             )}
-        </div>
+        </div> 
     )
 }

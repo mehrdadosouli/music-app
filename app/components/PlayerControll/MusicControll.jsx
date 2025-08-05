@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { actionBtn, nextMusicBtn, pauseAudio, playAudio, prevMusicBtn, setDurations, setMinustMusic, setPlayerVisibility, setTrackListMusic } from "~/redux/features/music/musicSlice";
+import { actionBtn, addFavoriteMusic, nextMusicBtn, pauseAudio, playAudio, prevMusicBtn, setMinustMusic, setPlayerVisibility, setTrackListMusic } from "~/redux/features/music/musicSlice";
 import { formatDuration } from "~/utils/formatDuration";
 import Sound from "../icons/Sound";
 import CloseBtn from "../icons/CloseIcon";
@@ -12,12 +12,13 @@ export default function MusicControll() {
     const timelineMobileRef = useRef(null);
     const [showSound, setShowSound] = useState(false)
     // State ها را از Redux بگیرید
-    const { isPlaying, currentAudio, track, minusMusic } = useSelector((state) => state.songs);
+    const { isPlaying, currentAudio, myFavoritemusic, minusMusic } = useSelector((state) => state.songs);
 
     // State های محلی برای زمان حال و کل زمان آهنگ
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [volume, setVolume] = useState(1);
+    let findMusicLiked=myFavoritemusic.find(item=>item.id == currentAudio.id)
 
     // 1. useEffect برای مدیریت رویدادهای مدیا (فقط یکبار اجرا می‌شود)
     useEffect(() => {
@@ -49,13 +50,13 @@ export default function MusicControll() {
             console.log("Loading audio file:", currentAudio.src); // برای debug
             audioRef.current.src = `${currentAudio.src}`;
             audioRef.current.load();
-            
+
             // اضافه کردن error handling
             audioRef.current.onerror = (e) => {
                 console.error("Audio loading error:", e);
                 console.error("Audio URL:", currentAudio.src);
             };
-            
+
             if (isPlaying) {
                 audioRef.current.play().catch(error => {
                     console.error("Error playing new track:", error);
@@ -147,8 +148,10 @@ export default function MusicControll() {
     // minus handler
     const minusHandle = () => {
         dispatch(setMinustMusic(false))
-        document.body.classList.remove('noScroll');        
-      }
+        document.body.classList.remove('noScroll');
+    }
+    console.log("current", currentAudio);
+
     return (
         <div>
             {/* music controll for desctop */}
@@ -192,10 +195,11 @@ export default function MusicControll() {
                         </div>
                         <div className=" text-white transition-all duration-500 rounded-b-xl flex items-center">
                             <div className="flex-auto flex items-center justify-evenly">
-                                <button type="button" aria-label="Add to favorites">
-                                    <svg width="24" height="24">
-                                        <path d="M7 6.931C7 5.865 7.853 5 8.905 5h6.19C16.147 5 17 5.865 17 6.931V19l-5-4-5 4V6.931Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                                    </svg>
+                                {/* favorite music */}
+                                <button type="button" aria-label="Add to favorites" onClick={() => dispatch(addFavoriteMusic(currentAudio))} >
+                                            <svg width="24" height="24">
+                                                <path d="M7 6.931C7 5.865 7.853 5 8.905 5h6.19C16.147 5 17 5.865 17 6.931V19l-5-4-5 4V6.931Z" fill={`${findMusicLiked ? 'currentColor' : 'none'}`} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                            </svg>
                                 </button>
                                 <button type="button" className="hidden sm:block lg:hidden xl:block" aria-label="Next" onClick={nextMusicHandler}>
                                     <svg width="24" height="24" fill="none">

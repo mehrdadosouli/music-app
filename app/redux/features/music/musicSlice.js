@@ -14,7 +14,10 @@ const initialState = {
   allSong: [],
   allAlbum: [],
   albumDetail: [],
-  myFavorite: [],
+  myFavoritemusic: [],
+  likedMusic:null,
+  isLoadingMyFavoritemusic: false,
+  errorMyFavoritemusic: "",
   isLoading: false,
   error: "",
   track: null,
@@ -41,7 +44,8 @@ export const funcUploadTrack = createAsyncThunk(
   async ({ file, customTitle, customArtist }, { rejectWithValue }) => {
     try {
       const fileNameWithoutExt = file.name.replace(/\.[^/.]+$/, "");
-      const title = customTitle && customTitle.trim() !== ""
+      const title =
+        customTitle && customTitle.trim() !== ""
           ? customTitle
           : fileNameWithoutExt;
       const artistName = "trackBg";
@@ -57,9 +61,9 @@ export const funcUploadTrack = createAsyncThunk(
       if (uploadError) throw uploadError;
 
       // گرفتن URL صحیح از response آپلود
-      const { data: { publicUrl } } = supabase.storage
-        .from("music-files")
-        .getPublicUrl(uploadData.path);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("music-files").getPublicUrl(uploadData.path);
 
       // درج رکورد تو جدول tracks بدون نیاز به user_id
       const { data: insertData, error: insertError } = await supabase
@@ -174,6 +178,26 @@ const musicSlice = createSlice({
   name: "music",
   initialState,
   reducers: {
+    addFavoriteMusic: (state, action) => {
+      const hasMusic = state.myFavoritemusic.find(
+        (item) => item.id === action.payload.id
+      );
+      if (!hasMusic) {
+        state.myFavoritemusic.push(action.payload);
+      } else {
+        const resultFilter = state.myFavoritemusic.filter(
+          (item) => item.id !== action.payload.id
+        );
+        state.myFavoritemusic = resultFilter;
+      }
+    },
+    actionLikeMusic: (state, action) => {      
+      if (state.likedMusic == action.payload) {
+        state.likedMusic=null
+      } else {
+        state.likedMusic=action.payload
+      }
+    },
     actionBtn: (state, action) => {
       state.btn = !!action.payload;
     },
@@ -352,6 +376,8 @@ export const {
   setMinustMusic,
   setCurrentPage,
   setItemsPerPage,
+  addFavoriteMusic,
+  actionLikeMusic
 } = musicSlice.actions;
 
 export default musicSlice.reducer;

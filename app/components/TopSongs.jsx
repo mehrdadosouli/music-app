@@ -53,7 +53,7 @@ export default function TopSongs({ title }) {
         return (
             <>
                 <div ref={sliderRef} className="keen-slider">
-                    { topSongs.map(song => (
+                    {topSongs.map(song => (
                         <div key={song.id} className="keen-slider__slide overflow-hidden rounded-xl">
                             <CardSongs song={song} />
                         </div>
