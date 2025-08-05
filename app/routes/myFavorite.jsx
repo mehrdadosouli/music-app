@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import ListMusicOfAlbum from "~/components/ListMusicOfAlbum";
+import Pagination from "~/components/PaginatedItems";
+import { usePagination } from "~/hooks/usePagination";
 import { setTrackListMusic } from "~/redux/features/music/musicSlice";
 
 export function meta() {
@@ -14,6 +16,10 @@ export function meta() {
 export default function myFavorite() {
   const dispatch = useDispatch();
   const { myFavoritemusic, isPlayerVisible, searchTrack } = useSelector(state => state.songs)
+  const { currentItems, pageCount, currentPage, handlePageChange } = usePagination({
+    items: myFavoritemusic,
+    itemsPerPage: 6,
+  });
   const { pathname } = useLocation()
   useEffect(() => {
     if (myFavoritemusic && myFavoritemusic.length > 0 && pathname === "/myfavorite" && isPlayerVisible && searchTrack == "") {
@@ -26,13 +32,19 @@ export default function myFavorite() {
 
   return (
     <div className="mt-12 md:mt-28">
-      {
-        myFavoritemusic.length ?
-          <div><ListMusicOfAlbum tracks={myFavoritemusic} /></div> :
-          <div>
+        {currentItems.length > 0 ?
+          <div><ListMusicOfAlbum tracks={currentItems} /></div>
+          : (
             <h2>هیچ موزیک دلخواهی هنوز انتخاب نشده</h2>
-          </div>
-      }
+          )}
+
+      {pageCount > 1 && (
+        <Pagination
+          pageCount={pageCount}
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+        />
+      )}
     </div>
-  )
+  );
 }

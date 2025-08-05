@@ -116,7 +116,7 @@ export default function MainLayout() {
               <HeartIcon />
               مورد علاقه های من
             </Link>
-            <Link to="/" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">
+            <Link to="/myPlayList" className="flex flex-row-reverse items-center gap-2 text-primarytxt hover:text-secondary">
               <LibraryIcon />
               پلی لیست من
             </Link>
