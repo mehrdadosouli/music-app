@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import TrackItem from "./TrackItem";
-import { actionLikeMusic, addFavoriteMusic } from "~/redux/features/music/musicSlice";
+import { actionMoreOption, addFavoriteMusic } from "~/redux/features/music/musicSlice";
 
 export default function ListMusicOfAlbum({ tracks }) {
     const { isPlayerVisible, likedMusic } = useSelector((state) => state.songs);
     const dispatch = useDispatch();
 
     const clickHandler = (trackId) => {
-        dispatch(actionLikeMusic(trackId))
+        dispatch(actionMoreOption(trackId))
     }
     const likeHandler = (track) => {
         dispatch(addFavoriteMusic(track))
@@ -20,7 +20,15 @@ export default function ListMusicOfAlbum({ tracks }) {
                 <span className="justify-self-end md:flex hidden">آلبوم</span>
                 <span className="justify-self-end">زمان</span>
             </div>
-            {tracks && tracks?.map((item) => <TrackItem likeHandler={likeHandler} onToggle={() => clickHandler(item.id)} isOpen={likedMusic === item.id} key={item.id} track={item} />)}
+            {tracks && tracks?.map((item) => {
+                if (!item || !item.id) {
+                    return null;
+                }
+                return (
+                    <TrackItem likeHandler={likeHandler} onToggle={() => clickHandler(item.id)} isOpen={likedMusic === item.id} key={item.id} track={item} />
+                )
+
+            })}
         </div>
 
     )

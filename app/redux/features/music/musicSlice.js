@@ -15,7 +15,7 @@ const initialState = {
   allAlbum: [],
   albumDetail: [],
   myFavoritemusic: [],
-  likedMusic:null,
+  likedMusic: null,
   isLoadingMyFavoritemusic: false,
   errorMyFavoritemusic: "",
   isLoading: false,
@@ -178,24 +178,31 @@ const musicSlice = createSlice({
   name: "music",
   initialState,
   reducers: {
-    addFavoriteMusic: (state, action) => {
-      const hasMusic = state.myFavoritemusic.find(
-        (item) => item.id === action.payload.id
-      );
-      if (!hasMusic) {
-        state.myFavoritemusic.push(action.payload);
-      } else {
-        const resultFilter = state.myFavoritemusic.filter(
-          (item) => item.id !== action.payload.id
-        );
-        state.myFavoritemusic = resultFilter;
-      }
+    loadFavoriteMusic: (state) => {
+      const savedFavorites =
+        JSON.parse(localStorage.getItem("myfavorite")) || [];
+      state.myFavoritemusic = savedFavorites;
     },
-    actionLikeMusic: (state, action) => {      
-      if (state.likedMusic == action.payload) {
-        state.likedMusic=null
+    addFavoriteMusic: (state, action) => {
+      let getLocalItems = JSON.parse(localStorage.getItem("myfavorite")) || [];
+      const track = action.payload;
+      const findItem = getLocalItems.some((item) => item.id === track.id);
+
+      let updatedFavorite;
+      if (!findItem) {
+        updatedFavorite = [...getLocalItems, track];
       } else {
-        state.likedMusic=action.payload
+        updatedFavorite = getLocalItems.filter((item) => item.id !== track.id);
+      }
+      state.myFavoritemusic = updatedFavorite;
+      localStorage.setItem("myfavorite", JSON.stringify(updatedFavorite));
+    },
+
+    actionMoreOption: (state, action) => {
+      if (state.likedMusic == action.payload) {
+        state.likedMusic = null;
+      } else {
+        state.likedMusic = action.payload;
       }
     },
     actionBtn: (state, action) => {
@@ -377,7 +384,8 @@ export const {
   setCurrentPage,
   setItemsPerPage,
   addFavoriteMusic,
-  actionLikeMusic
+  loadFavoriteMusic,
+  actionMoreOption,
 } = musicSlice.actions;
 
 export default musicSlice.reducer;
