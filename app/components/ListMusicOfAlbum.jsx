@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import TrackItem from "./TrackItem";
 import { actionMoreOption, addFavoriteMusic } from "~/redux/features/music/musicSlice";
+import { useNavigate } from "react-router";
 
 export default function ListMusicOfAlbum({ tracks }) {
     const { isPlayerVisible, likedMusic } = useSelector((state) => state.songs);
     const dispatch = useDispatch();
+    const navigate=useNavigate()
 
     const clickHandler = (trackId) => {
         dispatch(actionMoreOption(trackId))
@@ -12,9 +14,12 @@ export default function ListMusicOfAlbum({ tracks }) {
     const likeHandler = (track) => {
         dispatch(addFavoriteMusic(track))
     }
+    const addHandler = (track) => {
+        navigate(`/myPlayList?id=${track.id}`)
+    }
 
     return (
-        <div className={`w-full flex flex-col gap-10 p-2 ${isPlayerVisible && "mb-28"} h-fit overflow-y-auto my-10 flex-1`}>
+        <div className={`w-full flex flex-col gap-10 p-2 ${isPlayerVisible && "mb-28"} h-fit overflow-y-auto py-12 scrollbar-thin-custom flex-1`}>
             <div className="grid md:grid-cols-4 grid-cols-1 text-primarytxt ">
                 <span className="col-span-2 md:flex hidden justify-self-end">تاریخ اهنگ</span>
                 <span className="justify-self-end md:flex hidden">آلبوم</span>
@@ -25,7 +30,7 @@ export default function ListMusicOfAlbum({ tracks }) {
                     return null;
                 }
                 return (
-                    <TrackItem likeHandler={likeHandler} onToggle={() => clickHandler(item.id)} isOpen={likedMusic === item.id} key={item.id} track={item} />
+                    <TrackItem likeHandler={likeHandler} addHandler={addHandler} onToggle={() => clickHandler(item.id)} isOpen={likedMusic === item.id} key={item.id} track={item} />
                 )
 
             })}

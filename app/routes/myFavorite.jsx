@@ -33,14 +33,15 @@ export default function myFavorite() {
       dispatch(setTrackListMusic([]));
     }
 
+    console.log(currentItems);
   }, [myFavoritemusic, pathname, dispatch, isPlayerVisible, searchTrack]);
-
-  return (
-    <div className="mt-12 md:mt-28">
+  
+  return ( 
+    <div className="mt-12 md:mt-32">
       {currentItems.length > 0 ?
         <div><ListMusicOfAlbum tracks={currentItems} /></div>
         : (
-          <h2>هیچ موزیک دلخواهی هنوز انتخاب نشده</h2>
+          <h2 className="text-primarytxt">هیچ موزیک دلخواهی هنوز انتخاب نشده</h2>
         )}
 
       {pageCount > 1 && (

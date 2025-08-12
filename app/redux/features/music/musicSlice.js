@@ -179,6 +179,20 @@ const musicSlice = createSlice({
   name: "music",
   initialState,
   reducers: {
+    addtracktoplayList: (state, action) => {
+      const { music, index } = action.payload;
+      let findIteminLocalstorage=JSON.parse(localStorage.getItem('myPlayList')) || [];
+      let findIteminstate=state.playList[index];
+      
+      if(findIteminLocalstorage[index]){
+        let findmusic=findIteminLocalstorage[index].music.find(item=>item.id === music.id)
+        if(!findmusic){
+          findIteminLocalstorage[index].music.push(music)
+          findIteminstate.music.push(music)   
+          localStorage.setItem('myPlayList', JSON.stringify(findIteminLocalstorage));
+        }
+      }
+    },
     loadplayList: (state) => {
       const savePlayList = JSON.parse(localStorage.getItem("myPlayList"));
       state.playList = savePlayList || [];
@@ -212,7 +226,6 @@ const musicSlice = createSlice({
         }
       }
     },
-
     loadFavoriteMusic: (state) => {
       const savedFavorites =
         JSON.parse(localStorage.getItem("myfavorite")) || [];
@@ -423,6 +436,7 @@ export const {
   loadplayList,
   addMyPlayList,
   removePlayList,
+  addtracktoplayList,
 } = musicSlice.actions;
 
 export default musicSlice.reducer;

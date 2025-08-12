@@ -129,6 +129,24 @@ body {
   }
 }
 
+/* scroll */
+/* styles.css یا global.css */
+.scrollbar-thin-custom::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin-custom::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.5);
+  border-radius: 3px;
+}
+
+.scrollbar-thin-custom::-webkit-scrollbar-track {
+  background-color: rgba(200, 200, 200, 0.3);
+  border-radius: 3px;
+}
+
+
 /* slider topsong */
 
 [class^="number-slide"],
