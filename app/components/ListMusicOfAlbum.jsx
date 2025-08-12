@@ -30,11 +30,8 @@ export default function ListMusicOfAlbum({ tracks, albumTracks = null }) {
                     return null;
                 }
                 return (
-<<<<<<< HEAD
-                    <TrackItem likeHandler={likeHandler} onToggle={() => clickHandler(item.id)} isOpen={likedMusic === item.id} key={item.id} track={item} albumTracks={albumTracks || tracks} />
-=======
-                    <TrackItem likeHandler={likeHandler} addHandler={addHandler} onToggle={() => clickHandler(item.id)} isOpen={likedMusic === item.id} key={item.id} track={item} />
->>>>>>> e736b75 (set myplaylistDetail route)
+                    <TrackItem likeHandler={likeHandler} addHandler={addHandler} onToggle={() => clickHandler(item.id)} isOpen={likedMusic === item.id} key={item.id} track={item} albumTracks={albumTracks || tracks} />
+                    // <TrackItem likeHandler={likeHandler} addHandler={addHandler} onToggle={() => clickHandler(item.id)} isOpen={likedMusic === item.id} key={item.id} track={item} />
                 )
 
             })}

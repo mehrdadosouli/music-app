@@ -6,11 +6,9 @@ import HeartIconFill from "./icons/HeartIconFill";
 import { useSelector } from "react-redux";
 import AddPlaylistIcon from "./icons/AddPlaylistIcon";
 
-<<<<<<< HEAD
-export default function TrackItem({ track, onToggle, isOpen, likeHandler, albumTracks = null }) {
-=======
-export default function TrackItem({ track, onToggle, isOpen, likeHandler,addHandler }) {
->>>>>>> e736b75 (set myplaylistDetail route)
+
+export default function TrackItem({ track, onToggle, isOpen, likeHandler, albumTracks = null,addHandler }) {
+
     const { myFavoritemusic = [] } = useSelector(state => state.songs);
 
     let findMusicLiked = Array.isArray(myFavoritemusic) && track && track.id
