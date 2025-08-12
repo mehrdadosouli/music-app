@@ -29,7 +29,7 @@ export default function MyPlayListDetail() {
         <div className="mt-12 md:mt-32">
             {currentItems.length ? (
                 <>
-                    <div><ListMusicOfAlbum tracks={currentItems} /></div>
+                    <div><ListMusicOfAlbum tracks={currentItems} albumTracks={data?.music} /></div>
                     {pageCount > 1 && (
                         <Pagination
                             pageCount={pageCount}

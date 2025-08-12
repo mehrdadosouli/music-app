@@ -26,22 +26,6 @@ export default function myFavorite() {
       dispatch(loadFavoriteMusic())
   },[])
 
-  // حذف این useEffect تا لیست موسیقی در حال پخش حفظ شود
-  // useEffect(() => {
-  //   if (myFavoritemusic && myFavoritemusic.length > 0 && pathname === "/myfavorite" && isPlayerVisible && searchTrack == "") {
-  //     dispatch(setTrackListMusic({ tracks: myFavoritemusic }));
-  //   } else {
-  //     dispatch(setTrackListMusic([]));
-  //   }
-  // }, [myFavoritemusic, pathname, dispatch, isPlayerVisible, searchTrack]);
-
-  useEffect(() => {
-    if (myFavoritemusic && myFavoritemusic.length > 0 && pathname === "/myfavorite" && isPlayerVisible && searchTrack == "") {
-      dispatch(setTrackListMusic({ tracks: myFavoritemusic }));
-    } else {
-      dispatch(setTrackListMusic([]));
-    }
-  },[myFavoritemusic, pathname, dispatch, isPlayerVisible, searchTrack]);
   
   return ( 
     <div className="mt-12 md:mt-32">
