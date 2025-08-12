@@ -17,7 +17,7 @@ import { ToastContainer } from 'react-toastify';
 import { useLocation } from "react-router";
 
 export default function MainLayout() {
-  const { isPlayerVisible, track } = useSelector((state) => state.songs);
+  const { isPlayerVisible, track, currentPlaylist } = useSelector((state) => state.songs);
   const [width, setWidth] = useState(0)
   const [toggle, setToggle] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -83,7 +83,7 @@ export default function MainLayout() {
             pauseOnHover
             theme="light"
           />
-          {isPlayerVisible && <PlayerControll track={track} open={isPlayerVisible} />}
+          {isPlayerVisible && <PlayerControll track={currentPlaylist || track} open={isPlayerVisible} />}
           <Outlet />
         </main>
         <Footer />

@@ -37,6 +37,7 @@ const initialState = {
   FetchTrackUpload: [],
   isLoadingFetchTrackUpload: false,
   errorFetchTrackUpload: "",
+  currentPlaylist: null, // لیست موسیقی فعلی که در حال پخش است
 };
 
 export const funcUploadTrack = createAsyncThunk(
@@ -219,9 +220,23 @@ const musicSlice = createSlice({
     },
     setTrackListMusic: (state, action) => {
       state.track = action.payload;
+      // اگر لیست موسیقی جدیدی تنظیم شد، آن را به عنوان لیست فعلی ذخیره کن
+      if (action.payload && action.payload !== null && action.payload !== undefined) {
+        state.currentPlaylist = action.payload;
+      }
     },
     setMinustMusic: (state, action) => {
       state.minusMusic = action.payload;
+      // اگر پلیر کوچک می‌شود، لیست موسیقی فعلی را حفظ کن
+      if (action.payload === true && state.track) {
+        state.currentPlaylist = state.track;
+      }
+    },
+    restoreCurrentPlaylist: (state) => {
+      // بازیابی لیست موسیقی فعلی
+      if (state.currentPlaylist) {
+        state.track = state.currentPlaylist;
+      }
     },
     playAudio: (state, action) => {
       state.currentAudio = action.payload;
@@ -386,6 +401,7 @@ export const {
   addFavoriteMusic,
   loadFavoriteMusic,
   actionMoreOption,
+  restoreCurrentPlaylist,
 } = musicSlice.actions;
 
 export default musicSlice.reducer;

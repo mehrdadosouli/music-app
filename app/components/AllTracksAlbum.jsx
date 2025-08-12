@@ -8,13 +8,14 @@ import Toastify from "~/utils/Toastify";
 export default function AllTracksAlbum({ title }) {
     const dispatch = useDispatch()
     const { FetchTrackUpload, isLoadingFetchTrackUpload, errorFetchTrackUpload, searchTrack, isPlayerVisible,isLoadingUploadTrack } = useSelector(state => state.songs);
-    useEffect(() => {
-        if (FetchTrackUpload && FetchTrackUpload.length > 0 && isPlayerVisible && searchTrack == "") {
-            dispatch(setTrackListMusic({ tracks: FetchTrackUpload }));
-        } else {
-            dispatch(setTrackListMusic([]));
-        }
-    }, [FetchTrackUpload, dispatch, isPlayerVisible, searchTrack]);
+    // حذف این useEffect تا لیست موسیقی در حال پخش حفظ شود
+    // useEffect(() => {
+    //     if (FetchTrackUpload && FetchTrackUpload.length > 0 && isPlayerVisible && searchTrack == "") {
+    //         dispatch(setTrackListMusic({ tracks: FetchTrackUpload }));
+    //     } else {
+    //         dispatch(setTrackListMusic([]));
+    //     }
+    // }, [FetchTrackUpload, dispatch, isPlayerVisible, searchTrack]);
 
     if (errorFetchTrackUpload) {
         return (<h1>{errorFetchTrackUpload}</h1>)

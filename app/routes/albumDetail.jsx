@@ -26,11 +26,12 @@ export default function albumDetail() {
   }, [])
 
 
-useEffect(() => {
-  if(!track?.length){
-    dispatch(setTrackListMusic(albumDetail));    
-  }
-}, [albumDetail, dispatch,track]);
+// حذف این useEffect تا لیست موسیقی فقط هنگام پخش موسیقی تغییر کند
+// useEffect(() => {
+//   if(!track?.length){
+//     dispatch(setTrackListMusic(albumDetail));    
+//   }
+// }, [albumDetail, dispatch,track]);
 
   if (trackLoading) { return (<h1>IsLoading.....</h1>) }
   if (trackError) return <p>خطا: {trackError}</p>;

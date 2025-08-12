@@ -12,13 +12,13 @@ export default function MusicControll() {
     const timelineMobileRef = useRef(null);
     const [showSound, setShowSound] = useState(false)
     // State ها را از Redux بگیرید
-    const { isPlaying, currentAudio, myFavoritemusic, minusMusic } = useSelector((state) => state.songs);
+    const { isPlaying, currentAudio, myFavoritemusic, minusMusic, currentPlaylist } = useSelector((state) => state.songs);
 
     // State های محلی برای زمان حال و کل زمان آهنگ
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [volume, setVolume] = useState(1);
-    let findMusicLiked=myFavoritemusic.find(item=>item.id == currentAudio.id)
+    let findMusicLiked = currentAudio && myFavoritemusic ? myFavoritemusic.find(item => item.id === currentAudio.id) : undefined;
 
     // 1. useEffect برای مدیریت رویدادهای مدیا (فقط یکبار اجرا می‌شود)
     useEffect(() => {
@@ -141,7 +141,7 @@ export default function MusicControll() {
     const buttonHandler = () => {
         dispatch(actionBtn(true))
         dispatch(pauseAudio())
-        dispatch(setTrackListMusic([]))
+        // حذف dispatch(setTrackListMusic([])) تا لیست موسیقی حفظ شود
         dispatch(setPlayerVisibility(false))
         document.body.classList.remove('noScroll');
     }
@@ -151,6 +151,7 @@ export default function MusicControll() {
         document.body.classList.remove('noScroll');
     }
     console.log("current", currentAudio);
+    console.log("currentPlaylist", currentPlaylist);
 
     return (
         <div>
@@ -277,7 +278,7 @@ export default function MusicControll() {
                             </div>
                             <div className=" text-white transition-all duration-500 rounded-b-xl flex items-center gap-5">
                                 <div className="flex-auto flex items-center justify-end">
-                                    <button type="button" className="text-primary" aria-label="Previous" onClick={nextMusicHandler}>
+                                    <button type="button" className="text-primary" aria-label="Next" onClick={nextMusicHandler}>
                                         <svg width="24" height="24" fill="none">
                                             <path d="M14 12 6 6v12l8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                             <path d="M18 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -302,7 +303,7 @@ export default function MusicControll() {
                                     )}
                                 </button>
                                 <div className="flex-auto flex items-center justify-start">
-                                    <button type="button" className="text-primary" aria-label="Next" onClick={prevMusicHandler}>
+                                    <button type="button" className="text-primary" aria-label="Previous" onClick={prevMusicHandler}>
                                         <svg width="24" height="24" fill="none">
                                             <path d="m10 12 8-6v12l-8-6Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                             <path d="M6 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
