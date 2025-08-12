@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TrackItem from "./TrackItem";
 import { actionMoreOption, addFavoriteMusic } from "~/redux/features/music/musicSlice";
 
-export default function ListMusicOfAlbum({ tracks }) {
+export default function ListMusicOfAlbum({ tracks, albumTracks = null }) {
     const { isPlayerVisible, likedMusic } = useSelector((state) => state.songs);
     const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ export default function ListMusicOfAlbum({ tracks }) {
                     return null;
                 }
                 return (
-                    <TrackItem likeHandler={likeHandler} onToggle={() => clickHandler(item.id)} isOpen={likedMusic === item.id} key={item.id} track={item} />
+                    <TrackItem likeHandler={likeHandler} onToggle={() => clickHandler(item.id)} isOpen={likedMusic === item.id} key={item.id} track={item} albumTracks={albumTracks || tracks} />
                 )
 
             })}

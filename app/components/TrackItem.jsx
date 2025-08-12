@@ -5,7 +5,7 @@ import HeartIcon from "./icons/HeartIcon";
 import HeartIconFill from "./icons/HeartIconFill";
 import { useSelector } from "react-redux";
 
-export default function TrackItem({ track, onToggle, isOpen, likeHandler }) {
+export default function TrackItem({ track, onToggle, isOpen, likeHandler, albumTracks = null }) {
     const { myFavoritemusic = [] } = useSelector(state => state.songs);
 
     let findMusicLiked = Array.isArray(myFavoritemusic) && track && track.id
@@ -18,7 +18,7 @@ export default function TrackItem({ track, onToggle, isOpen, likeHandler }) {
 
     return (
         <div className="flex bg-bgcard rounded-md px-2 shadow-sm items-center ">
-            <ButtonMusic bg={true} track={track} />
+            <ButtonMusic bg={true} track={track} albumTracks={albumTracks} />
             <div className="flex w-full items-center justify-between [&>*]:text-primarytxt">
                 <div className="flex items-center">
                     <img src={`/photos/${track.artistName ? track.artistName : `trackBg`}.jpg`} className="size-12 bg-white object-cover mr-2" alt="" />

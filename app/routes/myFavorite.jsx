@@ -38,7 +38,7 @@ export default function myFavorite() {
   return (
     <div className="mt-12 md:mt-28">
       {currentItems.length > 0 ?
-        <div><ListMusicOfAlbum tracks={currentItems} /></div>
+        <div><ListMusicOfAlbum tracks={currentItems} albumTracks={myFavoritemusic} /></div>
         : (
           <h2>هیچ موزیک دلخواهی هنوز انتخاب نشده</h2>
         )}

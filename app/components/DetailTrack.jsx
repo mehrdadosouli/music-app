@@ -42,7 +42,7 @@ function DetailTrack() {
                                 <span className="text-primarytxt md:text-xl text-sm">{albumDetail?.tracks?.length || 0} اهنگ</span>
                                 <span className="text-primarytxt md:text-xl text-sm">{formatDuration(sumDurationMusics)} دقیقه</span>
                             </div>
-                            {albumDetail?.tracks?.length > 0 && <ButtonMusic track={albumDetail?.tracks[0]} />}
+                            {albumDetail?.tracks?.length > 0 && <ButtonMusic track={albumDetail?.tracks[0]} albumTracks={albumDetail?.tracks} />}
                         </div>
                 </div>
             </div>

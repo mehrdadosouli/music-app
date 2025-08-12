@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import PlayIconmusic from "~/components/icons/PlayIconmusic";
 import { fetchTrackById, pauseAudio, playAudio, setTrackListMusic } from "~/redux/features/music/musicSlice";
 
-export default function ButtonMusic({ track, bg = false }) {
+export default function ButtonMusic({ track, bg = false, albumTracks = null }) {
   const dispatch = useDispatch();
-  const { isPlaying, currentAudio, albumDetail, myFavoritemusic = [], trend } = useSelector((state) => state.songs);
+  const { isPlaying, currentAudio, albumDetail, myFavoritemusic = [] } = useSelector((state) => state.songs);
 
   // مقایسه بر اساس src به جای id
   const isCurrentTrack = currentAudio?.src === track.src;
@@ -17,24 +17,9 @@ export default function ButtonMusic({ track, bg = false }) {
       console.log("salam",track, albumTracks)
       
       // لیست موسیقی را در Redux ذخیره کن
-      let tracksToSet = null;
-      
-      // اگر در صفحه آلبوم هستیم
-      if (albumDetail?.tracks) {
-        tracksToSet = albumDetail.tracks;
-      }
-      // اگر در صفحه خانه (ترند) هستیم
-      else if (trend && trend.length > 0) {
-        tracksToSet = trend;
-      }
-      // اگر در صفحه مورد علاقه‌ها هستیم
-      else if (myFavoritemusic && myFavoritemusic.length > 0) {
-        tracksToSet = myFavoritemusic;
-      }
-      
-      if (tracksToSet) {
-        console.log("Setting tracks in Redux when playing:", tracksToSet);
-        dispatch(setTrackListMusic({ tracks: tracksToSet }));
+      if (albumTracks) {
+        console.log("Setting tracks in Redux when playing:", albumTracks);
+        dispatch(setTrackListMusic({ tracks: albumTracks }));
       }
     }
   };
