@@ -13,6 +13,7 @@ const initialState = {
   topSongs: [],
   allSong: [],
   allAlbum: [],
+  playList: [],
   albumDetail: [],
   myFavoritemusic: [],
   likedMusic: null,
@@ -179,6 +180,40 @@ const musicSlice = createSlice({
   name: "music",
   initialState,
   reducers: {
+    loadplayList: (state) => {
+      const savePlayList = JSON.parse(localStorage.getItem("myPlayList"));
+      state.playList = savePlayList || [];
+    },
+    addMyPlayList: (state, action) => {
+      const hasLocalstorage =
+        JSON.parse(localStorage.getItem("myPlayList")) || [];
+      if (hasLocalstorage) {
+        let findPlayListName = hasLocalstorage.find(
+          (obj) => obj.name === action.payload.name
+        );
+        if (!findPlayListName) {
+          hasLocalstorage.push(action.payload);
+          state.playList.push(action.payload);
+          localStorage.setItem("myPlayList", JSON.stringify(hasLocalstorage));
+        }
+      }
+    },
+    removePlayList: (state, action) => {
+      const saved = localStorage.getItem("myPlayList");
+      const getLocal = saved ? JSON.parse(saved) : [];
+
+      if (action.payload) {
+        const findItem = getLocal.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        if (findItem !== -1) {
+          getLocal.splice(findItem, 1);
+          state.playList = getLocal;
+          localStorage.setItem("myPlayList", JSON.stringify(getLocal));
+        }
+      }
+    },
+
     loadFavoriteMusic: (state) => {
       const savedFavorites =
         JSON.parse(localStorage.getItem("myfavorite")) || [];
@@ -198,7 +233,6 @@ const musicSlice = createSlice({
       state.myFavoritemusic = updatedFavorite;
       localStorage.setItem("myfavorite", JSON.stringify(updatedFavorite));
     },
-
     actionMoreOption: (state, action) => {
       if (state.likedMusic == action.payload) {
         state.likedMusic = null;
@@ -402,6 +436,9 @@ export const {
   loadFavoriteMusic,
   actionMoreOption,
   restoreCurrentPlaylist,
+  loadplayList,
+  addMyPlayList,
+  removePlayList,
 } = musicSlice.actions;
 
 export default musicSlice.reducer;

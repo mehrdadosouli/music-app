@@ -12,7 +12,7 @@
   --primarytxt: black;
   --bgplayercontroll: #373542;
   --bgplayercontrollcard: #4e4d52;
-  --footertext: #6b7280; 
+  --footertext: #6b7280;
   /* --bgbody: linear-gradient(to right, #0E9EEF, #053754) !important;  */
 }
 html[data-theme="dark"] {
@@ -24,7 +24,7 @@ html[data-theme="dark"] {
   --primarytxt: white;
   --bgplayercontroll: #373542;
   --bgplayercontrollcard: #4e4d52;
-  --footertext: #d1d5db; 
+  --footertext: #d1d5db;
 }
 
 html,
@@ -45,8 +45,8 @@ body {
   overflow: hidden;
 }
 .musicPlayer {
-  overflow-y: auto; 
-  height: 100vh;    
+  overflow-y: auto;
+  height: 100vh;
 }
 @layer components {
   .textstroke {
@@ -72,6 +72,17 @@ body {
     background: linear-gradient(to right, #0b77b3, #053754);
     background: -webkit-linear-gradient(to right, #0b77b3, #053754);
   }
+  .bgmylist {
+    background: #ee10b0;
+    background: linear-gradient(
+      0deg,
+      rgba(238, 16, 176, 0.91) 0%,
+      rgba(14, 158, 239, 1) 100%
+    );
+  }
+  .h-screen-minus-290 {
+  height: calc(100vh - 290px);
+}
 
 
   /* player open */
