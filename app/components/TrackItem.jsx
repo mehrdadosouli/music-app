@@ -4,8 +4,13 @@ import DotIcon from "./icons/DotIcon";
 import HeartIcon from "./icons/HeartIcon";
 import HeartIconFill from "./icons/HeartIconFill";
 import { useSelector } from "react-redux";
+import AddPlaylistIcon from "./icons/AddPlaylistIcon";
 
+<<<<<<< HEAD
 export default function TrackItem({ track, onToggle, isOpen, likeHandler, albumTracks = null }) {
+=======
+export default function TrackItem({ track, onToggle, isOpen, likeHandler,addHandler }) {
+>>>>>>> e736b75 (set myplaylistDetail route)
     const { myFavoritemusic = [] } = useSelector(state => state.songs);
 
     let findMusicLiked = Array.isArray(myFavoritemusic) && track && track.id
@@ -32,9 +37,12 @@ export default function TrackItem({ track, onToggle, isOpen, likeHandler, albumT
                 <div className="flex items-center relative">
                     <h5 className="text-primarytxt">{formatDuration(track?.duration)}</h5>
                     <span className="inline-flex cursor-pointer p-1 select-none" onClick={onToggle}><DotIcon /></span>
-                    <div className={`${isOpen ? "flex" : "hidden"} absolute left-10 -top-2 select-none w-48 h-12 flex justify-center items-center bg-bgbody p-2 rounded-lg`}>
-                        <span className="flex gap-2 cursor-pointer" onClick={() => likeHandler(track)}>
-                            اضافه کردن به لیست {findMusicLiked ? <HeartIconFill /> : <HeartIcon />}
+                    <div className={`${isOpen ? "flex flex-col gap-5" : "hidden"} absolute left-10 -top-2 select-none w-52 h-auto bg-bgbody p-2 rounded-lg`}>
+                        <span className="flex justify-between gap-2 cursor-pointer" onClick={() => likeHandler(track)}>
+                            اضافه کردن به علاقه ها {findMusicLiked ? <HeartIconFill /> : <HeartIcon />}
+                        </span>
+                        <span className="flex justify-between gap-2 cursor-pointer" onClick={() => addHandler(track)}>
+                            اضافه کردن به لیست { <AddPlaylistIcon /> }
                         </span>
                     </div>
                 </div>

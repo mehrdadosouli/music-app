@@ -26,6 +26,7 @@ export default function myFavorite() {
       dispatch(loadFavoriteMusic())
   },[])
 
+<<<<<<< HEAD
   // حذف این useEffect تا لیست موسیقی در حال پخش حفظ شود
   // useEffect(() => {
   //   if (myFavoritemusic && myFavoritemusic.length > 0 && pathname === "/myfavorite" && isPlayerVisible && searchTrack == "") {
@@ -37,10 +38,24 @@ export default function myFavorite() {
 
   return (
     <div className="mt-12 md:mt-28">
+=======
+  useEffect(() => {
+    if (myFavoritemusic && myFavoritemusic.length > 0 && pathname === "/myfavorite" && isPlayerVisible && searchTrack == "") {
+      dispatch(setTrackListMusic({ tracks: myFavoritemusic }));
+    } else {
+      dispatch(setTrackListMusic([]));
+    }
+
+    console.log(currentItems);
+  }, [myFavoritemusic, pathname, dispatch, isPlayerVisible, searchTrack]);
+  
+  return ( 
+    <div className="mt-12 md:mt-32">
+>>>>>>> e736b75 (set myplaylistDetail route)
       {currentItems.length > 0 ?
         <div><ListMusicOfAlbum tracks={currentItems} albumTracks={myFavoritemusic} /></div>
         : (
-          <h2>هیچ موزیک دلخواهی هنوز انتخاب نشده</h2>
+          <h2 className="text-primarytxt">هیچ موزیک دلخواهی هنوز انتخاب نشده</h2>
         )}
 
       {pageCount > 1 && (
