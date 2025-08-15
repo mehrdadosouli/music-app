@@ -11,10 +11,7 @@ export default function TrendingSongs({ title }) {
     const lastChar = titleArray[titleArray.length - 1]
     const { pathname } = useLocation()
     
-    // برای debug
-    console.log("TrendingSongs - currentPlaylist:", currentPlaylist);
-    console.log("TrendingSongs - pathname:", pathname);
-    console.log("TrendingSongs - isPlayerVisible:", isPlayerVisible);
+
     
     useEffect(() => {
         dispatch(fetchTrendSongs());
@@ -24,7 +21,6 @@ export default function TrendingSongs({ title }) {
         
         // غیرفعال کردن تنظیم خودکار لیست موسیقی
         // این کار باعث می‌شود لیست آلبوم حفظ شود
-        console.log("TrendingSongs useEffect disabled - keeping current playlist");
         
     }, [trend, pathname, dispatch, isPlayerVisible, searchTrack, currentPlaylist]);
 

@@ -14,12 +14,10 @@ export default function ButtonMusic({ track, bg = false, albumTracks = null }) {
       dispatch(pauseAudio());
     } else {
       dispatch(playAudio(track));
-      console.log("salam",track, albumTracks)
       
       // فقط اگر موسیقی جدید پخش می‌شود، لیست موسیقی را در Redux ذخیره کن
       // اگر موسیقی در حال پخش است، لیست را عوض نکن
       if (albumTracks && !isCurrentTrack) {
-        console.log("Setting tracks in Redux when playing new track:", albumTracks);
         dispatch(setTrackListMusic({ tracks: albumTracks }));
       }
     }
