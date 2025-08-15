@@ -11,18 +11,21 @@ export default function TrendingSongs({ title }) {
     const lastChar = titleArray[titleArray.length - 1]
     const { pathname } = useLocation()
     
-
+    // برای debug
+    console.log("TrendingSongs - currentPlaylist:", currentPlaylist);
+    console.log("TrendingSongs - pathname:", pathname);
+    console.log("TrendingSongs - isPlayerVisible:", isPlayerVisible);
     
     useEffect(() => {
         dispatch(fetchTrendSongs());
     }, [])
     
-    useEffect(() => {
-        
-        // غیرفعال کردن تنظیم خودکار لیست موسیقی
-        // این کار باعث می‌شود لیست آلبوم حفظ شود
-        
-    }, [trend, pathname, dispatch, isPlayerVisible, searchTrack, currentPlaylist]);
+    // حذف کامل این useEffect که باعث تغییر لیست موزیک می‌شد
+    // useEffect(() => {
+    //     // غیرفعال کردن تنظیم خودکار لیست موسیقی
+    //     // این کار باعث می‌شود لیست آلبوم حفظ شود
+    //     console.log("TrendingSongs useEffect disabled - keeping current playlist");
+    // }, [trend, pathname, dispatch, isPlayerVisible, searchTrack, currentPlaylist]);
 
     return (
         <div>
@@ -30,7 +33,7 @@ export default function TrendingSongs({ title }) {
             {isLoading ? (
                 <div>Loading songs...</div>
             ) : Array.isArray(trend) && trend.length > 0 ? (
-                <ListMusicOfAlbum tracks={trend} />
+                <ListMusicOfAlbum tracks={trend} albumTracks={trend} />
             ) : (
                 <div className="text-white">No songs found.</div>
             )}
