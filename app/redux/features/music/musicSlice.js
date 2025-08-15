@@ -201,7 +201,7 @@ const musicSlice = createSlice({
     addMyPlayList: (state, action) => {
       const hasLocalstorage =
         JSON.parse(localStorage.getItem("myPlayList")) || [];
-      if (hasLocalstorage) {
+      if (hasLocalstorage) {playList
         let findPlayListName = hasLocalstorage.find(
           (obj) => obj.name === action.payload.name
         );
@@ -228,8 +228,7 @@ const musicSlice = createSlice({
       }
     },
     loadFavoriteMusic: (state) => {
-      const savedFavorites =
-        JSON.parse(localStorage.getItem("myfavorite")) || [];
+      const savedFavorites = JSON.parse(localStorage.getItem("myfavorite")) || [];
       state.myFavoritemusic = savedFavorites;
     },
     addFavoriteMusic: (state, action) => {

@@ -371,5 +371,5 @@ app.get('/charts/top', (req, res) => {
 
 // استارت سرور
 app.listen(PORT, () => {
-  // Server started successfully
+  console.log(`API موزیک در حال اجرا روی http://localhost:${PORT}`);
 });

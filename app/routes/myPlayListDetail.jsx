@@ -23,7 +23,7 @@ export default function MyPlayListDetail() {
         } else {
             dispatch(loadplayList())
         }
-    }, [playList, listId]); // وابسته به playList و listId
+    }, [playList, listId,data]); // وابسته به playList و listId
 
     return (
         <div className="mt-12 md:mt-32">

@@ -33,7 +33,7 @@ export default function TrendingSongs({ title }) {
             {isLoading ? (
                 <div>Loading songs...</div>
             ) : Array.isArray(trend) && trend.length > 0 ? (
-                <ListMusicOfAlbum tracks={trend} albumTracks={trend} />
+                <ListMusicOfAlbum tracks={trend}  />
             ) : (
                 <div className="text-white">No songs found.</div>
             )}

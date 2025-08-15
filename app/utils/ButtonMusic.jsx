@@ -13,12 +13,23 @@ export default function ButtonMusic({ track, bg = false, albumTracks = null }) {
     if (isPlaying && isCurrentTrack) {
       dispatch(pauseAudio());
     } else {
+      // موسیقی را پخش کن
       dispatch(playAudio(track));
+      console.log("Playing track:", track);
       
       // فقط اگر موسیقی جدید پخش می‌شود، لیست موسیقی را در Redux ذخیره کن
-      // اگر موسیقی در حال پخش است، لیست را عوض نکن
-      if (albumTracks && !isCurrentTrack) {
-        dispatch(setTrackListMusic({ tracks: albumTracks }));
+      if (!isCurrentTrack) {
+        if (albumTracks) {
+          console.log("Setting tracks in Redux when playing new track:", albumTracks);
+          dispatch(setTrackListMusic({ tracks: albumTracks }));
+        } else if (myFavoritemusic && myFavoritemusic.length > 0) {
+          // اگر موسیقی در لیست مورد علاقه است، لیست مورد علاقه را تنظیم کن
+          const isInFavorites = myFavoritemusic.find(item => item.id === track.id);
+          if (isInFavorites) {
+            console.log("Setting favorites list in Redux when playing favorite track");
+            dispatch(setTrackListMusic({ tracks: myFavoritemusic }));
+          }
+        }
       }
     }
   };

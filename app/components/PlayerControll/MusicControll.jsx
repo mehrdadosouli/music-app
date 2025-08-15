@@ -47,6 +47,7 @@ export default function MusicControll() {
     // 2. useEffect برای تغییر آهنگ
     useEffect(() => {
         if (currentAudio && audioRef.current) {
+            console.log("Loading audio file:", currentAudio.src); // برای debug
             audioRef.current.src = `${currentAudio.src}`;
             audioRef.current.load();
 
@@ -149,6 +150,8 @@ export default function MusicControll() {
         dispatch(setMinustMusic(false))
         document.body.classList.remove('noScroll');
     }
+    console.log("current", currentAudio);
+    console.log("currentPlaylist", currentPlaylist);
 
     return (
         <div>

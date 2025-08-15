@@ -13,9 +13,16 @@ export default function PlayerControll({ track, open }) {
   // اولویت: currentPlaylist > reduxTrack > track prop
   const displayTrack = currentPlaylist || reduxTrack || track;
   
+  // برای debug
+  console.log("PlayerControll - currentPlaylist:", currentPlaylist);
+  console.log("PlayerControll - reduxTrack:", reduxTrack);
+  console.log("PlayerControll - track prop:", track);
+  console.log("PlayerControll - displayTrack:", displayTrack);
+  
   // وقتی پلیر باز می‌شود، لیست موسیقی فعلی را بازیابی کن
   useEffect(() => {
     if (open && !minusMusic && currentPlaylist && !reduxTrack) {
+      console.log("Restoring current playlist in PlayerControll");
       dispatch(restoreCurrentPlaylist());
     }
   }, [open, minusMusic, currentPlaylist, reduxTrack, dispatch]);
